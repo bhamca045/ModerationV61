@@ -68,7 +68,7 @@ setTimeout(function () {
     else {
       isArticleUrlFound = true;
     }
-    newFirstElement.innerHTML = '<table style="width:100%"><tr><td><b>Article URL: <input id="txtArticleUrl" type="text" style="width:80%" disabled="disabled" value=\'' + articleUrl + '\' /></b></td><td><input id="btnLoadModControls" type="button" value="1. Load Moderator Controls" /><input id="btnHighlightSpam" type="button" value="2. Find Spam Comments" /><input id="btnHideSpamComments" type="button" value="3. Hide All Spam Comments" /></td><td align="right" style="text-align:right">Moderator: <select id="selModerator">' + moderatorsList + '</select></td></tr></table>';
+    newFirstElement.innerHTML = '<table style="width:100%"><tr><td><b>Article URL: <input id="txtArticleUrl" type="text" style="width:80%" disabled="disabled" value=\'' + articleUrl + '\' /></b></td><td><input id="btnLoadModControls" type="button" value="1. Load Moderator Controls" /><input id="btnHighlightSpam" type="button" value="2. Find Spam Comments" /></td><td align="right" style="text-align:right">Moderator: <select id="selModerator">' + moderatorsList + '</select></td></tr></table>';
     //newFirstElement.innerHTML = '<table style="width:100%"><tr><td><b>Article URL: <input id="txtArticleUrl" type="text" style="width:80%" value=\'' + articleUrl + '\' /></b></td><td align="right" style="text-align:right">Article Topic: <input id="articleTopic" type="text" /></td></tr></table>';
     divFb.insertBefore(newFirstElement, divFb.firstChild);
     var btnLoadControls = document.getElementById('btnLoadModControls');
@@ -81,11 +81,11 @@ setTimeout(function () {
     {
       HighlightSpamCommentsNew();
     }
-    var btnHideSpamComments = document.getElementById('btnHideSpamComments');
-    btnHideSpamComments.onclick = function ()
-    {
-      HideSpamComments();
-    }
+    //var btnHideSpamComments = document.getElementById('btnHideSpamComments');
+    //btnHideSpamComments.onclick = function ()
+    //{
+    //  HideSpamComments();
+    //}
     uguid = getParameterByName('userguid');
     if (uguid != null) {
       var sModerator = document.getElementById('selModerator');
@@ -547,8 +547,8 @@ function HighlightSpamComments() {
     alert(ex);
   }
 }
-//Hide highlighted comments
 
+//Hide highlighted comments
 function HideSpamComments() {
   try
   {
@@ -833,7 +833,6 @@ function sendFbData(objid) {
     }
     
     //request data
-
     if (articleUrl.indexOf('?') != - 1)
     {
       articleUrl = articleUrl.split('?') [0];
@@ -851,7 +850,8 @@ function sendFbData(objid) {
     
     var checkSel = element.getElementsByTagName('input');
     if(checkSel.length == 2) {
-      checkSel[0].checked = true;
+      checkSel[0].click();
+      checkSel[0].checked = true;      
     }
     
     //var requestData = '{"apiKey"="JMfNqhMk3d6uUZJVtua0SNRWBOgepSd2IRyvSUG3Ticif5A84MfZ5ZlsW0mLw1f","moderationMessage"="' + moderationMessage + '"}';
@@ -883,3 +883,4 @@ function Delay(sleepDuration) {
   while (new Date().getTime() < now + sleepDuration) { /* do nothing */
   }
 }
+
