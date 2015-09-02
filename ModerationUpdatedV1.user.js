@@ -8,7 +8,7 @@
 // @updateURL   https://monkeyguts.com/754.meta.js?c
 // @downloadURL https://monkeyguts.com/754.user.js?c
 // ==/UserScript==
-//var submitUrl ='http://127.0.0.1:6000/CommentService.svc/ModeratorAction?apiKey=JMfNqhMk3d6uUZJVtua0SNRWBOgepSd2IRyvSUG3Ticif5A84MfZ5ZlsW0mLw1f';
+//var submitUrl ='http://127.0.0.1:7000/CommentService.svc/ModeratorAction?apiKey=JMfNqhMk3d6uUZJVtua0SNRWBOgepSd2IRyvSUG3Ticif5A84MfZ5ZlsW0mLw1f';
 var submitUrl = 'http://d6f576881c0146cb8f2a26dd5136cd53.cloudapp.net:8080/Pages/SubmitFBData?dat=';
 //var submitUrl = 'http://localhost:32852/Pages/SubmitFBData?dat=';
 var articleUrl = '';
@@ -297,7 +297,9 @@ function HighlightSpamCommentsNew() {
       var tbodyId = tblBodys[i].getAttribute('data-reactid');
       if (tbodyId != null && tbodyId.indexOf('.0.1.0.1.0') != -1)
       {
-        allCommentsParent = tblBodys[i];        
+        if (allCommentsParent == null) {
+          allCommentsParent = tblBodys[i];        
+        }
       }
     }
     
@@ -311,7 +313,6 @@ function HighlightSpamCommentsNew() {
           firstCommentTblRow = tblRows[i];
         }
         
-        //alert(trId);
         var divFbId = '';
         if(trId.indexOf('.1.0.0.1.0.0:$') != -1) {
           divFbId = 'divFb_' + trId + '.0.1.0.0.$right.0';  
@@ -334,8 +335,9 @@ function HighlightSpamCommentsNew() {
             
             for (var cc = 0; cc < comDiv.length; cc++) {
               var comSpanID = comDiv[cc].getAttribute('data-reactid');
-              if (comSpanID != null && comSpanID.indexOf('$end:0:$text') != -1) {               
+              if (comSpanID != null && ((comSpanID.indexOf('$end/=1$text') != -1) || (comSpanID.indexOf('.0.1.0.0.$right.0.0.1.0.0') != -1))) {               
                 commentCheck = '';
+                //alert(comDiv[cc].textContent);
                 commentCheck = comDiv[cc].textContent.replace(regex, '');
                 var res1 = regexSpam1.exec(commentCheck);
                 var res2 = regexSpam2.exec(commentCheck);
@@ -362,8 +364,14 @@ function HighlightSpamCommentsNew() {
                 if(regExMatched) {
                   for(var k = 0; k < comDiv.length; k++) {
                    if(comDiv[k].className == "_2uma" || comDiv[k].className.indexOf("_5mdd") != -1) {
-                     comDiv[k].setAttribute('style', 'background-color:yellow;');                 
-                     allCommentsParent.insertBefore(mDiv.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement, firstCommentTblRow);
+                     comDiv[k].setAttribute('style', 'background-color:yellow;');
+                     
+                     var sourceNode = mDiv.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
+                     var datReactId = sourceNode.getAttribute('data-reactid');
+                     if(datReactId != null && datReactId.indexOf('.1.0.0.1.0.0:$') != -1) {
+                       sourceNode = mDiv.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
+                     }
+                     allCommentsParent.insertBefore(sourceNode, firstCommentTblRow);
                      break;
                    }
                   }
@@ -385,9 +393,10 @@ function HighlightSpamCommentsNew() {
         var divTags = document.getElementsByTagName('div');        
     for (var i = 0; i < divTags.length; i++) {
       var mainDivId = divTags[i].getAttribute('data-reactid');
-      if (mainDivId != null && mainDivId.indexOf('.0.0.1') != -1)
-      {
-        allCommentsParent = divTags[i];        
+      if (mainDivId != null && mainDivId.indexOf('.0.0.2') != -1) {
+         if (allCommentsParent == null) { 
+           allCommentsParent = divTags[i];  
+         }
       }
     }
         
@@ -755,7 +764,7 @@ function sendFbData(objid) {
       var articleLinks = mDiv.getElementsByTagName('a');              
       for (var i = 0; i < articleLinks.length; i++) {                
         var dataId = articleLinks[i].getAttribute('data-reactid');                
-        if (dataId != null && dataId.indexOf('$child:0.1') != - 1) {
+        if (dataId != null && dataId.indexOf('$right.0.0.0.$=11/=1$child') != - 1) {
           var tmpArtUrl = articleLinks[i].getAttribute('href')                  
           document.getElementById('txtArticleUrl').value = tmpArtUrl.replace(/%3A/g, ':').replace(/%2F/g, '/').replace(/%3F/g, '?').replace(/%25/g, '%');                  
           break;
@@ -832,13 +841,41 @@ function sendFbData(objid) {
       return;
     }
     
+    // viewType Information
+    var viewType = 2;
+    var ulList = document.getElementsByTagName('ul');
+    if(ulList != null) {
+      for(var k = 0; k < ulList.length; k++) {
+        var ulClass = ulList[k].getAttribute('class');
+        if(ulClass != null && ulClass.indexOf('_43o4') != -1){
+          var spans = ulList[k].getElementsByTagName('span');
+          for(var i = 0; i< spans.length; i++) {
+            var spanClass = spans[i].className;
+            if(spanClass != null && spanClass.indexOf('accessible_elem') != -1) {              
+              var spanId = spans[i].getAttribute('data-reactid');              
+              if(spanId.indexOf('$0.$pending') != -1) {
+                  viewType = 3;
+                }
+              else if(spanId.indexOf('$0.$approved') != -1) {
+                  viewType = 2;
+                }
+              else if(spanId.indexOf('$0.$deleted') != -1) {
+                  viewType = 4;
+                }
+              break;
+            }            
+          }          
+        }
+      }
+    }
+    
     //request data
     if (articleUrl.indexOf('?') != - 1)
     {
       articleUrl = articleUrl.split('?') [0];
     }
-    var moderationMessage = '{ "CommentId":"' + commentID + '","IsReset":false,"CommentMessage":"' + comment + '","CommentedUserID":"' + from + '","CommentedUserName":"' + userName + '","CommentDateTime":"' + datev + '","ModeratorGUID":"' + moderator.value + '","ModeratorAction":' + action.value + ',"OffenceType":' + offence.value + ',"LikesCount":' + likes + ',"ArticleTopic":"' + artiTopic + '","ArticleUrl":"' + articleUrl + '"}';
-        
+    var moderationMessage = '{ "CommentId":"' + commentID + '","IsReset":false,"CommentMessage":"' + comment + '","CommentedUserID":"' + from + '","CommentedUserName":"' + userName + '","CommentDateTime":"' + datev + '","ModeratorGUID":"' + moderator.value + '","ModeratorAction":' + action.value + ',"OffenceType":' + offence.value + ',"ViewType":' + viewType + ',"LikesCount":' + likes + ',"ArticleTopic":"' + artiTopic + '","ArticleUrl":"' + articleUrl + '"}';
+    
     var element = mDiv;
     while(element.parentNode) {      
       if(element.parentNode.nodeName == "TR") {        
@@ -883,4 +920,3 @@ function Delay(sleepDuration) {
   while (new Date().getTime() < now + sleepDuration) { /* do nothing */
   }
 }
-
