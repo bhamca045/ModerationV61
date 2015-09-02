@@ -106,7 +106,7 @@ function SetPagerDivClickAction() {
     var buttonPager = document.getElementsByTagName('button');
     for (var i = 0; i < buttonPager.length; i++) {
       var dataId = buttonPager[i].getAttribute('data-reactid');
-      if (dataId != null && ((dataId.indexOf('$=10:0.0') != - 1) || (dataId.indexOf('.0.0.2.1.0') != -1))) {
+      if (dataId != null && ((dataId.indexOf('$=10/=10.0') != - 1) || (dataId.indexOf('.0.0.2.1.0') != -1))) {
         buttonPager[i].onclick = function ()
         {
           setTimeout(function () {
@@ -743,8 +743,8 @@ function sendFbData(objid) {
       var comDiv = mDiv.getElementsByTagName('span');      
             
       for (var cc = 0; cc < comDiv.length; cc++) {        
-        var comSpanID = comDiv[cc].getAttribute('data-reactid');
-        if (comSpanID != null && comSpanID.indexOf('$text0:0') != -1) {          
+        var comSpanID = comDiv[cc].className;        
+        if (comSpanID != null && ((comSpanID == "_2uma") || (comSpanID.indexOf("_5mdd") != -1))) {          
           comment = comDiv[cc].innerHTML.replace(regex, '');
           comment = comment.replace(/&amp;/g, 'and');
           comment = comment.replace(/&/g, 'and');
