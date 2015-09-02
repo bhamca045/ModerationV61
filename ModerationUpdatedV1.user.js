@@ -3,7 +3,7 @@
 // @namespace   01d301193b1757939f0f4b6b54406641
 // @description Moderation Controls for Facebook Widget
 // @include     https://*facebook.com/*
-// @version     1
+// @version     8
 // @grant       none
 // @updateURL   https://monkeyguts.com/754.meta.js?c
 // @downloadURL https://monkeyguts.com/754.user.js?c
@@ -337,15 +337,17 @@ function HighlightSpamCommentsNew() {
               var comSpanID = comDiv[cc].getAttribute('data-reactid');
               if (comSpanID != null && ((comSpanID.indexOf('$end/=1$text') != -1) || (comSpanID.indexOf('.0.1.0.0.$right.0.0.1.0.0') != -1))) {               
                 commentCheck = '';
-                //alert(comDiv[cc].textContent);
-                commentCheck = comDiv[cc].textContent.replace(regex, '');
+                commentCheck = comDiv[cc].textContent.replace(regex, '');                
                 var res1 = regexSpam1.exec(commentCheck);
                 var res2 = regexSpam2.exec(commentCheck);
                 var res3 = regexSpam3.exec(commentCheck);
                 var res4 = regexSpam4.exec(commentCheck);
                 var res5 = regexSpam5.exec(commentCheck);
                 var res6 = regexSpam6.exec(commentCheck);
+                var patt = new RegExp("every hour");                
+                res6 = patt.exec(commentCheck);
                 if (res1 != null || res2 != null || res3 != null || res4 != null || res5 != null || res6 != null) {
+                  //alert(comDiv[cc].textContent);
                   regExMatched = true; 
                 } 
                 else
@@ -365,7 +367,6 @@ function HighlightSpamCommentsNew() {
                   for(var k = 0; k < comDiv.length; k++) {
                    if(comDiv[k].className == "_2uma" || comDiv[k].className.indexOf("_5mdd") != -1) {
                      comDiv[k].setAttribute('style', 'background-color:yellow;');
-                     
                      var sourceNode = mDiv.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
                      var datReactId = sourceNode.getAttribute('data-reactid');
                      if(datReactId != null && datReactId.indexOf('.1.0.0.1.0.0:$') != -1) {
