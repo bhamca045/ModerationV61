@@ -3,7 +3,7 @@
 // @namespace   01d301193b1757939f0f4b6b54406641
 // @description Moderation Controls for Facebook Widget
 // @include     https://*facebook.com/*
-// @version     8
+// @version     9
 // @grant       none
 // @updateURL   https://monkeyguts.com/754.meta.js?c
 // @downloadURL https://monkeyguts.com/754.user.js?c
@@ -43,7 +43,7 @@ var moderatorsList = '<option value="0"></option>'
 + '<option value="55AD57C2-7589-4997-B707-65D9AA87131F">Vinay</option>'
 + '<option value="430CB796-59E1-491A-B727-8B516BFB1245">Qutubuddin</option>'; 
 var regex = /(<([^>]+)>)/gi;
-var regexSpam1 = /(?=.*\b(http(s)*:\/\/)(www\.))|((www*\.)([0-9a-zA-Z]*|(\/)*)*(\.(co*)))|((www*\.)([0-9a-zA-Z]*|(\/)*)*(\.org))/g;
+var regexSpam1 = /(?=.*\b(http(s)*:\/\/)(www\.))|((www*\.)([0-9a-zA-Z]*|(\/)*)*(\.(co*)))|((www*\.)([0-9a-zA-Z]*|(\/)*)*(\.org))|((w)w\2+\.|ｗ+\.)|([a-zA-Z]¬+|­+)|(\.|­)\s{0,10}\S{0,10}(c|ｃ|ℂ)(o|ｏ|ℴ)(m|ｍ)/g;
 var regexSpam2 = /(https?:\/\/([0-9a-zA-Z]*|(\/)*)*\.co*)|(https?:\/\/([0-9a-zA-Z]*|(\/)*)*\.org)/g;
 var regexSpam3 = /(?=.*(w(\W+)w(\W+)w.))/g;
 var regexSpam4 = /^(?=.*\$[0-9]+)(?=.*(work|home)).*/g;
@@ -426,7 +426,7 @@ function HighlightSpamCommentsNew() {
             var decodedCommentCheck = '';            
             for (var cc = 0; cc < comDiv.length; cc++) {
               var comSpanID = comDiv[cc].getAttribute('data-reactid');
-              if (comSpanID != null && comSpanID.indexOf('$text0:0') != -1) {               
+              if (comSpanID != null && comSpanID.indexOf('$right.0.$left.0.1.0.0.0') != -1) {               
                 commentCheck = '';                
                 commentCheck = comDiv[cc].textContent.replace(regex, '');                
                 var res1 = regexSpam1.exec(commentCheck);
