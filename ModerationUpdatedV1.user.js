@@ -721,7 +721,7 @@ function ClickPagerButtons() {
         buttonPager[i].onclick = function ()
        {
          setTimeout(function () {
-           alert('beforeinnterpagerclick');
+           //alert('beforeinnterpagerclick');
            ClickPagerButtons();    
           }, 5000);
         }
