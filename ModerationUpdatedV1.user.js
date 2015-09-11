@@ -3,7 +3,7 @@
 // @namespace   01d301193b1757939f0f4b6b54406641
 // @description Moderation Controls for Facebook Widget
 // @include     https://*facebook.com/*
-// @version     9
+// @version     10
 // @grant       none
 // @updateURL   https://monkeyguts.com/754.meta.js?c
 // @downloadURL https://monkeyguts.com/754.user.js?c
@@ -68,7 +68,7 @@ setTimeout(function () {
     else {
       isArticleUrlFound = true;
     }
-    newFirstElement.innerHTML = '<table style="width:100%"><tr><td><b>Article URL: <input id="txtArticleUrl" type="text" style="width:80%" disabled="disabled" value=\'' + articleUrl + '\' /></b></td><td><input id="btnLoadModControls" type="button" value="1. Load Moderator Controls" /><input id="btnHighlightSpam" type="button" value="2. Find Spam Comments" /></td><td align="right" style="text-align:right">Moderator: <select id="selModerator">' + moderatorsList + '</select></td></tr></table>';
+    newFirstElement.innerHTML = '<table style="width:100%"><tr><td><b>Article URL: <input id="txtArticleUrl" type="text" style="width:80%" disabled="disabled" value=\'' + articleUrl + '\' /></b></td><td><input id="btnLoadModControls" type="button" value="1. Load Moderator Controls" /><input id="btnHighlightSpam" type="button" value="2. Find Spam Comments" /><input id="btnHideSpamComments" type="button" value="3. Hide All Spam Comments" /></td><td align="right" style="text-align:right">Moderator: <select id="selModerator">' + moderatorsList + '</select></td></tr></table>';
     //newFirstElement.innerHTML = '<table style="width:100%"><tr><td><b>Article URL: <input id="txtArticleUrl" type="text" style="width:80%" value=\'' + articleUrl + '\' /></b></td><td align="right" style="text-align:right">Article Topic: <input id="articleTopic" type="text" /></td></tr></table>';
     divFb.insertBefore(newFirstElement, divFb.firstChild);
     var btnLoadControls = document.getElementById('btnLoadModControls');
@@ -81,11 +81,11 @@ setTimeout(function () {
     {
       HighlightSpamCommentsNew();
     }
-    //var btnHideSpamComments = document.getElementById('btnHideSpamComments');
-    //btnHideSpamComments.onclick = function ()
-    //{
-    //  HideSpamComments();
-    //}
+    var btnHideSpamComments = document.getElementById('btnHideSpamComments');
+    btnHideSpamComments.onclick = function ()
+    {
+      HideSpamCommentsNew();
+    }
     uguid = getParameterByName('userguid');
     if (uguid != null) {
       var sModerator = document.getElementById('selModerator');
@@ -94,7 +94,7 @@ setTimeout(function () {
   }
   AddModerateControls();   
   if (uguid != '') {
-    HideSpamComments();
+    HideSpamCommentsNew();
     window.close();
   }
 }, 2000);
@@ -110,7 +110,7 @@ function SetPagerDivClickAction() {
         buttonPager[i].onclick = function ()
         {
           setTimeout(function () {
-            AddModerateControls();            
+           AddModerateControls();            
           }, 5000);
         }
       }
@@ -706,8 +706,123 @@ function HideSpamComments() {
     alert(ex);
   }
 }
-//sending fb data to server
 
+
+function ClickPagerButtons() {
+  try
+  {
+    var buttonPager = document.getElementsByTagName('button');
+    for (var i = 0; i < buttonPager.length; i++) {
+      var dataId = buttonPager[i].getAttribute('data-reactid');
+      if (dataId != null && (dataId.indexOf('$=10/=10.0') != - 1)) {
+        
+        buttonPager[i].click();
+        
+        buttonPager[i].onclick = function ()
+       {
+         setTimeout(function () {
+           alert('beforeinnterpagerclick');
+           ClickPagerButtons();    
+          }, 5000);
+        }
+      }
+    }    
+  }
+  catch (ex)
+  {
+    //alert(ex);
+  }
+}
+
+// Hide Spam comments new method
+function HideSpamCommentsNew() {
+  try
+  {
+    var moderator = document.getElementById('selModerator');
+    if (moderator.value == 0)
+    {
+      window.alert('please select moderator');
+      //moderator.focus();
+      return;
+    }
+    //alert('fromhidespam');
+    
+    ClickPagerButtons();
+    
+    var tblRows = document.getElementsByTagName('tr');
+    for (var i = 0; i < tblRows.length; i++) {
+      var trId = tblRows[i].getAttribute('data-reactid');
+      if (trId != null && trId.indexOf('.0.1.0.1.0.0:$') != - 1) {
+        
+        var divFbId = '';
+        if(trId.indexOf('.1.0.0.1.0.0:$') != -1) {
+          divFbId = 'divFb_' + trId + '.0.1.0.0.$right.0';  
+        }
+        else {          
+          divFbId = 'divFb_' + trId + '.1.0.0.0.$right.0';  
+        }          
+        
+        var divCheck = document.getElementById(divFbId);
+        if (divCheck != null)
+        { 
+          //comment text
+          try
+          {
+            var mDiv = divCheck.parentElement;
+            var comDiv = mDiv.getElementsByTagName('span');
+            for(var k = 0; k < comDiv.length; k++) {
+              if(comDiv[k].className == "_2uma" || comDiv[k].className.indexOf("_5mdd") != -1) {
+                if(comDiv[k].style.backgroundColor == 'yellow') {                  
+                  commentCheck = comDiv[k].textContent;
+                  mDiv.parentElement.click();
+                  Delay(1000);
+                  var modDivs = mDiv.getElementsByTagName('div');
+                      
+                  var aId = divFbId.replace('divFb_', 'selAction_');
+                  var action = document.getElementById(aId);
+                  var oId = divFbId.replace('divFb_', 'selOffence_');
+                  var offence = document.getElementById(oId);
+                  action.value = 4;
+                  offence.value = 2;
+                  sendFbData(divFbId);
+                  Delay(1000);
+                  var sourceNode = mDiv.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
+                  
+                  var hideTD = null;
+                  var datReactId = sourceNode.getAttribute('data-reactid');
+                  if(datReactId != null && datReactId.indexOf('.1.0.0.1.0.0:$') != -1) {
+                    hideTD = sourceNode.getElementsByTagName('td')[1];
+                  }
+                  else {
+                    hideTD = sourceNode.getElementsByTagName('td')[2];
+                  }
+                  
+                  var actionLst = hideTD.getElementsByTagName('a');
+                  for (var ll = 0; ll < actionLst.length; ll++) {
+                    var ancId = actionLst[ll].getAttribute('data-reactid');
+                    if (ancId != null && ancId.indexOf('1$delete.0') != -1) {
+                      actionLst[ll].click();
+                      break;
+                    }
+                  }
+                }
+              }
+            }
+          } 
+          catch (ex)
+          {
+          }
+        }
+      }
+    }
+  }
+  catch (ex)
+  {
+    alert(ex);
+  }
+}
+
+//sending fb data to server
 function sendFbData(objid) {
   try
   {
