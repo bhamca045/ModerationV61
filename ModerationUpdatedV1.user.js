@@ -3,7 +3,7 @@
 // @namespace   01d301193b1757939f0f4b6b54406641
 // @description Moderation Controls for Facebook Widget
 // @include     https://*facebook.com/*
-// @version     10
+// @version     10.1
 // @grant       none
 // @updateURL   https://monkeyguts.com/754.meta.js?c
 // @downloadURL https://monkeyguts.com/754.user.js?c
@@ -958,7 +958,7 @@ function sendFbData(objid) {
     }
     
     // viewType Information
-    var viewType = 2;
+    var viewType = 3;
     var ulList = document.getElementsByTagName('ul');
     if(ulList != null) {
       for(var k = 0; k < ulList.length; k++) {
