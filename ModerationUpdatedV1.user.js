@@ -3,7 +3,7 @@
 // @namespace   01d301193b1757939f0f4b6b54406641
 // @description Moderation Controls for Facebook Widget
 // @include     https://*facebook.com/*
-// @version     10.1
+// @version     10.2
 // @grant       none
 // @updateURL   https://monkeyguts.com/754.meta.js?c
 // @downloadURL https://monkeyguts.com/754.user.js?c
@@ -106,7 +106,7 @@ function SetPagerDivClickAction() {
     var buttonPager = document.getElementsByTagName('button');
     for (var i = 0; i < buttonPager.length; i++) {
       var dataId = buttonPager[i].getAttribute('data-reactid');
-      if (dataId != null && ((dataId.indexOf('$=10/=10.0') != - 1) || (dataId.indexOf('.0.0.2.1.0') != -1))) {
+      if (dataId != null && ((dataId.indexOf('$/=10.0') != - 1) || (dataId.indexOf('.0.0.2.1.0') != -1))) {
         buttonPager[i].onclick = function ()
         {
           setTimeout(function () {
