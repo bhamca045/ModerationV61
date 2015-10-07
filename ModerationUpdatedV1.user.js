@@ -57,6 +57,7 @@ var enRegPatts = new Array(new RegExp('(?!\>)(adult|adultsex|amaTeur|asexual|ASS
 'god-dam|horny|hot chiCk|hotsex|idiot|jerk|lesbain|lesbayn|lezbos|Lezzian|lusting|ma5terbate|massterbait|masstrbait|masstrbate|massturb|mastabate|mastabater|masterb|masterb8|masterbaiter|'+
 'masterbat|masterbat*|masterbat3|masterbate|master-bate|masterbates|masterbating|masterbation|masterbations|masterblaster|masturbacion|masturbat|mormon|oxymoron|pervert|Piss off|pissant|pissed|'+
 'pissed off|pisses|pissin|pissing|pissoff|piss-off|pisspIg|porn|prick|rapist|retard|scat|scrotum|sex|sexx|sexxx|sexY|shoot|stupid|teabaggers|transsexual|voyeur|wanker|wanking|wankware|wanky|willy)(?!\<)','i')); 
+
   
 setTimeout(function () {
   var divFb = document.getElementById('facebook');
@@ -97,13 +98,14 @@ setTimeout(function () {
     {
       HideSpamCommentsNew();
     }
-    
     var btnHighlightBlacklistwords = document.getElementById('btnHighlightBlacklistwords');
     btnHighlightBlacklistwords.onclick = function ()
     {
       HighLightBlackListedWords();
     }
-        GetApplicationID();
+    
+    GetApplicationID();
+    
     uguid = getParameterByName('userguid');
     if (uguid != null) {
       var sModerator = document.getElementById('selModerator');
@@ -117,21 +119,38 @@ setTimeout(function () {
   }
 }, 2000);
 
-
+// Gets the Current Application ID
 function GetApplicationID() {  
-  var textContainers = document.getElementsByClassName('_50f8 _50f3');
-  for(var i=0; i<textContainers.length;i++) {
-    var spans = textContainers[i].getElementsByTagName('span');
-    for(var j=0;j<spans.length;j++) { 
-      var dataId = spans[j].getAttribute('data-reactid');            
-      if (dataId != null && dataId.indexOf('.0.0.0.$right.0.0.1.1.0.2') != - 1) {
-        currentAppId = spans[j].textContent;
-        break;          
+  try
+  { 
+    var pageUrl = window.location.href;
+    if(!pageUrl.contains('tools/comments/url')) {
+      var textContainers = document.getElementsByClassName('_50f8 _50f3'); 
+      if(textContainers.length>0) {
+        for(var i=0; i<textContainers.length;i++) {
+          var spans = textContainers[i].getElementsByTagName('span');          
+          for(var j=0;j<spans.length;j++) { 
+            var dataId = spans[j].getAttribute('data-reactid');            
+            if (dataId != null && dataId.indexOf('.0.0.0.$right.0.0.1.1.0.2') != - 1) {
+              currentAppId = spans[j].textContent;
+              break;          
+            }
+          }
+        }
       }
     }
-  }  
-}
+    else {      
+      textContainers = document.getElementsByClassName('_5c0n');      
+      currentAppId = textContainers[0].href.match(/\d+/);  
+    }   
+  }
+  catch(ex) 
+  {
+    alert(ex);
+  }
+}  
 
+// Load Application's RegExPatterns
 function LoadApplicationRegExs() {
 
   //'EN-MSN#689384617806917'
@@ -179,10 +198,8 @@ function HighLightBlackListedWords() {
           var dataId = spans[j].getAttribute('data-reactid');            
           if (dataId != null && dataId.indexOf('.0.1.0.1.0.0:$') != - 1) { 
             var content = spans[j].innerHTML;
-            //alert(content);
             for each(var regPatt in enRegPatts ) {
-              while(match=regPatt.exec(content)) {               
-                //alert(match.index);
+              while(match=regPatt.exec(content)) {
                 var before = content.slice(0,match.index);
                 var after = content.slice(match.index + match[0].length,content.length);
                 content = before + hilightTag + match[0] + highlightEndTag + after;                               
