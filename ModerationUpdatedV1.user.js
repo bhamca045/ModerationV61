@@ -3,7 +3,7 @@
 // @namespace   01d301193b1757939f0f4b6b54406641
 // @description Moderation Controls for Facebook Widget
 // @include     https://*facebook.com/*
-// @version     10.2
+// @version     11.0
 // @grant       none
 // @updateURL   https://monkeyguts.com/754.meta.js?c
 // @downloadURL https://monkeyguts.com/754.user.js?c
@@ -13,6 +13,7 @@ var submitUrl = 'http://d6f576881c0146cb8f2a26dd5136cd53.cloudapp.net:8080/Pages
 //var submitUrl = 'http://localhost:32852/Pages/SubmitFBData?dat=';
 var articleUrl = '';
 var uguid = '';
+var currentAppId = '';
 var isArticleUrlFound = false;
 var moderatorDivStyle = 'float:right;font-size:12px;top:0px;right:0px;background-color:white';
 var actionTitle = 'Action:';
@@ -49,6 +50,29 @@ var regexSpam3 = /(?=.*(w(\W+)w(\W+)w.))/g;
 var regexSpam4 = /^(?=.*\$[0-9]+)(?=.*(work|home)).*/g;
 var regexSpam5 = /^(?=.*\$[0-9]+)(?=.*(got paid))/g;
 var regexSpam6 = /^(?=.*\$[0-9]+)(?=.*(per hour))/g;
+var regExDict = {};
+
+var enRegPatts = new Array(new RegExp('(?!\>)(a s s h o le|anal(e\s+)?(fuck*|impaler|leakage|annie|buckaneer|jabber|lingus|probe|sex)?|ar(s|5)e(holes?|wipes?)?|(ass|butt)\s*(ho(1|l)(e|z)s?|bag|bagger|bandit|bang|banged|banger|bangs|bite|'+
+'blaster|blow|boma|boy|breath|clown|cock|cowboy|cracker|face|fuck(ed|ers?|ing|s)?|stain|pirate|fucking|fukka|goblin|ASSH&%\\$|h0lez?|-?hat|head|hopper|hore|hound|jacker|jockey|kicker|kiss|kisser|'+
+'klown|leach|lover|fugly|hole|plug|cheeks|load|ocks|man|monkey|master|mucus|mun?ch|muncher|nigger|packer|peddler|puppies|queen|rag|rammer|ranger|shit|shole|sucker|wad|who(l|r)e|wipes?|crack'+
+'|lick(ing|s|ers?|ed)?)|ball\s*(kicking|licking|sucking|bag|bags|breaker|buster|busters|hair|licker|ocks)|awfuck|azz|azzhole|badass|badfuck|bang her|bareass|bareassed|bareback|barenaked ladies)(?!\<)','i'),
+  new RegExp('(?!\>)(bast(a|e)rd(s|z)?|big\s*(tits|ass|bastard|butt|ot|oted|ots)|bitch\s*(ass|tits?|ass|y|s|ing?|er?s?z?)|black cock|blow(-|\s+)?jobs?|boll(ocks?|ox)|bonesmoker|boo(b(s|y)?|bies|ger|tie|ty\s*(call|warrior))|breast(job|lover|man)|brotherfucker|'+
+'bugger|bullshit(s?|ted|ters?|ting)|bullturds|bum(fucke(r|d)s?|fucking|fucks?|holes?|licks?|suckers?)|bung hole|chickenshits?|clit(licker|face|fuck|fuck*|oris|oritis|orus|s|ty|ty litter)|cock(cheese|jockey|pocket|snot'+
+'|sucker|ass|bite|block(er)?|burger|cowboy|face|fight|fucker|head|holster|knob|knocker|knoker|lick(er)?|-?load|lover|master|monkey|munch(er)?|nob|nose|nugget|queen|rider|s|sauce|shit|sman|smith|smok(er)?|sniffer'+
+'|sucer|-?suck(ed)>?|sucking|sucks|suka|sukka|tease|teaser|weasel)|clusterfuckcojones|coon(ass|dog)?|couch sluts|cowfuck|crack(ass|head|-?whore)|creampie|cum(chugger|dumpster|freak|guzzler|bubble|catcher|dump|dumpster|fest|jockey|mer|shot|shots|slut|stain))(?!\<)','i'),
+ new RegExp('(?!\>)(cumsuck(ers?|ing)?|cun(nilingus|ts?|t badger|t hair|tbag|tball|tfuck(er)?|thunter|tlick(er|ing)?)|dead(ass|hits?)|dipshit|ditchpig|dogshit|douche\s*(bags?)|dumb(shits?|asse?s?|bitch|fuck(ing|s)?)|eatpussy|'+
+'dick(breath|-?heads?|hole|licker|shy|bag|beaters|brain|dipper|drink|face|flipper|forbrains|fuck(er)?|hole|juice|less|lick|lips|man|milk|monger|ripper|s|sipper|slap|smacks?|suckers?|sucking|tickler|wads?|weasel|weeds?|whipper|wod)|'+
+'eyefuck(s|ed|er|ing)|f u c k( e r)?|facefucker|fag(fucker|ging|g(i|o|e)ts?|gitt|gotcock)|fastfuck|fat\s*(ass|butt|fuck(er)?)|finger\s*fuck(ed|ers?|ing)?|fist(ed|er|fucked|fuckers?|fuckings?|fucks?|ing)|knucklehead|lameass|'+
+'foot(fuck(er)?|job)|freaky?(fuck(er)?)|fuck\s*(buttons|hole|knuckle|puppet|whit|able|ass|boy|brain|buddy|butt|butter|ed|edup|er|ers|face|fest|freak|friend|heads?|hole|ing|ing cunt|ingbitch|me|off|pig|tards?|whore|you)|'+
+'gangbang|gay(ass|fuck(ist)?|tard)|giant cock|hardcock|hardcoresex|headfuck|hooker|horse\s*(shit|crap)|hotpussy|jack(asssss|off|ass|hole|ing\s*off|shit)|jerk\s*((o|0)ff|ass|off)|knobhead|lameasswipe|limpdick|lipshits|masterbat(ing|ions?|e))(?!\<)','i'),
+new RegExp('(?!\>)(moosefucker|morons?|m(o|u)?th(afuck(a?s?z?|ed|ers?|ing?s?)|afucks|afuker|afukk(ah|er)|er\s*fuckers?|erfucka?|erfuck(ed|ing?s?)|erfuckka|erfucks|erfukah|erfuker|erfukkah|erfukker|erfucker|rfucker|rfucking|afucka|afuc?ker|erfucking|rfucking)|'+
+'nasty(bitch|slut|whore)|negro(\'s)?|nigg(ar?d?|arded|arding|as|az|er|erhead|erhole|ers|er\'s)|nipple|oral sex|penis(banger|breath|es|fucker|puffer)|pervert|piece of shit|piss(pig|ant|ed|ers?|es|flaps|heads?|ing?)|'+
+'punkass|puss(ies?|ys?|y fart|y licker|y palace|yeater|yfucker|ylicking|ylips|ylover|ypounder)|queer cunt|raghead|rapist|rat arsed|redneck|redskin|rentafuck|retard|scum|scumbags?|sex(hound|whore)|whitenigger|whore(bag|face|fucker|hopper|house|s)|'+
+'shit(fucker|slinger|ass|bag|bagger|brains|breath|can(ned)?|cunt|dick|e|eater|ey|faced?|fit|forbrains|fuck(ers?)?|full|happ?ens|-?heads?|hole|house|ings?|kicker|s|spitter|stain|stick|t|ted|ters?|tiest|tings?|ty|y|z)|'+
+'shiz|skanky?(bitch|fuck|whore|y)|skullfuck|skumbag|slut\s*(bucket|bag|dumper|kiss|s|t|ing|ty|wear|whore)|sonofabitch|stfu|stupidfuck(er)?|suckdick|suckmy(ass|dick|tit)|thundercunt|tightarse|tightass|'+
+'tit(wank|fuck(er|ing?)?|job|licker|lover|s|ties|ty|tyfuck|tyfucker|tywank)|tiefucker|tonguefuck|twat(face|head|lips|s|ty|waffle)|twobitwhore|unclefucker|uptheass|wank(er|ing|job|ware)|whisk(eydick|kydick)|white trash scumbag|wtf|you dumb ass)(?!\<)','i')); 
+
+  
 setTimeout(function () {
   var divFb = document.getElementById('facebook');
   if (divFb != null)
@@ -59,6 +83,8 @@ setTimeout(function () {
     //divFbPostContainer[i].setAttribute('style', 'overflow:scroll;max-height:100%;height:100%;width:100%; margin:0px auto;');
     //}
     //}
+    LoadApplicationRegExs();
+    
     divFb.setAttribute('style', 'overflow:scroll;width:95%; margin:0px auto;');
     var newFirstElement = document.createElement('label');
     articleUrl = getParameterByName('href');
@@ -68,7 +94,7 @@ setTimeout(function () {
     else {
       isArticleUrlFound = true;
     }
-    newFirstElement.innerHTML = '<table style="width:100%"><tr><td><b>Article URL: <input id="txtArticleUrl" type="text" style="width:80%" disabled="disabled" value=\'' + articleUrl + '\' /></b></td><td><input id="btnLoadModControls" type="button" value="1. Load Moderator Controls" /><input id="btnHighlightSpam" type="button" value="2. Find Spam Comments" /><input id="btnHideSpamComments" type="button" value="3. Hide All Spam Comments" /></td><td align="right" style="text-align:right">Moderator: <select id="selModerator">' + moderatorsList + '</select></td></tr></table>';
+    newFirstElement.innerHTML = '<table style="width:100%"><tr><td><b>Article URL: <input id="txtArticleUrl" type="text" style="width:80%" disabled="disabled" value=\'' + articleUrl + '\' /></b></td><td><input id="btnLoadModControls" type="button" value="1. Load Moderator Controls" /><input id="btnHighlightSpam" type="button" value="2. Find Spam Comments" /><input id="btnHideSpamComments" type="button" value="3. Hide All Spam Comments" /><input id="btnHighlightBlacklistwords" type="button" value="4. Hghlight All Blacklist words" /></td><td align="right" style="text-align:right">Moderator: <select id="selModerator">' + moderatorsList + '</select></td></tr></table>';
     //newFirstElement.innerHTML = '<table style="width:100%"><tr><td><b>Article URL: <input id="txtArticleUrl" type="text" style="width:80%" value=\'' + articleUrl + '\' /></b></td><td align="right" style="text-align:right">Article Topic: <input id="articleTopic" type="text" /></td></tr></table>';
     divFb.insertBefore(newFirstElement, divFb.firstChild);
     var btnLoadControls = document.getElementById('btnLoadModControls');
@@ -86,6 +112,13 @@ setTimeout(function () {
     {
       HideSpamCommentsNew();
     }
+    
+    var btnHighlightBlacklistwords = document.getElementById('btnHighlightBlacklistwords');
+    btnHighlightBlacklistwords.onclick = function ()
+    {
+      HighLightBlackListedWords();
+    }
+        GetApplicationID();
     uguid = getParameterByName('userguid');
     if (uguid != null) {
       var sModerator = document.getElementById('selModerator');
@@ -98,6 +131,91 @@ setTimeout(function () {
     window.close();
   }
 }, 2000);
+
+
+function GetApplicationID() {  
+  var textContainers = document.getElementsByClassName('_50f8 _50f3');
+  for(var i=0; i<textContainers.length;i++) {
+    var spans = textContainers[i].getElementsByTagName('span');
+    for(var j=0;j<spans.length;j++) { 
+      var dataId = spans[j].getAttribute('data-reactid');            
+      if (dataId != null && dataId.indexOf('.0.0.0.$right.0.0.1.1.0.2') != - 1) {
+        currentAppId = spans[j].textContent;
+        break;          
+      }
+    }
+  }  
+}
+
+function LoadApplicationRegExs() {
+
+  //'EN-MSN#689384617806917'
+regExDict['689384617806917'] = enRegPatts;
+//'FR-MSN#340534406099501'
+  
+//'DE-MSN#544580382313562'
+//'PT-MSN#1449534195317900'
+//'IT-MSN#1455766471352200'
+//'ES-MSN#577804522329995'
+//'NL-MSN#486847318126219'
+//'SV-MSN#253239748208334'
+//'TR-MSN#667415743327744'
+//'RU-MSN#760049184057705'
+//'JA-MSN#304492469722269'
+//'TH-MSN#320330421467948'
+//'ID-MSN#242727845936737'
+//'HE-MSN#319883131525928'
+//'KO-MSN#1445736572366490'
+//'NB-MSN#1452940268301780'
+//'VI-MSN#1516422451902910'
+//'ZH-MSN#268405136692327'
+//'FI-MSN#963921453634367'
+//'EL-MSN#796325693750916'
+//'DA-MSN#1542514589303710'
+//'PL-MSN#689527477782682'
+//'AR-MSN#636427529797723'
+  
+}
+  
+
+// HighLight Black Listed Words
+function HighLightBlackListedWords() {
+  try
+  {
+    // Gets the Current Application ID
+    GetApplicationID();
+    if(currentAppId != '' ) {
+      var textContainers = document.getElementsByClassName('_2uma');
+      var hilightTag = "<font style='background-color:red;color:white'>";
+      var highlightEndTag = "</font>";  
+      for(var i=0; i<textContainers.length;i++) {
+        var spans = textContainers[i].getElementsByTagName('span');
+        for(var j=0;j<spans.length;j++) { 
+          var dataId = spans[j].getAttribute('data-reactid');            
+          if (dataId != null && dataId.indexOf('.0.1.0.1.0.0:$') != - 1) { 
+            var content = spans[j].innerHTML;
+            //alert(content);
+            for each(var regPatt in enRegPatts ) {
+              while(match=regPatt.exec(content)) {               
+                //alert(match.index);
+                var before = content.slice(0,match.index);
+                var after = content.slice(match.index + match[0].length,content.length);
+                content = before + hilightTag + match[0] + highlightEndTag + after;                               
+              }
+            }
+            spans[j].innerHTML = ''; 
+            spans[j].innerHTML = content;  
+          }
+        }            
+      }
+    }
+  }
+  catch(ex)
+  {
+    alert(ex);
+  }
+}
+
 
 // Load More button click
 function SetPagerDivClickAction() {
@@ -204,7 +322,7 @@ function SetSortByChangeAction() {
   }
 }
 
-//adding moderators controls
+// adding moderators controls
 function AddModerateControls() {
   try
   {    
@@ -274,6 +392,7 @@ function AddModerateControls() {
     SetMoreCommentClickAction();
     SetSortByChangeAction();
     HighlightSpamCommentsNew();  
+    HighLightBlackListedWords();
     
     var divCheck = document.getElementById('divFb_.0.0.1.$right.0');
     if(divCheck != null)
@@ -287,7 +406,7 @@ function AddModerateControls() {
   }
 }
 
-//Highliting spam comments
+// Highliting spam comments
 function HighlightSpamCommentsNew() {
   try
   {    
@@ -473,248 +592,14 @@ function HighlightSpamCommentsNew() {
   }
 }
 
-function HighlightSpamComments() {
-  try
-  {
-    var uls = document.getElementsByTagName('ul');
-    var allCommentsParent;
-    for (var i = 0; i < uls.length; i++) {
-      if (uls[i].className.indexOf('uiList fbFeedbackPosts') != - 1)
-      {
-        allCommentsParent = uls[i];
-      }
-    }
-    var firstCommentDiv;
-    var divs = document.getElementsByTagName('li');
-    for (var i = 0; i < divs.length; i++) {
-      if (divs[i].id.indexOf('fbc_') != - 1) {
-        if (firstCommentDiv == null) {
-          firstCommentDiv = divs[i];
-        }
-        var pId = divs[i].id;
-        var divFbId = 'divFb_' + pId;
-        var divCheck = document.getElementById(divFbId);
-        if (divCheck != null)
-        {
-          //comment text
-          try
-          {
-            var mDiv = document.getElementById(pId);
-            var comDiv = mDiv.getElementsByTagName('div');
-            var commentCheck = '';
-            var decodedCommentCheck = '';
-            for (var cc = 0; cc < comDiv.length; cc++) {
-              if (comDiv[cc].className == 'postText') {
-                commentCheck = '';
-                commentCheck = comDiv[cc].textContent.replace(regex, '');
-                var res1 = regexSpam1.exec(commentCheck);
-                var res2 = regexSpam2.exec(commentCheck);
-                var res3 = regexSpam3.exec(commentCheck);
-                var res4 = regexSpam4.exec(commentCheck);
-                var res5 = regexSpam5.exec(commentCheck);
-                var res6 = regexSpam6.exec(commentCheck);
-                if (res1 != null || res2 != null || res3 != null || res4 != null || res5 != null || res6 != null)
-                {
-                  comDiv[cc].setAttribute('style', 'background-color:yellow;');
-                  if (mDiv.id.indexOf('reply') != - 1) {
-                    allCommentsParent.insertBefore(mDiv.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement, firstCommentDiv);
-                  } 
-                  else {
-                    allCommentsParent.insertBefore(mDiv, firstCommentDiv);
-                  }
-                } 
-                else
-                {
-                  decodedCommentCheck = commentCheck.replace(/&shy;/g, '-').replace(/&gt;/g, '>').replace(/amp;/g, '&').replace(/&quot;/g, '"').replace(/&#x27;/g, '');
-                  res1 = regexSpam1.exec(decodedCommentCheck);
-                  res2 = regexSpam2.exec(decodedCommentCheck);
-                  res3 = regexSpam3.exec(decodedCommentCheck);
-                  res4 = regexSpam4.exec(decodedCommentCheck);
-                  res5 = regexSpam5.exec(decodedCommentCheck);
-                  res6 = regexSpam6.exec(decodedCommentCheck);
-                  if (res1 != null || res2 != null || res3 != null || res4 != null || res5 != null || res6 != null)
-                  {
-                    comDiv[cc].setAttribute('style', 'background-color:yellow;');
-                    if (mDiv.id.indexOf('reply') != - 1)
-                    allCommentsParent.insertBefore(mDiv.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement, firstCommentDiv);
-                     else
-                    allCommentsParent.insertBefore(mDiv, firstCommentDiv);
-                  }
-                }
-                break;
-              }
-            }
-          } 
-          catch (ex)
-          {
-          }
-        }
-      }
-    }
-  } 
-  catch (ex)
-  {
-    alert(ex);
-  }
-}
-
-//Hide highlighted comments
-function HideSpamComments() {
-  try
-  {
-    var moderator = document.getElementById('selModerator');
-    if (moderator.value == 0)
-    {
-      window.alert('please select moderator');
-      //moderator.focus();
-      return;
-    }
-    var isModerateView = false;
-    var btnCommentHide;
-    var hideBtn = document.getElementsByTagName('label');
-    for (var hh = 0; hh < hideBtn.length; hh++) {
-      if (hideBtn[hh].className.indexOf('fbRemoveButton') != - 1) {
-        var inBtns = hideBtn[hh].getElementsByTagName('input');
-        for (var ii = 0; ii < inBtns.length; ii++) {
-          if (inBtns[ii].value == 'Hide') {
-            btnCommentHide = inBtns[ii];
-            isModerateView = true;
-            break;
-          }
-        }
-        break;
-      }
-    }
-    if (isModerateView) {
-      var divs = document.getElementsByTagName('li');
-      for (var i = 0; i < divs.length; i++) {
-        if (divs[i].id.indexOf('fbc_') != - 1) {
-          var isUndoFound = false;
-          var aUndos = divs[i].getElementsByTagName('a');
-          for (var u = 0; u < aUndos.length; u++) {
-            if (aUndos[u].className == 'fbUndoBlacklistLink')
-            isUndoFound = true;
-          }
-          if (isUndoFound == false) {
-            var pId = divs[i].id;
-            var divFbId = 'divFb_' + pId;
-            var divCheck = document.getElementById(divFbId);
-            if (divCheck != null)
-            {
-              //comment text
-              try
-              {
-                var mDiv = document.getElementById(pId);
-                var comDiv = mDiv.getElementsByTagName('div');
-                var commentCheck = '';
-                var decodedCommentCheck = '';
-                for (var cc = 0; cc < comDiv.length; cc++) {
-                  if (comDiv[cc].className == 'postText') {
-                    if (comDiv[cc].style.backgroundColor == 'yellow') {
-                      commentCheck = comDiv[cc].textContent;
-                      mDiv.click();
-                      Delay(1000);
-                      var action = document.getElementById('selAction_' + pId);
-                      var offence = document.getElementById('selOffence_' + pId);
-                      action.value = 4;
-                      offence.value = 2;
-                      sendFbData('btnSum_' + pId);
-                      Delay(1000);
-                    }
-                    break;
-                  }
-                }
-              } 
-              catch (ex)
-              {
-              }
-            }
-          }
-        }
-      }
-      if (btnCommentHide.disabled != undefined || btnCommentHide.disabled != 1) {
-        btnCommentHide.click();
-      }
-    } 
-    else
-    {
-      var divs = document.getElementsByTagName('li');
-      for (var i = 0; i < divs.length; i++) {
-        if (divs[i].id.indexOf('fbc_') != - 1) {
-          var isUndoFound = false;
-          var aUndos = divs[i].getElementsByTagName('a');
-          for (var u = 0; u < aUndos.length; u++) {
-            if (aUndos[u].className == 'fbUndoBlacklistLink')
-            isUndoFound = true;
-          }
-          if (isUndoFound == false) {
-            var pId = divs[i].id;
-            var divFbId = 'divFb_' + pId;
-            var divCheck = document.getElementById(divFbId);
-            if (divCheck != null)
-            {
-              //comment text
-              try
-              {
-                var mDiv = document.getElementById(pId);
-                var comDiv = mDiv.getElementsByTagName('div');
-                var commentCheck = '';
-                var decodedCommentCheck = '';
-                for (var cc = 0; cc < comDiv.length; cc++) {
-                  if (comDiv[cc].className == 'postText') {
-                    if (comDiv[cc].style.backgroundColor == 'yellow') {
-                      commentCheck = comDiv[cc].textContent;
-                      mDiv.click();
-                      Delay(1000);
-                      var modDivs = mDiv.getElementsByTagName('div');
-                      for (var mm = 0; mm < comDiv.length; mm++) {
-                        if (modDivs[mm].className == 'fbModerationDropdownList hidden_elem') {
-                          var action = document.getElementById('selAction_' + pId);
-                          var offence = document.getElementById('selOffence_' + pId);
-                          action.value = 4;
-                          offence.value = 2;
-                          sendFbData('btnSum_' + pId);
-                          Delay(1000);
-                          modDivs[mm].className = 'fbModerationDropdownList';
-                          var actionLst = modDivs[mm].getElementsByTagName('a');
-                          for (var ll = 0; ll < actionLst.length; ll++) {
-                            if (actionLst[ll].className == 'fbModerationDropdownListItem fbSwitchPrivacy')
-                            {
-                              actionLst[ll].click();
-                              break;
-                            }
-                          }
-                          break;
-                        }
-                      }
-                    }
-                    break;
-                  }
-                }
-              } 
-              catch (ex)
-              {
-              }
-            }
-          }
-        }
-      }
-    }
-  } 
-  catch (ex)
-  {
-    alert(ex);
-  }
-}
-
-
+// Clicks pager button
 function ClickPagerButtons() {
   try
   {
     var buttonPager = document.getElementsByTagName('button');
     for (var i = 0; i < buttonPager.length; i++) {
       var dataId = buttonPager[i].getAttribute('data-reactid');
-      if (dataId != null && (dataId.indexOf('$=10/=10.0') != - 1)) {
+      if (dataId != null && (dataId.indexOf('$/=10.0') != - 1)) {
         
         buttonPager[i].click();
         
@@ -747,7 +632,7 @@ function HideSpamCommentsNew() {
     }
     //alert('fromhidespam');
     
-    ClickPagerButtons();
+    //ClickPagerButtons();
     
     var tblRows = document.getElementsByTagName('tr');
     for (var i = 0; i < tblRows.length; i++) {
@@ -822,7 +707,7 @@ function HideSpamCommentsNew() {
   }
 }
 
-//sending fb data to server
+// sending fb data to server
 function sendFbData(objid) {
   try
   {
