@@ -191,7 +191,7 @@ function HighLightBlackListedWords() {
     GetApplicationID();
     if(currentAppId != '' ) {
       var textContainers = document.getElementsByClassName('_2uma');
-      var hilightTag = "<font style='background-color:cyan'>";
+      var hilightTag = "<font style='background-color:red;color:white'>";
       var highlightEndTag = "</font>";  
       for(var i=0; i<textContainers.length;i++) {
         var spans = textContainers[i].getElementsByTagName('span');
