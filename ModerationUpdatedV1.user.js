@@ -3,7 +3,7 @@
 // @namespace   01d301193b1757939f0f4b6b54406641
 // @description Moderation Controls for Facebook Widget
 // @include     https://*facebook.com/*
-// @version     11.0
+// @version     11.1
 // @grant       none
 // @updateURL   https://monkeyguts.com/754.meta.js?c
 // @downloadURL https://monkeyguts.com/754.user.js?c
@@ -52,11 +52,12 @@ var regexSpam5 = /^(?=.*\$[0-9]+)(?=.*(got paid))/g;
 var regexSpam6 = /^(?=.*\$[0-9]+)(?=.*(per hour))/g;
 var regExDict = {};
 
-var enRegPatts = new Array(new RegExp('(?!\>)(adult|adultsex|amaTeur|asexual|ASSumption|badass|balls|bigoted|bugger|cocktail|cretin|cybersex|dimwit|erotic|escoRt|fagging|faggot|faggotry|faggots|faggott|fagot|fagots|freesex|freex|'+
+var enRegPatts = new Array(new RegExp('(?:^|[\s\.;\?\!,])(adult|adultsex|amaTeur|asexual|ASSumption|badass|balls|bigoted|bugger|cocktail|cretin|cybersex|dimwit|erotic|escoRt|fagging|faggot|faggotry|faggots|faggott|fagot|fagots|freesex|freex|'+
 'gay|Gay Bow|gay bOy|gay dog|gay man|gay men|gay sEx|gaybert|gaybob|gaybor|gayboy|gaydo|gaygirl|gaylord|gays|gaysex|gaysian|gaytard|gayteens|gayteenz|gaywad|god damn|godamn|godamnit|goddam|'+
 'god-dam|horny|hot chiCk|hotsex|idiot|jerk|lesbain|lesbayn|lezbos|Lezzian|lusting|ma5terbate|massterbait|masstrbait|masstrbate|massturb|mastabate|mastabater|masterb|masterb8|masterbaiter|'+
 'masterbat|masterbat*|masterbat3|masterbate|master-bate|masterbates|masterbating|masterbation|masterbations|masterblaster|masturbacion|masturbat|mormon|oxymoron|pervert|Piss off|pissant|pissed|'+
-'pissed off|pisses|pissin|pissing|pissoff|piss-off|pisspIg|porn|prick|rapist|retard|scat|scrotum|sex|sexx|sexxx|sexY|shoot|stupid|teabaggers|transsexual|voyeur|wanker|wanking|wankware|wanky|willy)(?!\<)','i')); 
+'pissed off|pisses|pissin|pissing|pissoff|piss-off|pisspIg|porn|prick|rapist|retard|scat|scrotum|sex|sexx|sexxx|sexY|shoot|stupid|teabaggers|transsexual|voyeur|wanker|wanking|wankware|wanky|willy)(?:$|[\s\.;\?\!,])','i'));
+//var enRegPatts = new Array(new RegExp('(?!\>)(pussy|fuc(k|ed|ers?|ing|s)?|dick|motherfu?|fuk|cunt|asshole|a s s h o l e |assh|f\'cking|F-ing|azz|bitch|dumb|suck(s|er|ed)?|^\lick|nigg(ro|ga|er)?|shit|jacka(s|$)?)(?!\<)','i')); 
 
   
 setTimeout(function () {
@@ -190,7 +191,7 @@ function HighLightBlackListedWords() {
     GetApplicationID();
     if(currentAppId != '' ) {
       var textContainers = document.getElementsByClassName('_2uma');
-      var hilightTag = "<font style='background-color:red;color:white'>";
+      var hilightTag = "<font style='background-color:cyan'>";
       var highlightEndTag = "</font>";  
       for(var i=0; i<textContainers.length;i++) {
         var spans = textContainers[i].getElementsByTagName('span');
@@ -923,3 +924,4 @@ function Delay(sleepDuration) {
   while (new Date().getTime() < now + sleepDuration) { /* do nothing */
   }
 }
+
