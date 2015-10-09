@@ -3,7 +3,7 @@
 // @namespace   01d301193b1757939f0f4b6b54406641
 // @description Moderation Controls for Facebook Widget
 // @include     https://*facebook.com/*
-// @version     11.1
+// @version     11.2
 // @grant       none
 // @updateURL   https://monkeyguts.com/754.meta.js?c
 // @downloadURL https://monkeyguts.com/754.user.js?c
@@ -52,12 +52,14 @@ var regexSpam5 = /^(?=.*\$[0-9]+)(?=.*(got paid))/g;
 var regexSpam6 = /^(?=.*\$[0-9]+)(?=.*(per hour))/g;
 var regExDict = {};
 
-var enRegPatts = new Array(new RegExp('(?:^|[\s\.;\?\!,])(adult|adultsex|amaTeur|asexual|ASSumption|badass|balls|bigoted|bugger|cocktail|cretin|cybersex|dimwit|erotic|escoRt|fagging|faggot|faggotry|faggots|faggott|fagot|fagots|freesex|freex|'+
+var enL2RegPatts = new Array(new RegExp('(?:^|[\s\.;\?\!,])(adult|adultsex|amaTeur|asexual|ASSumption|badass|balls|bigoted|bugger|cocktail|cretin|cybersex|dimwit|erotic|escoRt|fagging|faggot|faggotry|faggots|faggott|fagot|fagots|freesex|freex|'+
 'gay|Gay Bow|gay bOy|gay dog|gay man|gay men|gay sEx|gaybert|gaybob|gaybor|gayboy|gaydo|gaygirl|gaylord|gays|gaysex|gaysian|gaytard|gayteens|gayteenz|gaywad|god damn|godamn|godamnit|goddam|'+
 'god-dam|horny|hot chiCk|hotsex|idiot|jerk|lesbain|lesbayn|lezbos|Lezzian|lusting|ma5terbate|massterbait|masstrbait|masstrbate|massturb|mastabate|mastabater|masterb|masterb8|masterbaiter|'+
 'masterbat|masterbat*|masterbat3|masterbate|master-bate|masterbates|masterbating|masterbation|masterbations|masterblaster|masturbacion|masturbat|mormon|oxymoron|pervert|Piss off|pissant|pissed|'+
 'pissed off|pisses|pissin|pissing|pissoff|piss-off|pisspIg|porn|prick|rapist|retard|scat|scrotum|sex|sexx|sexxx|sexY|shoot|stupid|teabaggers|transsexual|voyeur|wanker|wanking|wankware|wanky|willy)(?:$|[\s\.;\?\!,])','i'));
-//var enRegPatts = new Array(new RegExp('(?!\>)(pussy|fuc(k|ed|ers?|ing|s)?|dick|motherfu?|fuk|cunt|asshole|a s s h o l e |assh|f\'cking|F-ing|azz|bitch|dumb|suck(s|er|ed)?|^\lick|nigg(ro|ga|er)?|shit|jacka(s|$)?)(?!\<)','i')); 
+
+
+var enL3RegPatts = new Array(new RegExp('(?!\>)(pussy|fuc(k|ed|ers?|ing|s)?|dick|motherfu?|fuk|cunt|asshole|a s s h o l e |assh|f\'cking|F-ing|azz|bitch|dumb|suck(s|er|ed)?|^\lick|nigg(ro|ga|er)?|shit|jacka(s|$)?)(?!\<)','i')); 
 
   
 setTimeout(function () {
@@ -70,6 +72,7 @@ setTimeout(function () {
     //divFbPostContainer[i].setAttribute('style', 'overflow:scroll;max-height:100%;height:100%;width:100%; margin:0px auto;');
     //}
     //}
+    GetApplicationID();
     LoadApplicationRegExs();
     
     divFb.setAttribute('style', 'overflow:scroll;width:95%; margin:0px auto;');
@@ -102,10 +105,8 @@ setTimeout(function () {
     var btnHighlightBlacklistwords = document.getElementById('btnHighlightBlacklistwords');
     btnHighlightBlacklistwords.onclick = function ()
     {
-      HighLightBlackListedWords();
+      HighLightBlackListedWords();      
     }
-    
-    GetApplicationID();
     
     uguid = getParameterByName('userguid');
     if (uguid != null) {
@@ -154,32 +155,43 @@ function GetApplicationID() {
 // Load Application's RegExPatterns
 function LoadApplicationRegExs() {
 
-  //'EN-MSN#689384617806917'
-regExDict['689384617806917'] = enRegPatts;
-//'FR-MSN#340534406099501'
+  switch(currentAppId) {
+    //'EN-MSN#689384617806917'
+    case 689384617806917:
+      regExDict['review'] = enL2RegPatts;
+      regExDict['public'] = enL3RegPatts;
+      break;
+    //'FR-MSN#340534406099501'    
+    case 340534406099501:
+      //regExDict['review'] = enL2RegPatts;
+      //regExDict['public'] = enL3RegPatts;
+      break;
+    default:
+      regExDict['review'] = enL2RegPatts;
+      regExDict['public'] = enL3RegPatts;
+  }
   
-//'DE-MSN#544580382313562'
-//'PT-MSN#1449534195317900'
-//'IT-MSN#1455766471352200'
-//'ES-MSN#577804522329995'
-//'NL-MSN#486847318126219'
-//'SV-MSN#253239748208334'
-//'TR-MSN#667415743327744'
-//'RU-MSN#760049184057705'
-//'JA-MSN#304492469722269'
-//'TH-MSN#320330421467948'
-//'ID-MSN#242727845936737'
-//'HE-MSN#319883131525928'
-//'KO-MSN#1445736572366490'
-//'NB-MSN#1452940268301780'
-//'VI-MSN#1516422451902910'
-//'ZH-MSN#268405136692327'
-//'FI-MSN#963921453634367'
-//'EL-MSN#796325693750916'
-//'DA-MSN#1542514589303710'
-//'PL-MSN#689527477782682'
-//'AR-MSN#636427529797723'
-  
+  //'DE-MSN#544580382313562'
+  //'PT-MSN#1449534195317900'
+  //'IT-MSN#1455766471352200'
+  //'ES-MSN#577804522329995'
+  //'NL-MSN#486847318126219'
+  //'SV-MSN#253239748208334'
+  //'TR-MSN#667415743327744'
+  //'RU-MSN#760049184057705'
+  //'JA-MSN#304492469722269'
+  //'TH-MSN#320330421467948'
+  //'ID-MSN#242727845936737'
+  //'HE-MSN#319883131525928'
+  //'KO-MSN#1445736572366490'
+  //'NB-MSN#1452940268301780'
+  //'VI-MSN#1516422451902910'
+  //'ZH-MSN#268405136692327'
+  //'FI-MSN#963921453634367'
+  //'EL-MSN#796325693750916'
+  //'DA-MSN#1542514589303710'
+  //'PL-MSN#689527477782682'
+  //'AR-MSN#636427529797723'  
 }
   
 
@@ -187,30 +199,43 @@ regExDict['689384617806917'] = enRegPatts;
 function HighLightBlackListedWords() {
   try
   {
-    // Gets the Current Application ID
-    GetApplicationID();
-    if(currentAppId != '' ) {
-      var textContainers = document.getElementsByClassName('_2uma');
-      var hilightTag = "<font style='background-color:red;color:white'>";
-      var highlightEndTag = "</font>";  
-      for(var i=0; i<textContainers.length;i++) {
-        var spans = textContainers[i].getElementsByTagName('span');
-        for(var j=0;j<spans.length;j++) { 
-          var dataId = spans[j].getAttribute('data-reactid');            
-          if (dataId != null && dataId.indexOf('.0.1.0.1.0.0:$') != - 1) { 
-            var content = spans[j].innerHTML;
-            for each(var regPatt in enRegPatts ) {
-              while(match=regPatt.exec(content)) {
-                var before = content.slice(0,match.index);
-                var after = content.slice(match.index + match[0].length,content.length);
-                content = before + hilightTag + match[0] + highlightEndTag + after;                               
-              }
+    // Gets the Current Application ID    
+    if(currentAppId == '' ) {
+      GetApplicationID();
+      LoadApplicationRegExs();
+    }
+    var textContainers = document.getElementsByClassName('_2uma');
+    var hilightTag = '';
+    var regPatterns;
+
+    var pageUrl = window.location.href;
+    if(pageUrl.contains('/approved/')) {
+      hilightTag = "<font style='background-color:cyan'>";
+      regPatterns = regExDict['public'];
+    }
+    else {
+      hilightTag = "<font style='background-color:red;color:white'>";
+      regPatterns = regExDict['review'];
+    }
+
+    var highlightEndTag = "</font>";  
+    for(var i=0; i<textContainers.length;i++) {
+      var spans = textContainers[i].getElementsByTagName('span');
+      for(var j=0;j<spans.length;j++) { 
+        var dataId = spans[j].getAttribute('data-reactid');            
+        if (dataId != null && dataId.indexOf('.0.1.0.1.0.0:$') != - 1) { 
+          var content = spans[j].innerHTML;
+          for each(var regPatt in regPatterns ) {
+            while(match=regPatt.exec(content)) {
+              var before = content.slice(0,match.index);
+              var after = content.slice(match.index + match[0].length,content.length);
+              content = before + hilightTag + match[0] + highlightEndTag + after;                               
             }
-            spans[j].innerHTML = ''; 
-            spans[j].innerHTML = content;  
           }
-        }            
-      }
+          spans[j].innerHTML = ''; 
+          spans[j].innerHTML = content;  
+        }
+      }            
     }
   }
   catch(ex)
@@ -394,8 +419,8 @@ function AddModerateControls() {
     SetViewChangeAction();    
     SetMoreCommentClickAction();
     SetSortByChangeAction();
-    HighlightSpamCommentsNew();  
-    HighLightBlackListedWords();
+    HighlightSpamCommentsNew();
+    HighLightBlackListedWords();    
     
     var divCheck = document.getElementById('divFb_.0.0.1.$right.0');
     if(divCheck != null)
@@ -924,4 +949,3 @@ function Delay(sleepDuration) {
   while (new Date().getTime() < now + sleepDuration) { /* do nothing */
   }
 }
-
