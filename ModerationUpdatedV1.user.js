@@ -3,7 +3,7 @@
 // @namespace   01d301193b1757939f0f4b6b54406641
 // @description Moderation Controls for Facebook Widget
 // @include     https://*facebook.com/*
-// @version     11.2
+// @version     11.3
 // @grant       none
 // @updateURL   https://monkeyguts.com/754.meta.js?c
 // @downloadURL https://monkeyguts.com/754.user.js?c
@@ -55,7 +55,7 @@ var regExDict = {};
 var enL2RegPatts = new Array(new RegExp('(?:^|[\s\.;\?\!,])(adult|adultsex|amaTeur|asexual|ASSumption|badass|balls|bigoted|bugger|cocktail|cretin|cybersex|dimwit|erotic|escoRt|fagging|faggot|faggotry|faggots|faggott|fagot|fagots|freesex|freex|'+
 'gay|Gay Bow|gay bOy|gay dog|gay man|gay men|gay sEx|gaybert|gaybob|gaybor|gayboy|gaydo|gaygirl|gaylord|gays|gaysex|gaysian|gaytard|gayteens|gayteenz|gaywad|god damn|godamn|godamnit|goddam|'+
 'god-dam|horny|hot chiCk|hotsex|idiot|jerk|lesbain|lesbayn|lezbos|Lezzian|lusting|ma5terbate|massterbait|masstrbait|masstrbate|massturb|mastabate|mastabater|masterb|masterb8|masterbaiter|'+
-'masterbat|masterbat*|masterbat3|masterbate|master-bate|masterbates|masterbating|masterbation|masterbations|masterblaster|masturbacion|masturbat|mormon|oxymoron|pervert|Piss off|pissant|pissed|'+
+'masterbat|masterbat[*]|masterbat3|masterbate|master-bate|masterbates|masterbating|masterbation|masterbations|masterblaster|masturbacion|masturbat|mormon|oxymoron|pervert|Piss off|pissant|pissed|'+
 'pissed off|pisses|pissin|pissing|pissoff|piss-off|pisspIg|porn|prick|rapist|retard|scat|scrotum|sex|sexx|sexxx|sexY|shoot|stupid|teabaggers|transsexual|voyeur|wanker|wanking|wankware|wanky|willy)(?:$|[\s\.;\?\!,])','i'));
 
 
