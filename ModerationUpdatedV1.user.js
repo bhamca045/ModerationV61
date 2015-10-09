@@ -781,8 +781,8 @@ function sendFbData(objid) {
           comment = encodeURIComponent(comment);
           comment = comment.replace(/%0A/g, ' ');
           comment = comment.replace(/%20/g, ' ');
-          if (comment.length > 200)
-            comment = comment.substr(0, 200) + '...';
+          //if (comment.length > 200)
+            //comment = comment.substr(0, 200) + '...';
             break;
         }
       }      
