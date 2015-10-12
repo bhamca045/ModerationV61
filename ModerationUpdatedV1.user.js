@@ -3,7 +3,7 @@
 // @namespace   01d301193b1757939f0f4b6b54406641
 // @description Moderation Controls for Facebook Widget
 // @include     https://*facebook.com/*
-// @version     11.3
+// @version     11.4
 // @grant       none
 // @updateURL   https://monkeyguts.com/754.meta.js?c
 // @downloadURL https://monkeyguts.com/754.user.js?c
@@ -52,14 +52,15 @@ var regexSpam5 = /^(?=.*\$[0-9]+)(?=.*(got paid))/g;
 var regexSpam6 = /^(?=.*\$[0-9]+)(?=.*(per hour))/g;
 var regExDict = {};
 
-var enL2RegPatts = new Array(new RegExp('(?:^|[\s\.;\?\!,])(adult|adultsex|amaTeur|asexual|ASSumption|badass|balls|bigoted|bugger|cocktail|cretin|cybersex|dimwit|erotic|escoRt|fagging|faggot|faggotry|faggots|faggott|fagot|fagots|freesex|freex|'+
-'gay|Gay Bow|gay bOy|gay dog|gay man|gay men|gay sEx|gaybert|gaybob|gaybor|gayboy|gaydo|gaygirl|gaylord|gays|gaysex|gaysian|gaytard|gayteens|gayteenz|gaywad|god damn|godamn|godamnit|goddam|'+
-'god-dam|horny|hot chiCk|hotsex|idiot|jerk|lesbain|lesbayn|lezbos|Lezzian|lusting|ma5terbate|massterbait|masstrbait|masstrbate|massturb|mastabate|mastabater|masterb|masterb8|masterbaiter|'+
-'masterbat|masterbat[*]|masterbat3|masterbate|master-bate|masterbates|masterbating|masterbation|masterbations|masterblaster|masturbacion|masturbat|mormon|oxymoron|pervert|Piss off|pissant|pissed|'+
-'pissed off|pisses|pissin|pissing|pissoff|piss-off|pisspIg|porn|prick|rapist|retard|scat|scrotum|sex|sexx|sexxx|sexY|shoot|stupid|teabaggers|transsexual|voyeur|wanker|wanking|wankware|wanky|willy)(?:$|[\s\.;\?\!,])','i'));
+var enL2RegPatts = new Array(new RegExp('(?:^|[\s\.;\?\!,])(adultsex|amaTeur|asexual|ASSumption|badass|balls|bigoted|bitching|bitchy|boned|butt|buttocks|clitoritis|clitorus|cunilingus|cunillingus|cunnilingus|cybersex|dick|erotic|escoRt|fagging|'+
+'faggot|faggotry|faggots|faggott|fagot|fagots|freesex|freex|gay|Gay Bow|gay bOy|gay dog|gay man|gay men|gay sEx|gaybert|gaybob|gaybor|gayboy|gaydo|gaygirl|gaylord|gays|gaysex|gaysian|'+
+'gaytard|gayteens|gayteenz|gaywad|god damn|god-dam|horny|hot chiCk|hotsex|idiot|jerk|lesbain|lesbayn|lusting|masturbat|mormon|oxymoron|pervert|pissant|pissed off|pisspIg|porn|prick|rapist|'+
+'sex|sexx|sexxx|sexY|shoot|stupid|teabaggers|transsexual|voyeur|willy|troll|scrounger|sow|crapped|immigrant|immigrants|imigrants Moslem|Muslim|Moslim|scrounge|Islam|islamists|Jew|Jewry|slits|'+
+'freaks|assinine|Axx|B_A_L_L_S!|bullocks|fracking|fricking|i.d.i.o.t.|idiots|idoit|jerks|knuckleheads|load of crap|loser|perverts|pi[***]ed|retarded|sucked|SUCKS|Terroristen|w[*]nkers|'+
+'islamo facist|putz|demoskanks|Focks |ragheads|Snatch|numbskull|half breed|nit wit|dummy|dole bludging|filth|Bozo|shagging|ball-less|peabrain|libtard|Jesus|Christ)(?:$|[\s\.;\?\!,])','i'));
 
 
-var enL3RegPatts = new Array(new RegExp('(?!\>)(pussy|fuc(k|ed|ers?|ing|s)?|dick|motherfu?|fuk|cunt|asshole|a s s h o l e |assh|f\'cking|F-ing|azz|bitch|dumb|suck(s|er|ed)?|^\lick|nigg(ro|ga|er)?|shit|jacka(s|$)?)(?!\<)','i')); 
+var enL3RegPatts = new Array(new RegExp('(?!\>)(pussy|fuc(k|ed|ers?|ing|s)?|motherfu?|fuk|cunt|d(i|!|[*])ck|asshole|a s s h o l e |assh|f\'cking|F-ing|azz|bitch|dumb|suck(s|er|ed)?|^\lick|nigg(ro|ga|er)?|shit|jacka(s|$)?)(?!\<)','i')); 
 
   
 setTimeout(function () {
@@ -782,7 +783,7 @@ function sendFbData(objid) {
           comment = comment.replace(/%0A/g, ' ');
           comment = comment.replace(/%20/g, ' ');
           //if (comment.length > 200)
-            //comment = comment.substr(0, 200) + '...';
+         //   comment = comment.substr(0, 200) + '...';
             break;
         }
       }      
