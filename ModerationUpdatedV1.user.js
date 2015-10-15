@@ -3,7 +3,7 @@
 // @namespace   01d301193b1757939f0f4b6b54406641
 // @description Moderation Controls for Facebook Widget
 // @include     https://*facebook.com/*
-// @version     11.7
+// @version     11.8
 // @grant       none
 // @updateURL   https://monkeyguts.com/754.meta.js?c
 // @downloadURL https://monkeyguts.com/754.user.js?c
@@ -53,12 +53,11 @@ var regexSpam6 = /^(?=.*\$[0-9]+)(?=.*(per hour))/g;
 var regExDict = {};
 
 var enL2RegPatts = new Array(new RegExp('(?:^|[\s\.;\?\!,])(adultsex|amaTeur|asexualox|badass|balls|bigoted|bitching|bitchy|boned|butt|buttocks|clitoritis|clitorus|cunilingus|cunillingus|cunnilingus|cybersex|dick|erotic|escoRt|fagging|'+
-'faggot|faggotry|faggots|faggott|fagot|fagots|freesex|freex|gay|Gay Bow|gay bOy|gay dog|gay man|gay men|gay sEx|gaybert|gaybob|gaybor|gayboy|gaydo|gaygirl|gaylord|gays|gaysex|gaysian|'+
+'faggot|faggotry|faggots|faggott|fagot|fagots|freesex|freex|gay|Gay Bow|gay bOy|gay dog|gay man|gay men|gay sEx|gaybert|gaybob|gaybor|gayboy|gaydo|gaygirl|dumb|dumbs|dumbest|gaylord|gays|gaysex|gaysian|'+
 'gaytard|gayteens|gayteenz|gaywad|suck|sucking|god damn|god-dam|redneck|slope|horny|hot chiCk|hotsex|idiot|jerk|lesbain|lesbayn|lusting|masturbat|mormon|pervert|pissant|pissed off|pisspIg|porn|prick|rapist|'+
-'sex|sexx|sexxx|sexY|shoot|stupid|teabaggers|transsexual|voyeur|willy|troll|scrounger|sow|crapped|immigrant|immigrants|imigrants Moslem|Muslim|Moslim|scrounge|Islam|islamists|Jew|Jewry|slits|'+
-'freaks|assinine|Axx|B_A_L_L_S!|bullocks|fracking|fricking|i.d.i.o.t.|idiots|idoit|jerks|knuckleheads|load of crap|loser|perverts|pi[*][*][*]ed|retarded|sucked|SUCKS|Terroristen|w[*]nkers|'+
+'sex|sexx|sexxx|sexY|shoot|stupid|teabaggers|transsexual|voyeur|willy|troll|scrounger|sow|crapped|immigrant|immigrants|imigrants Moslem|Muslim|Moslim|scrounge|dumbassit|Islam|islamists|Jew|Jewry|slits|'+
+'freaks|assinine|Axx|B_A_L_L_S!|bullocks|fracking|fricking|i.d.i.o.t.|idiots|idoit|jerks|knuckleheads|load of crap|loser|perverts|pi[*][*][*]ed|retarded|sucked|ohshithead|odumbass|SUCKS|Terroristen|w[*]nkers|'+
 'islamo facist|putz|demoskanks|Focks|ragheads|Snatch|numbskull|half breed|nit wit|dummy|dole bludging|filth|Bozo|shagging|ball-less|peabrain|libtard|Jesus|Christ)(?:$|[\s\.;\?\!,])','i'));
-
 
 var enL3RegPatts = new Array(new RegExp('(?!\>)(pussy|fuc(k|ed|ers?|ing|s)?|(f|F)(~|_|!|@|#|$|%|^|&|[*](k))|fckn|Rats|motherfu?|fuk|cunt|d(i|!|[*])ck|asshole|a s s h o l e |assh|a[$]|f\'cking|F-ing|azz|bitch|dumb|suck(s|er|ed)?|^\lick|nigg(ro|ga|er)?|(s|S)((~|!|@|#|$|%|^|&|[*])h(i|!|)t)|jacka(s|$)?)(?!\<)','i')); 
 
