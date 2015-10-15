@@ -745,15 +745,15 @@ function sendFbData(objid) {
     var cId = objid.replace('btnSum_', '');
     
     var commentID = '';
-    if(cId.indexOf('$left.0.3.0:$') != -1){
+    if(cId.indexOf('.1.0.0.1.0.0:$') != -1){      
       var tmp = cId.split('$');
-    commentID = tmp[tmp.length -2];
+    commentID = tmp[tmp.length -2];      
     }
     else {
-    var tmp = cId.split('$');
+    var tmp = cId.split('$');      
     commentID = tmp[1].replace('.1.0.0.0.','');      
     }
-    commentID = commentID.replace('1.0.0.1.0.0:','');
+    commentID = commentID.replace('.0.1.0.0.','');
     commentID = commentID.replace('.','');
     //alert(commentID);
     //if (cId.indexOf('reply'))
