@@ -82,12 +82,16 @@ new RegExp('(?!\>)(moosefucker|morons?|m(o|u)?th(afuck(a?s?z?|ed|ers?|ing?s?)|af
 'tit(wank|fuck(er|ing?)?|job|licker|lover|s|ties|ty|tyfuck|tyfucker|tywank)|tiefucker|tonguefuck|twat(face|head|lips|s|ty|waffle)|twobitwhore|unclefucker|uptheass|wank(er|ing|job|ware)|whisk(eydick|kydick)|white trash scumbag|wtf|you dumb ass)(?!\<)','i'));    
  
 
-var deL2RegPatts = new Array(new RegExp('(?:^|[\s\.;\?\!,])(adultsex|amaTeur|asexualox|badass|balls|bigoted|bitching|bitchy|boned|butt|buttocks|clitoritis|clitorus|cunilingus|cunillingus|cunnilingus|cybersex|dick|erotic|escoRt|fagging|'+
-'faggot|faggotry|faggots|faggott|fagot|fagots|freesex|freex|gay|Gay Bow|gay bOy|gay dog|gay man|gay men|gay sEx|gaybert|gaybob|gaybor|gayboy|gaydo|gaygirl|dumb|dumbs|dumbest|gaylord|gays|gaysex|gaysian|'+
-'gaytard|gayteens|gayteenz|gaywad|suck|sucking|god damn|god-dam|redneck|slope|horny|hot chiCk|hotsex|idiot|jerk|lesbain|lesbayn|lusting|masturbat|mormon|pervert|pissant|pissed off|pisspIg|porn|prick|rapist|'+
-'sex|sexx|sexxx|sexY|shoot|stupid|teabaggers|transsexual|voyeur|willy|troll|scrounger|sow|crapped|immigrant|immigrants|imigrants Moslem|Muslim|Moslim|scrounge|dumbassit|Islam|islamists|Jew|Jewry|slits|'+
-'freaks|assinine|Axx|B_A_L_L_S!|bullocks|fracking|fricking|i.d.i.o.t.|idiots|idoit|jerks|knuckleheads|load of crap|loser|perverts|pi[*][*][*]ed|retarded|sucked|ohshithead|odumbass|SUCKS|Terroristen|w[*]nkers|'+
-'islamo facist|putz|demoskanks|Focks|ragheads|Snatch|numbskull|half breed|nit wit|dummy|dole bludging|filth|Bozo|shagging|ball-less|peabrain|libtard|Jesus|Christ|refugee)(?:$|[\s\.;\?\!,])','i'));
+var deL2RegPatts = new Array(new RegExp('(?:^|[\s\.;\?\!,])(bdm|cutemodel|cute-model|fresh-girls|girlfriendshowoff|innocentdream|innocent-youth|jungfrau|jungsforum|jungundblond|kinderschänder|massacre|massaker|momandboy|mord|netbunnies|onboys|onlyboysdotnet|rape|'+
+'realboys4u|scheiss|schwul|spank|suicide|suizid|tod|ukrainian-boy|14words|14-words|3reich|achtundachtzig|acht-und-achtzig|adolf|ag-schwaben|3rdreich|3rd-reich|antifa|arier|arisch|aryan|auslaender|ausländer|belzec|c18|c-18|combat18|'+
+'combat-18|deutschefront|deutsche-front|deutscherstaat|deutscher-staat|deutscherstandpunkt|deutscher-standpunkt|deutschesreich|deutsches-reich|deutschherrenklub|deutschlanddendeutschen|deutschland-den-deutschen|divisionwiking|'+
+'division-wiking|djihad|doitsch|doitschland|doitschlanddendoitschen|doitschland-den-doitschen|dreck|dschihad|eichmann|eightyeight|eighty-eight|fremdherrschaft|fremd-herrschaft|germania88|germania-88|getto|ghetto|hakenkreuz|'+
+'haken-kreuz|hammerskin|hammer-skin|hitler|holocaust|holo-caust|holokaust|holo-kaust|interracial|islambruderschaft|islambrüderschaft|islambruederschaft|jew|jihad|jude|landser|nazi|nsdap|nsmnebraska|nukeisrael|nuke-israel|'+
+'radiogermania|radio-germania|radioislam|radio-islam|rahowa|rasse|sieg|skinhead|sleipnir|terra-germania|terrorism|tuerkenjaeger|tuerken-jaeger|türkenjäger|türken-jäger|überfremdung|ueberfremdung|ungeziefer|brutal|gunshot|kill|'+
+'shownomercy|splatter|squish|violate|violence|violent|besamung|bonbonbabes|boystrymoms|bravovids|dadsandbabe|dadsindaughters|entjungfer|fierybabe|girlforgirl|kindfrau|lil18|lola|loli|pädo|paedo|pedo|sodom|adult|amateur|bangbros|'+
+'blowjob|blow-job|boob|breast|breitbeinig|brueste|brüste|clitoris|cock|creameater|cream-eater|creampie|cum|deepthroat|deep-throat|entjungfert|erogeschichten|facial|flotterdreier|flotter-dreier|hardcore|hard-core|illegal|lesbian|'+
+'nackt|natur-sekt|pipi|schwaenz|smut|spiescam|Drecksau|Fett backe|Onanieren|Pisser|Scheiße|Schwuler|der Schwanz|die Titten|missgeburt|dummes huhn|trottel|der teufel|der abschaum|dumme kuh|wichser|scheiss auf die|was die scheiß|'+
+'Die Möpse|Drecksack!|die Scheiße|mieser stricher|schwanz lecker|so ein beschiß!|der drecksack|du dumme kuh|Flüchtling|)(?:$|[\s\.;\?\!,])','i'));
 
 var deL3RegPatts = new Array(new RegExp('(?!\>)(pussy|fuc(k|ed|ers?|ing|s)?|(f|F)(~|_|!|@|#|$|%|^|&|[*](k))|fckn|Rats|motherfu?|fuk|cunt|d(i|!|[*])ck|asshole|a s s h o l e |assh|a[$]|f\'cking|F-ing|azz|bitch|'+
              'dumb|suck(s|er|ed)?|^\lick|nigg(ro|ga|er)?|(s|S)((~|!|@|#|$|%|^|&|[*])h(i|!|)t)|jacka(s|$)?)(?!\<)','i'));    
