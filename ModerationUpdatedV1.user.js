@@ -91,7 +91,7 @@ var deL2RegPatts = new Array(new RegExp('(?:^|[\s\.;\?\!,])(bdm|cutemodel|cute-m
 'shownomercy|splatter|squish|violate|violence|violent|besamung|bonbonbabes|boystrymoms|bravovids|dadsandbabe|dadsindaughters|entjungfer|fierybabe|girlforgirl|kindfrau|lil18|lola|loli|pädo|paedo|pedo|sodom|adult|amateur|bangbros|'+
 'blowjob|blow-job|boob|breast|breitbeinig|brueste|brüste|clitoris|cock|creameater|cream-eater|creampie|cum|deepthroat|deep-throat|entjungfert|erogeschichten|facial|flotterdreier|flotter-dreier|hardcore|hard-core|illegal|lesbian|'+
 'nackt|natur-sekt|pipi|schwaenz|smut|spiescam|Drecksau|Fett backe|Onanieren|Pisser|Scheiße|Schwuler|der Schwanz|die Titten|missgeburt|dummes huhn|trottel|der teufel|der abschaum|dumme kuh|wichser|scheiss auf die|was die scheiß|'+
-'Die Möpse|Drecksack!|die Scheiße|mieser stricher|schwanz lecker|so ein beschiß!|der drecksack|du dumme kuh|Flüchtling|)(?:$|[\s\.;\?\!,])','i'));
+'Die Möpse|Drecksack!|die Scheiße|mieser stricher|schwanz lecker|so ein beschiß!|der drecksack|du dumme kuh|Flüchtling)(?:$|[\s\.;\?\!,])','i'));
 
 var deL3RegPatts = new Array(new RegExp('(?!\>)(pussy|fuc(k|ed|ers?|ing|s)?|(f|F)(~|_|!|@|#|$|%|^|&|[*](k))|fckn|Rats|motherfu?|fuk|cunt|d(i|!|[*])ck|asshole|a s s h o l e |assh|a[$]|f\'cking|F-ing|azz|bitch|'+
              'dumb|suck(s|er|ed)?|^\lick|nigg(ro|ga|er)?|(s|S)((~|!|@|#|$|%|^|&|[*])h(i|!|)t)|jacka(s|$)?)(?!\<)','i'));    
