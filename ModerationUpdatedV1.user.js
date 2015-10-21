@@ -3,7 +3,7 @@
 // @namespace   01d301193b1757939f0f4b6b54406641
 // @description Moderation Controls for Facebook Widget
 // @include     https://*facebook.com/*
-// @version     11.10
+// @version     11.11
 // @grant       none
 // @updateURL   https://monkeyguts.com/754.meta.js?c
 // @downloadURL https://monkeyguts.com/754.user.js?c
@@ -192,17 +192,17 @@ function LoadApplicationRegExs() {
 
   switch(currentAppId) {
     //'EN-MSN#689384617806917'
-    case 689384617806917:
+    case '689384617806917':
       regExDict['review'] = enL2RegPatts;
       regExDict['public'] = enL3RegPatts;
       break;
     //'FR-MSN#340534406099501'    
-    case 340534406099501:
+    case '340534406099501':
       //regExDict['review'] = enL2RegPatts;
       //regExDict['public'] = enL3RegPatts;
       break;
     //'DE-MSN#544580382313562'
-    case 544580382313562:
+    case '544580382313562':
       regExDict['review'] = deL2RegPatts;
       regExDict['public'] = deL3RegPatts;
       break;
