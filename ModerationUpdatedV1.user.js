@@ -121,7 +121,7 @@ var deL2RegPatts = new Array(new RegExp('(?:^|[\s\.;\?\!,])(agedream|bdm|candy|c
 'xxpasswordxx|xxx|yourwastedgirlfriend|zensiert|zensurfrei|zensur-frei|zweitfrau|zweit-frau|ana-4life|anaengel|ana-hanna|anamia|ana-mia|ana-perfection|anasbrief|anas-brief|anasdiary|anasgebote|anas-gebote|anashome|ana-till-the-end|anorexic|drogendealer|drogen-forum|'+
 'drugworld|fur-alle-ana-neulinge|highway-to-ana|lady-ana|me-and-ana|morbid-alcoholica|proana|pro-ana|pro-anorexia|promia|pro-mia|romancingthebone|saufen|skinny|thinspiration|thinspo|valerie-ana-freundschaft|Drecksau|Fett backe|Horst|Onanieren|Pisser|Schei[ß]e|Schwuchtel|'+
 'Schwuler|Shishkoff|der Schwanz|die Titten|missgeburt|dummes huhn|trottel|der teufel|der abschaum|dumme kuh|wichser|Dreckschweine|scheiss auf die|was die schei[ß]|Die M[ö]pse|Drecksack!|die Schei[ß]e|geil|mieser stricher|schwanz lecker|so ein beschi[ß]!|der abschaum der menschlichen gesellschaft|'+
-'der drecksack|du dumme kuh|duncauf|homofuerst|Fl[ü]chtling|,)(?:$|[\s\.;\?\!,])','i'));
+'der drecksack|du dumme kuh|duncauf|homofuerst|Fl[ü]chtling)(?:$|[\s\.;\?\!,])','i'));
 
 var deL3RegPatts = new Array(new RegExp('(?!\>)(pussy|fuc(k|ed|ers?|ing|s)?|(f|F)(~|_|!|@|#|$|%|^|&|[*](k))|fckn|Rats|motherfu?|fuk|cunt|d(i|!|[*])ck|asshole|a s s h o l e |assh|a[$]|f\'cking|F-ing|azz|bitch|'+
              'dumb|suck(s|er|ed)?|^\lick|nigg(ro|ga|er)?|(s|S)((~|!|@|#|$|%|^|&|[*])h(i|!|)t)|jacka(s|$)?)(?!\<)','i'));    
