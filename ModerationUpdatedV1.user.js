@@ -238,6 +238,7 @@ function LoadApplicationRegExs() {
       // 'PT-MSN#577804522329995'
       case '577804522329995':
         regExDict['review'] = ptL2RegPatts;
+        //regExDict['public'] = enL3RegPatts;
         break;
     //'DE-MSN#544580382313562'
     case '544580382313562':
