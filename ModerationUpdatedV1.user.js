@@ -238,7 +238,7 @@ function LoadApplicationRegExs() {
       // 'PT-MSN#577804522329995'
       case '1449534195317908':
         regExDict['review'] = ptL2RegPatts;
-        //regExDict['public'] = enL3RegPatts;
+        regExDict['public'] = enL3RegPatts;
         break;
     //'DE-MSN#544580382313562'
     case '544580382313562':
@@ -251,7 +251,7 @@ function LoadApplicationRegExs() {
   }
   
   //'DE-MSN#544580382313562'
-  //'PT-MSN#1449534195317900'
+  //'PT-MSN#1449534195317908'
   //'IT-MSN#1455766471352200'
   //'ES-MSN#577804522329995'
   //'NL-MSN#486847318126219'
