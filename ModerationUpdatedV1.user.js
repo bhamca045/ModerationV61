@@ -236,7 +236,7 @@ function LoadApplicationRegExs() {
       regExDict['public'] = enL3RegPatts;
       break;
       // 'PT-MSN#577804522329995'
-      case '577804522329995':
+      case '1449534195317908':
         regExDict['review'] = ptL2RegPatts;
         //regExDict['public'] = enL3RegPatts;
         break;
