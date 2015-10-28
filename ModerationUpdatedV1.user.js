@@ -127,6 +127,24 @@ var deL2RegPatts = new Array(new RegExp('(?:^|[\s\.;\?\!,])(agedream|bdm|candy|c
 
 var ptL2RegPatts = new Array(new RegExp('(?:^|[\s\.;\?\!,])(Acha que eu n[ã]o consigo?|Amo sua bunda|Babaca|Bicha|Viado|Viad[ã]o|Marica|Burro|Idiota|Cuz[ã]o|Cuz[õ]es|Filhos da puta|escroto|Filho da puta|Idiota|Burro|Maconha|Vamos ficar b[ê]bados hoje [à] noite|Viado|Bicha|Bichona)(?:$|[\s\.;\?\!,])','i'));
 
+var esL2RegPatts = new Array(new RegExp('(?:^|[\s\.;\?\!,])(Me llega al pincho|Qu[é] tal concha|Crees que no puedo?|a la loma del orto|[â]vete al infierno consultoriadedadoscorrea|acabar|al pedo|And[á] a lavar los platos|[á]ndate a la mierda|argolla|Bardo|Bobososo.|Bola|bolsas|buseta|Cabilla|'+
+'Cabro,Chivo,Maricón,Rosquete|Cachapera|cana|caño|canuto,a|cara de orto|caracartón.|chanta|choto|chumbo|Chupa medias|Cocolla|Cojío|Cojonera|cojones|commnidades|Coñaza|Conchudo|Coscorria|Covero|Cuchara|curro|de pedo|despelote|el burro sabe m[á]s que t[ú]|en pedo|en pelota|Enchavar|'+
+'Estoy arrecho|Estoy caliente|Est[ú]pido|est[ú]pido, idiota, imb[é]cil|falopa|Garulla|Gasofia|gay|Gorronea|groncho|Hacerse el boludo|hostiazo|hueco|Huevastristes|Huevero|huevón|Huevón,Cerdo,Cojudo|Huevos|Idiota,est[ú]pido|Idiota, est[ú]pido|Idiota, est[ú]pido,huevón|imbecil|Japuta|Kil[ú]a|'+
+'la cabeza de la pinga|lelo,lela,nabo|Lerdo|Machete|Malandro|Maldito,Pelotudo|Malparío|mamonazo|mam[ú]a|marica|Marica,maricón|Marico|Maric[ó]n,Cabro|Maric[ó]n,Cabro de mierda|Maric[ó]n,Marica|Maric[ó]n de playa|Maricon de playa.|Marihuana|Me la pela|me la vas a comer|Me lo pones en la boca|'+
+'metetela en la boca|met[é]tela en la boca|M[é]tetela en la boca|mina|mocazo|nabo|Ñengue|Ni en pedo|ojala que mueras|ojal[á] te mueras|Pacusobo|pajilla|Pandorga|Papo|Parcha|Parchita|parr[ú]s|Pedo|pedorro|Pel[ó]n|Pelotudo|pelotudo, huev[ó]n. Aweonado|Pendejo|pepa|Pepire|Percanta|Pichinga|'+
+'Pichurria|pijotero|pisar|Pocha|Ponela en mi boca|pongalo en su boca|P[ó]nmela en la boca|porro|punta|Qu[é] buen culo|que te den por culo|que te follen|quiero chupar esta noche|Romper las bolas|Ruchar|Sapo|Te metieron la yuca|te odio|te rompo el cacas|te rompo el culo|tener sexo|'+
+'Tengo ganas|testítulos|Tirar|tonto|tonto,lerdo ,lelo ,tonta ,lerda ,lela|tonto,tonta|Tonto a las tres.|Tontolaba.|tontolcapullo.|Tontopolla.|toparse|Totona|trucho|tu crees que no puedo?|tu madre|Tu madre,Tu vieja|un huevo|Vagina|vagina, concha|Vamos a chupar esta noche|'+
+'vamos a em borrachar esta noche|Vamos a emborracharnos esta noche|vamos a mamarnos esta noche|Verdugo|Vete al infierno|Vete al infierno,Vete a la mierda|Wepota|Y tu mama tambien|Y tu mam[á] tambi[é]n|yuta|Zunga)(?:$|[\s\.;\?\!,])','i'));
+
+var frL2RegPatts = new Array(new RegExp('(?:^|[\s\.;\?\!,])(abruti|anulingus|attard[é]|beur|bordel de merde|branleur|[ç]a pue|[ç]a schlingue!|casse toi!|casse-toi|[c\']est quoi ce bordel ?|[c\']est quoi ton ostie de probl[è]me|cochonneries|couille|d[é]bile|d[é]foncer|d[é]gage !|d[é]g[é]n[é]r[é]|enfoir[é]|face de cul|ferme ta gueule|fille|fous le camp|fous le camps|führer|glande|idiot(e)!|imbecile|imb[é]cile|jouir|la chatte|mort à|mort aux|mouchard|p[é]dale|p[é]d[é]|petite fille|petites filles|pouf|racailles|raton|rebeu|sac à vin !|sacrer|seins|sexe|sexe en direct|SEXUELLE|sperme|suce|ta gueule|tais-toi|tapette|tarlouse va !|transexuelle|tu commence [à] [m\']enmerder !|tuyau|vache|vibreur|violer|youpin|youpins)(?:$|[\s\.;\?\!,])','i'));
+
+var itL2RegPatts = new Array(new RegExp('(?:^|[\s\.;\?\!,])(ALLUPATE|ALLUPATO|AMMUCCHIATA|AMMUCCHIATE|ANO|ARRAPATA|ARRAPATE|ARRAPATI|ARRAPATO|BAGARDONA|BAGARDONE|BAGASCIONE|BALLE|BAMBA|BATTONE|BEGA|BEGHE|BELINI|BERNARDE|BOCCHINARE|BOCCHINARI|BOCCHINARO|BOIATE|BORDELLI|BORDELLO|'+
+'BRODA|BRODE|BUCAIOLA|BUCAIOLE|BUCAIOLI|BUS DEL CU|BUSONI|CACCHE|CAGATE|CAPPELLE|CASINI|CASINO|CHECCA|CIOSPA|CIOSPE|CIPPA|CIPPE|CIULATA|CIULATE|COGLIONAZZO|COGLIONE|CORNUTA|CORNUTE|CORNUTI|CU|DIIO|DIO CANE|DIOCANE|FAVE|FETENTE|FETENTI|FIADENA|FICHE|FIGONA|FIGONE|FIGONI|FIKA|FIKE|'+
+'FIODENA|FROCI|FROCIO|FROCIONE|FROCIONI|GANGIA|GOLDONE|GOLDONI|GRILLETTI|GUANTI|GUANTO|INCAZZARSI|LECCHINE|LECCHINI|LECCHINO|LIMONARE|LOFFA|LOFFARE|LOFFE|LOFFIA|LOFFIE|MADONNA|MAIALA|MAIALE|MERDOSI|MERLOTTI|MERLOTTO|MIGNOTTONE|MIGNOTTONI|MINCHIONE|MINCHIONI|MINNA|MINNE|MNCHIE|MONE|'+
+'MONTA|MUSSE|NCULAMMAMMATE|NDROCCHIA|NERCHIE|ORCA MADONNA|ORCO DIO|ORCODIGEL|PACCHI|PACCO|PADULI|PADULO|PALLA|PALLE|PALLOSA|PALLOSE|PALLOSI|PALLOSO|PATONZE|PECORINE|PESCE|PICI|PICIO|PIPE|PIPPA|PISCIATE|PISCIO|PISELLI|PISELLO|PISTOLA|PISTOLOTTO|POMICIARE|POMPA|POMPE|POPPA|POPPE|'+
+'PORCODIO|PUPPARE|PUTTANONE|PUZZONA|PUZZONE|RECCHIONE|RENZA|RENZE|RICCHIONE|RICCHIONI|RINCOGLIONIRSI|SBATTIMENTI|SBATTIMENTO|SBORRONE|SBORRONI|SBRODA|SBRODOLARE|SBRODOLATA|SBRODOLATE|SCOREGGE|SCOREGGIA|SCOREGGIARE|SCOREGGIONA|SCOREGGIONE|SCOREGGIONI|SCORREGGIONE|SEGHE|SEGONE|SEGONI|'+
+'SFONDARE|SLINGUARE|SLINGUATA|SLINGUATE|SMINCHIARE|SORCHE|SORETA|SPOMPINARE|STRONZONA|SUCARE|SUCCHIACAPPELLA|SUCCHIACAPPELLE|SUKARE|TARZANELLI|TARZANELLO|TERRONACCI|TERRONACCIO|TERRONAZZI|TERRONAZZO|TERRONE|TERRONI|TOPA|TOPE|UCCELLI|UCCELLO|VACCA|VACCHE|ZIO CANTANTE)(?:$|[\s\.;\?\!,])','i'));
+
 var deL3RegPatts = new Array(new RegExp('(?!\>)(pussy|fuc(k|ed|ers?|ing|s)?|(f|F)(~|_|!|@|#|$|%|^|&|[*](k))|fckn|Rats|motherfu?|fuk|cunt|d(i|!|[*])ck|asshole|a s s h o l e |assh|a[$]|f\'cking|F-ing|azz|bitch|'+
              'dumb|suck(s|er|ed)?|^\lick|nigg(ro|ga|er)?|(s|S)((~|!|@|#|$|%|^|&|[*])h(i|!|)t)|jacka(s|$)?)(?!\<)','i'));    
  
@@ -232,12 +250,22 @@ function LoadApplicationRegExs() {
       break;
     //'FR-MSN#340534406099501'    
     case '340534406099501':
-      regExDict['review'] = enL2RegPatts;
+      regExDict['review'] = frL2RegPatts;
       regExDict['public'] = enL3RegPatts;
       break;
-      // 'PT-MSN#577804522329995'
+      // 'PT-MSN#1449534195317908'
       case '1449534195317908':
         regExDict['review'] = ptL2RegPatts;
+        regExDict['public'] = enL3RegPatts;
+        break;
+        // 'ES-MSN#577804522329995'
+      case '577804522329995':
+        regExDict['review'] = esL2RegPatts;
+        regExDict['public'] = enL3RegPatts;
+        break;
+        // 'IT-MSN#1455766471352205'
+      case '1455766471352205':
+        regExDict['review'] = itL2RegPatts;
         regExDict['public'] = enL3RegPatts;
         break;
     //'DE-MSN#544580382313562'
