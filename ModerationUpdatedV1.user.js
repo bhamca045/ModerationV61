@@ -125,7 +125,7 @@ var deL2RegPatts = new Array(new RegExp('(?:^|[\s\.;\?\!,])(agedream|bdm|candy|c
 'Schwuler|Shishkoff|der Schwanz|die Titten|missgeburt|dummes huhn|trottel|der teufel|der abschaum|dumme kuh|wichser|Dreckschweine|scheiss auf die|was die schei[ß]|Die M[ö]pse|Drecksack!|die Schei[ß]e|geil|mieser stricher|schwanz lecker|so ein beschi[ß]!|der abschaum der menschlichen gesellschaft|'+
 'der drecksack|du dumme kuh|duncauf|homofuerst|Fl[ü]chtlinge)(?:$|[\s\.;\?\!,])','i'));
 
-var ptL2RegPatts = new Array(new RegExp('(?:^|[\s\.;\?\!,])(Acha que eu n[ã]o consigo?|Amo sua bunda|Babaca|Bicha|Viado|Viad[ã]o|Marica|Burro|Idiota|Cuz[ã]o|Cuz[õ]es|Filhos da puta|escroto|Filho da puta|Idiota|Burro|Maconha|Vamos ficar b[ê]bados hoje [à] noite|Bicha|Bichona)(?:$|[\s\.;\?\!,])','i'));
+var ptL2RegPatts = new Array(new RegExp('(?:^|[\s\.;\?\!,])(acha que eu n[ã]o consigo?|amo sua bunda|babaca|bicha|viado|viad[ã]o|marica|burro|idiota|cuz[ã]o|cuz[õ]es|filhos da puta|escroto|filho da puta|idiota|burro|maconha|vamos ficar b[ê]bados hoje [à] noite|bicha|bichona)(?:$|[\s\.;\?\!,])','i'));
 
 var esL2RegPatts = new Array(new RegExp('(?:^|[\s\.;\?\!,])(me llega al pincho|qu[é] tal concha|crees que no puedo?|a la loma del orto|[â]vete al infierno consultoriadedadoscorrea|acabar|al pedo|and[á] a lavar los platos|[á]ndate a la mierda|'+
 'argolla|bardo|bobososo|bola|bolsas|buseta|cabilla|cabro|chivo|rosquete|cachapera|cana|ca[ñ]o|canuto[,]a|cara de orto|caracart[ó]n|chanta|choto|chumbo|chupa medias|cocolla|coj[í]o|cojonera|cojones|'+
