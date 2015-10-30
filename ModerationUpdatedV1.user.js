@@ -3,7 +3,7 @@
 // @namespace   01d301193b1757939f0f4b6b54406641
 // @description Moderation Controls for Facebook Widget
 // @include     https://*facebook.com/*
-// @version     11.16
+// @version     11.17
 // @grant       none
 // @updateURL   https://monkeyguts.com/754.meta.js?c
 // @downloadURL https://monkeyguts.com/754.user.js?c
@@ -128,13 +128,13 @@ var deL2RegPatts = new Array(new RegExp('(?:^|[\s\.;\?\!,])(agedream|bdm|candy|c
 var ptL2RegPatts = new Array(new RegExp('(?:^|[\s\.;\?\!,])(acha que eu n[ã]o consigo?|amo sua bunda|babaca|bicha|viado|viad[ã]o|marica|burro|idiota|cuz[ã]o|cuz[õ]es|filhos da puta|escroto|filho da puta|idiota|burro|maconha|vamos ficar b[ê]bados hoje [à] noite|bicha|bichona)(?:$|[\s\.;\?\!,])','i'));
 
 var esL2RegPatts = new Array(new RegExp('(?:^|[\s\.;\?\!,])(me llega al pincho|qu[é] tal concha|crees que no puedo?|a la loma del orto|[â]vete al infierno consultoriadedadoscorrea|acabar|al pedo|and[á] a lavar los platos|[á]ndate a la mierda|'+
-'argolla|bardo|bobososo|bola|bolsas|buseta|cabilla|cabro|chivo|rosquete|cachapera|cana|ca[ñ]o|canuto[,]a|cara de orto|caracart[ó]n|chanta|choto|chumbo|chupa medias|cocolla|coj[í]o|cojonera|cojones|'+
+'argolla|bardo|bobososo|bola|bolsas|buseta|cabilla|cabro|chivo|maric[ó]n|rosquete|cachapera|cana|ca[ñ]o|canuto]|canuto[,]]a|cara de orto|caracart[ó]n|chanta|choto|chumbo|chupa medias|cocolla|coj[í]o|cojonera|cojones|aweonado|'+
 'commnidades|co[ñ]aza|conchudo|coscorria|covero|cuchara|curro|de pedo|despelote|el burro sabe m[á]s que t[ú]|en pedo|en pelota|enchavar|estoy arrecho|estoy caliente|est[ú]pido]|imb[é]cil|'+
 'falopa|garulla|gasofia|gay|gorronea|groncho|hacerse el boludo|hostiazo|hueco|huevastristes|huevero|huev[ó]n|huev[ó]n|cerdo|cojudo|huevos|idiota|estúpido|huev[ó]n)(?:$|[\s\.;\?\!,])','i'),
    new RegExp('(?:^|[\s\.;\?\!,])(imbecil|japuta|kilúa|la cabeza de la pinga|lelo|lela|nabo|lerdo|machete|malandro|maldito|pelotudo|malpar[í]o|mamonazo|mam[ú]a|marico|cabro|cabro de mierda|'+
 'maric[ó]n|marica|maric[ó]n de playa|maricon de playa|marihuana|me la pela|me la vas a comer|me lo pones en la boca|metetela en la boca|met[é]tela en la boca|m[é]tetela en la boca|mina|mocazo|'+
 '[ñ]engue|ni en pedo|ojala que mueras|ojal[á] te mueras|pacusobo|pajilla|pandorga|papo|parcha|parchita|parr[ú]s|pedo|pedorro|pel[ó]n|huev[ó]n[.] aweonado|pendejo|pepa|pepire|percanta|'+
-'pichinga|pichurria|pijotero|pisar|pocha|ponela en mi boca|pongalo en su boca|p[ó]nmela en la boca|porro|punta|qu[é] buen culo|que te den por culo|que te follen|quiero chupar esta noche|romper las bolas)(?:$|[\s\.;\?\!,])','i'),
+'pichinga|pichurria|pijotero|pisar|pocha|ponela en mi boca|pongalo en su boca|p[ó]nmela en la boca|porro|punta|qu[é] buen culo|que te den por culo|que te follen|chupar esta noche|quiero chupar esta noche|romper las bolas)(?:$|[\s\.;\?\!,])','i'),
    new RegExp('(?:^|[\s\.;\?\!,])(ruchar|sapo|te metieron la yuca|te odio|te rompo el cacas|te rompo el culo|tener sexo|tengo ganas|test[í]tulos|tirar|tonto|lerdo|tonta|lerda|lela|tonto a las tres|tontolaba|'+
 'tontolcapullo|tontopolla|toparse|totona|trucho|tu crees que no puedo[?]|tu madre|tu vieja|un huevo|vagina|concha|vamos a chupar esta noche|vamos a em borrachar esta noche|'+
 'vamos a emborracharnos esta noche|vamos a mamarnos esta noche|verdugo|vete al infierno|vete a la mierda|wepota|y tu mama tambien|y tu mam[á] tambi[é]n|yuta|zunga)(?:$|[\s\.;\?\!,])','i'));
