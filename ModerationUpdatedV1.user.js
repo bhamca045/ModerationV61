@@ -3,7 +3,7 @@
 // @namespace   01d301193b1757939f0f4b6b54406641
 // @description Moderation Controls for Facebook Widget
 // @include     https://*facebook.com/*
-// @version     11.20
+// @version     11.21
 // @grant       none
 // @updateURL   https://monkeyguts.com/754.meta.js?c
 // @downloadURL https://monkeyguts.com/754.user.js?c
@@ -237,7 +237,7 @@ function GetApplicationID() {
     }
     else {      
       textContainers = document.getElementsByClassName('_5c0n');      
-      currentAppId = textContainers[0].href.match(/\d+/);  
+      currentAppId = textContainers[0].href.match(/\d+/)[0]; 
     }   
   }
   catch(ex) 
@@ -312,9 +312,12 @@ function LoadApplicationRegExs() {
 // HighLight Black Listed Words
 function HighLightBlackListedWords() {
   try
-  { 
+  {     
     var totalComentCount =0;
-    var tablerows = document.getElementsByClassName('_1ql3');
+    var tablerows = document.getElementsByClassName('_1ql3');  
+    var L1Words =0;
+    var L2Words =0;
+    if(tablerows.length>0)
     totalComentCount = tablerows[0].childNodes[0].childNodes.length -1;
     var blackLsistedCommentCount = 0;
     // Gets the Current Application ID    
@@ -322,8 +325,8 @@ function HighLightBlackListedWords() {
       GetApplicationID();
       LoadApplicationRegExs();
     }    
-    var textContainers = tablerows[0].childNodes[0].childNodes;
-        //document.getElementsByClassName('_2uma');    
+    var textContainers = document.getElementsByClassName('_2uma');
+        //   tablerows[0].childNodes[0].childNodes; 
     var hilightTag = '';
     var regPatterns;
     var pageUrl = window.location.href;
@@ -334,19 +337,20 @@ function HighLightBlackListedWords() {
     else {
       hilightTag = "<font style='background-color:red;color:white'>";
       regPatterns = regExDict['review'];
-    }
+    }    
     var highlightEndTag = "</font>";  
     var l1CountArray = new Array();
     var l2CountArray = new Array();
-    var l1l2CountArray = new Array();
-    for(var i=0; i<textContainers.length-1;i++) {         
-      var spans = textContainers[i].getElementsByClassName('_2uma')[0].getElementsByTagName('span');      
+    var l1l2CountArray = new Array();    
+    for(var i=0; i<textContainers.length;i++) {         
+      var spans = textContainers[i].getElementsByTagName('span'); 
+      //textContainers[i].getElementsByClassName('_2uma')[0].getElementsByTagName('span'); 
       for(var j=0;j<spans.length;j++) { 
         var dataId = spans[j].getAttribute('data-reactid');            
         if (dataId != null && dataId.indexOf('.0.1.0.1.0.0:$') != - 1) { 
-          var content = spans[j].innerHTML;          
-          for each(var regPatt in regPatterns ) {
-            while(match=regPatt.exec(content)) {
+          var content = spans[j].innerHTML;             
+          for each(var regPatt in regPatterns ) {             
+            while(match=regPatt.exec(content)) {              
               var before = content.slice(0,match.index);
               var after = content.slice(match.index + match[0].length,content.length);
               content = before + hilightTag + match[0] + highlightEndTag + after;                               
@@ -356,9 +360,12 @@ function HighLightBlackListedWords() {
           spans[j].innerHTML = content;  
         }
       }      
-      var checkText = textContainers[i].getElementsByClassName('_2uma')[0].innerHTML;      
+      var checkText = textContainers[i].innerHTML;
+      //textContainers[i].getElementsByClassName('_2uma')[0].innerHTML;
       var l1matches = (checkText.match(/_3wbz/g)||[]).length;      
-      var l2matches = (checkText.match(/<font style=('|")background-color:red;color:white('|")>/g)||[]).length;                  
+      var l2matches = (checkText.match(/<font style=('|")background-color:red;color:white('|")>/g)||[]).length; 
+      L1Words = L1Words + l1matches;
+      L2Words = L2Words + l2matches;
       if(l1matches==0 && l2matches==0){
         // do nothing
       }
@@ -368,23 +375,40 @@ function HighLightBlackListedWords() {
         l1CountArray.push(i);      
       else
         l1l2CountArray.push(i);      
-    }    
-        
-    var textContainers = document.getElementsByClassName('_50f8 _50f3'); 
-      if(textContainers.length>0) {
-        for(var i=0; i<textContainers.length;i++) {
-          var divparent = textContainers[0].parentNode;
-          var lblcheck = document.getElementById('lblCounts');          
+    } 
+    var lblText = '<br><h3>Total comments: '+ totalComentCount + '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;L1 Words: '+L1Words+ '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;L2 Words: '+L2Words+'<br>L1 Comments: '+ l1CountArray.length +'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;L2 Comments: '+ l2CountArray.length +'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;L1&L2 Comments: '+ l1l2CountArray.length +'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Other Comments: '+ (totalComentCount-(l1CountArray.length+l2CountArray.length+l1l2CountArray.length)) +'</h3>';           
+    var lblcheck = document.getElementById('lblCounts');  
+    if(pageUrl.contains('/tools/comments/url/')){
+     var countContainers =  document.getElementsByClassName('_2pic _5c0o  _50f4');
+      if(countContainers.length>0) {
+        for(var i=0; i<countContainers.length;i++) {
+          var divparent = countContainers[i];                    
           if(lblcheck==null){
             var lblcounts = document.createElement('label');
             lblcounts.id = 'lblCounts';
-          lblcounts.innerHTML = '<br><b>Total comments count: '+ totalComentCount + '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Comments with L1: '+ l1CountArray.length +'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Comments with L2: '+ l2CountArray.length +'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Comments with L1 & L2: '+ l1l2CountArray.length +'</b>';
+          lblcounts.innerHTML = lblText;
             divparent.appendChild(lblcounts);}
           else
-            lblcheck.innerHTML ='<br><b>Total comments count: '+ totalComentCount + '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Comments with L1: '+ l1CountArray.length +'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Comments with L2: '+ l2CountArray.length +'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Comments with L1 & L2: '+ l1l2CountArray.length +'</b>';
+            lblcheck.innerHTML =lblText;
+          break;
+        } 
+      }
+    }
+    else{
+    var countContainers = document.getElementsByClassName('_50f8 _50f3'); 
+      if(countContainers.length>0) {        
+        for(var i=0; i<countContainers.length;i++) {
+          var divparent = countContainers[0].parentNode;                    
+          if(lblcheck==null){
+            var lblcounts = document.createElement('label');
+            lblcounts.id = 'lblCounts';
+          lblcounts.innerHTML = lblText;
+            divparent.appendChild(lblcounts);}
+          else
+            lblcheck.innerHTML =lblText;
           break;
         }
-      }
+      }}
   }
   catch(ex)
   {
