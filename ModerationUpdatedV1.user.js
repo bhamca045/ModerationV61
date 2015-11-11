@@ -3,7 +3,7 @@
 // @namespace   01d301193b1757939f0f4b6b54406641
 // @description Moderation Controls for Facebook Widget
 // @include     https://*facebook.com/*
-// @version     11.23
+// @version     11.24
 // @grant       none
 // @updateURL   https://monkeyguts.com/754.meta.js?c
 // @downloadURL https://monkeyguts.com/754.user.js?c
@@ -227,7 +227,7 @@ function GetApplicationID() {
           var spans = textContainers[i].getElementsByTagName('span');          
           for(var j=0;j<spans.length;j++) { 
             var dataId = spans[j].getAttribute('data-reactid');            
-            if (dataId != null && dataId.indexOf('.0.0.0.$right.0.0.1.1.0.2') != - 1) {
+            if (dataId != null && dataId.indexOf('22') != - 1) {
               currentAppId = spans[j].textContent;
               break;          
             }
@@ -238,7 +238,8 @@ function GetApplicationID() {
     else {      
       textContainers = document.getElementsByClassName('_5c0n');      
       currentAppId = textContainers[0].href.match(/\d+/)[0]; 
-    }   
+    }  
+    //alert(currentAppId);
   }
   catch(ex) 
   {
@@ -307,7 +308,6 @@ function LoadApplicationRegExs() {
   //'PL-MSN#689527477782682'
   //'AR-MSN#636427529797723'  
 }
-  
 
 // HighLight Black Listed Words
 function HighLightBlackListedWords() {
@@ -346,8 +346,8 @@ function HighLightBlackListedWords() {
       var spans = textContainers[i].getElementsByTagName('span'); 
       //textContainers[i].getElementsByClassName('_2uma')[0].getElementsByTagName('span'); 
       for(var j=0;j<spans.length;j++) { 
-        var dataId = spans[j].getAttribute('data-reactid');            
-        if (dataId != null && dataId.indexOf('.0.1.0.1.0.0:$') != - 1) { 
+        //var dataId = spans[j].getAttribute('data-reactid');            
+        //if (dataId != null && dataId.indexOf('.0.1.0.1.0.0:$') != - 1) { 
           var content = spans[j].innerHTML;             
           for each(var regPatt in regPatterns ) {             
             while(match=regPatt.exec(content)) {              
@@ -358,7 +358,7 @@ function HighLightBlackListedWords() {
           }
           spans[j].innerHTML = ''; 
           spans[j].innerHTML = content;  
-        }
+       // }
       }      
       var checkText = textContainers[i].innerHTML;
       //textContainers[i].getElementsByClassName('_2uma')[0].innerHTML;
@@ -416,15 +416,16 @@ function HighLightBlackListedWords() {
   }
 }
 
-
 // Load More button click
 function SetPagerDivClickAction() {
   try
   {    
     var buttonPager = document.getElementsByTagName('button');
     for (var i = 0; i < buttonPager.length; i++) {
-      var dataId = buttonPager[i].getAttribute('data-reactid');
-      if (dataId != null && ((dataId.indexOf('$/=10.0') != - 1) || (dataId.indexOf('.0.0.2.1.0') != -1))) {
+      var dataId = buttonPager[i].getAttribute('class');
+      
+      if (dataId != null && ((dataId.indexOf('_4jy0 _4jy3 _517h') != - 1) || (dataId.indexOf('.0.0.2.1.0') != -1))) {
+       // alert(dataId);
         buttonPager[i].onclick = function ()
         {
           setTimeout(function () {
@@ -530,7 +531,35 @@ function AddModerateControls() {
     for (var i = 0; i < divs.length; i++) {
       var divClass = divs[i].getAttribute('class');
       if (divClass != null && divClass.indexOf('UFIImageBlockContent') != - 1) {
-        var pId = divs[i].getAttribute('data-reactid');
+        
+        var dateDiv = '';
+    dateDiv = divs[i].getElementsByTagName('abbr') [0];    
+    var datev = '';
+    datev = dateDiv.getAttribute('data-utime');
+    datev += '000';
+        
+        //profileName
+    var pDiv = divs[i].getElementsByTagName('a');
+    var from = '';
+    var userName = '';
+        
+         for (var k = 0; k < pDiv.length; k++) {      
+      if (pDiv[k].className == ' UFICommentActorName') {
+        from = pDiv[k].getAttribute('href');
+        from = from.replace('https://www.facebook.com/', '');
+        userName = pDiv[k].childNodes[0].innerHTML;        
+        if (from.indexOf('?id=') != - 1) {
+          from = from.replace('profile.php?id=', '');
+        }
+        break;
+      }
+    }
+        
+        //alert("i" + i + "   datev: " + datev + "    from :" + from + "             userName" + userName);
+        
+        
+        var pId =  datev+"|"+from+"|"+userName;  //divs[i].getAttribute('data-reactid');
+        //alert(pId);
         var divFbId = 'divFb_' + pId;
         var divCheck = document.getElementById(divFbId);
         if (divCheck == null)
@@ -575,8 +604,8 @@ function AddModerateControls() {
             if (!isArticleUrlFound) {
               var articleLinks = this.getElementsByTagName('a');              
               for (var i = 0; i < articleLinks.length; i++) {                
-                var dataId = articleLinks[i].getAttribute('data-reactid');                
-                if (dataId != null && dataId.indexOf('$child:0.1') != - 1) {
+                var dataId = articleLinks[i].parentElement.getAttribute('class');                
+                if (dataId != null && dataId.indexOf('_3lfy') != - 1) {
                   var tmpArtUrl = articleLinks[i].getAttribute('href')                  
                   document.getElementById('txtArticleUrl').value = tmpArtUrl.replace(/%3A/g, ':').replace(/%2F/g, '/').replace(/%3F/g, '?').replace(/%25/g, '%');                  
                   break;
@@ -916,17 +945,40 @@ function sendFbData(objid) {
     var mId = 'selModerator'; //objid.replace('btnSum', 'selModerator');
     var cId = objid.replace('btnSum_', '');
     
-    var commentID = '';
-    if(cId.indexOf('.1.0.0.1.0.0:$') != -1){      
-      var tmp = cId.split('$');
-    commentID = tmp[tmp.length -2];      
+    var divCheck = document.getElementById(objid);
+    var mDiv = divCheck.parentElement.parentElement.parentElement;
+    
+    var tmpArtUrl = document.getElementById('txtArticleUrl').value;
+    
+    if (!isArticleUrlFound) {
+      var articleLinks = mDiv.getElementsByTagName('a');              
+      for (var i = 0; i < articleLinks.length; i++) {                
+        var dataId = articleLinks[i].parentElement.getAttribute('class');                
+                if (dataId != null && dataId.indexOf('_3lfy') != - 1) {
+          tmpArtUrl = articleLinks[i].getAttribute('href')                  
+          document.getElementById('txtArticleUrl').value = tmpArtUrl.replace(/%3A/g, ':').replace(/%2F/g, '/').replace(/%3F/g, '?').replace(/%25/g, '%');                  
+          break;
+        }
+      }
     }
-    else {
-    var tmp = cId.split('$');      
-    commentID = tmp[1].replace('.1.0.0.0.','');      
-    }
-    commentID = commentID.replace('.0.1.0.0.','');
-    commentID = commentID.replace('.','');
+    
+    var res = tmpArtUrl.split("/");
+    var articleID = res[res.length -1];
+    //alert(articleID);
+    
+    //alert(tmpArtUrl);
+    
+    var commentID = cId + "|"+  articleID;
+    //if(cId.indexOf('.1.0.0.1.0.0:$') != -1){      
+      //var tmp = cId.split('$');
+    ///commentID = tmp[tmp.length -2];      
+   // }
+    //else {
+    //var tmp = cId.split('$');      
+   // commentID = tmp[1].replace('.1.0.0.0.','');      
+   // }
+   // commentID = commentID.replace('.0.1.0.0.','');
+   // commentID = commentID.replace('.','');
     //alert(commentID);
     //if (cId.indexOf('reply'))
     //commentID = tmp[2];    
@@ -937,8 +989,7 @@ function sendFbData(objid) {
     
     var comment = '';
     var likes = 0;
-    var divCheck = document.getElementById(objid);
-    var mDiv = divCheck.parentElement.parentElement.parentElement;
+    
     
       //comment text      
       var comDiv = mDiv.getElementsByTagName('span');      
@@ -961,17 +1012,7 @@ function sendFbData(objid) {
         
     //comment udate
 
-    if (!isArticleUrlFound) {
-      var articleLinks = mDiv.getElementsByTagName('a');              
-      for (var i = 0; i < articleLinks.length; i++) {                
-        var dataId = articleLinks[i].getAttribute('data-reactid');                
-        if (dataId != null && dataId.indexOf('$right.0.0.0.$=11/=1$child') != - 1) {
-          var tmpArtUrl = articleLinks[i].getAttribute('href')                  
-          document.getElementById('txtArticleUrl').value = tmpArtUrl.replace(/%3A/g, ':').replace(/%2F/g, '/').replace(/%3F/g, '?').replace(/%25/g, '%');                  
-          break;
-        }
-      }
-    }
+    
     
     var artUrl = document.getElementById('txtArticleUrl');
     articleUrl = artUrl.value;
@@ -1048,24 +1089,48 @@ function sendFbData(objid) {
     if(ulList != null) {
       for(var k = 0; k < ulList.length; k++) {
         var ulClass = ulList[k].getAttribute('class');
-        if(ulClass != null && ulClass.indexOf('_43o4') != -1){
-          var spans = ulList[k].getElementsByTagName('span');
-          for(var i = 0; i< spans.length; i++) {
-            var spanClass = spans[i].className;
-            if(spanClass != null && spanClass.indexOf('accessible_elem') != -1) {              
-              var spanId = spans[i].getAttribute('data-reactid');              
-              if(spanId.indexOf('$0.$pending') != -1) {
+        if(ulClass != null && ulClass.indexOf('_43o4') != -1) {
+          
+          var anchors =  ulList[k].getElementsByTagName('a');
+          
+          for(var i =0; i<anchors.length; i++ ) {
+            
+            var areaSel = anchors[i].getAttribute('aria-selected'); 
+            
+            if(areaSel != '' && areaSel == "true")
+              {
+                if(anchors[i].getAttribute('href').indexOf('pending') != -1) {
                   viewType = 3;
                 }
-              else if(spanId.indexOf('$0.$approved') != -1) {
+                else if(anchors[i].getAttribute('href').indexOf('approved') != -1) {
                   viewType = 2;
                 }
-              else if(spanId.indexOf('$0.$deleted') != -1) {
+                else if(anchors[i].getAttribute('href').indexOf('deleted') != -1) {
                   viewType = 4;
                 }
-              break;
-            }            
-          }          
+                break;
+              }
+          }
+          
+          //alert(viewType);
+          
+          //var spans = ulList[k].getElementsByTagName('a');
+          //for(var i = 0; i< spans.length; i++) {
+          //  var spanClass = spans[i].className;
+          //  if(spanClass != null && spanClass.indexOf('accessible_elem') != -1) {              
+           //   var spanId = spans[i].getAttribute('data-reactid');              
+          //    if(spanId.indexOf('$0.$pending') != -1) {
+           //       viewType = 3;
+           //     }
+          //    else if(spanId.indexOf('$0.$approved') != -1) {
+          //        viewType = 2;
+          //      }
+          //    else if(spanId.indexOf('$0.$deleted') != -1) {
+          //        viewType = 4;
+          //      }
+         //     break;
+         //   }            
+         // }          
         }
       }
     }
