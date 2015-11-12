@@ -3,7 +3,7 @@
 // @namespace   01d301193b1757939f0f4b6b54406641
 // @description Moderation Controls for Facebook Widget
 // @include     https://*facebook.com/*
-// @version     11.25
+// @version     11.26
 // @grant       none
 // @updateURL   https://monkeyguts.com/754.meta.js?c
 // @downloadURL https://monkeyguts.com/754.user.js?c
@@ -224,14 +224,18 @@ function GetApplicationID() {
       var textContainers = document.getElementsByClassName('_50f8 _50f3'); 
       if(textContainers.length>0) {
         for(var i=0; i<textContainers.length;i++) {
-          var spans = textContainers[i].getElementsByTagName('span');          
-          for(var j=0;j<spans.length;j++) { 
-            var dataId = spans[j].getAttribute('data-reactid');            
-            if (dataId != null && dataId.indexOf('22') != - 1) {
-              currentAppId = spans[j].textContent;
-              break;          
-            }
-          }
+          var spanText = textContainers[i].innerHTML;
+          if(spanText.contains('App ID:')){
+          currentAppId = spanText.match(/\d+/)[0];
+            break;}
+          //var spans = textContainers[i].getElementsByTagName('span');           
+          //for(var j=0;j<spans.length;j++) { 
+          //  var dataId = spans[j].getAttribute('data-reactid');            
+          //  if (dataId != null && dataId.indexOf('22') != - 1) {
+          //    currentAppId = spans[j].textContent;
+          //    break;          
+          //  }
+          //}
         }
       }
     }
@@ -349,7 +353,7 @@ function HighLightBlackListedWords() {
         //var dataId = spans[j].getAttribute('data-reactid');            
         //if (dataId != null && dataId.indexOf('.0.1.0.1.0.0:$') != - 1) { 
           var content = spans[j].innerHTML;             
-          for each(var regPatt in regPatterns ) {             
+          for each(var regPatt in regPatterns ) {                         
             while(match=regPatt.exec(content)) {              
               var before = content.slice(0,match.index);
               var after = content.slice(match.index + match[0].length,content.length);
@@ -667,9 +671,12 @@ function HighlightSpamCommentsNew() {
        // if (firstCommentTblRow == null) {
        //   firstCommentTblRow = tblRows[i];
        // }
+     
+      var imageBlockContent = tblRows[i].getElementsByClassName('UFIImageBlockContent _42ef');
+      for(l=0;l<imageBlockContent.length;l++){
       
       var dateDiv = '';
-    dateDiv = tblRows[i].getElementsByTagName('abbr') [0];    
+    dateDiv = imageBlockContent[l].getElementsByTagName('abbr') [0];    
     var datev = '';
         if(dateDiv != null && dateDiv != '') {
           datev = dateDiv.getAttribute('data-utime');
@@ -680,7 +687,7 @@ function HighlightSpamCommentsNew() {
         }          
           
         //profileName
-    var pDiv = tblRows[i].getElementsByTagName('a');
+    var pDiv = imageBlockContent[l].getElementsByTagName('a');
     var from = '';
     var userName = '';
         
@@ -774,6 +781,7 @@ function HighlightSpamCommentsNew() {
           }
         }
     //  }
+    }
     }
   }
     else
@@ -937,16 +945,42 @@ function HideSpamCommentsNew() {
     
     var tblRows = document.getElementsByTagName('tr');
     for (var i = 0; i < tblRows.length; i++) {
-      var trId = tblRows[i].getAttribute('data-reactid');
-      if (trId != null && trId.indexOf('.0.1.0.1.0.0:$') != - 1) {
-        
-        var divFbId = '';
-        if(trId.indexOf('.1.0.0.1.0.0:$') != -1) {
-          divFbId = 'divFb_' + trId + '.0.1.0.0.$right.0';  
+      //var trId = tblRows[i].getAttribute('data-reactid');      
+      //if (trId != null && trId.indexOf('.0.1.0.1.0.0:$') != - 1) {
+    
+       var imageBlockContent = tblRows[i].getElementsByClassName('UFIImageBlockContent _42ef');
+      for(l=0;l<imageBlockContent.length;l++){
+       var dateDiv = '';
+    dateDiv = imageBlockContent[l].getElementsByTagName('abbr') [0];    
+    var datev = '';
+        if(dateDiv != null && dateDiv != '') {
+          datev = dateDiv.getAttribute('data-utime');
+          datev += '000';
         }
-        else {          
-          divFbId = 'divFb_' + trId + '.1.0.0.0.$right.0';  
+        else {
+          datev ="UNDEFINE";
         }          
+          
+        //profileName
+    var pDiv = imageBlockContent[l].getElementsByTagName('a');
+    var from = '';
+    var userName = '';
+        
+         for (var k = 0; k < pDiv.length; k++) {      
+      if (pDiv[k].className == ' UFICommentActorName') {
+        from = pDiv[k].getAttribute('href');
+        from = from.replace('https://www.facebook.com/', '');
+        userName = pDiv[k].childNodes[0].innerHTML;        
+        if (from.indexOf('?id=') != - 1) {
+          from = from.replace('profile.php?id=', '');
+        }
+        break;
+      }
+    } 
+        
+        var pId =  datev+"|"+from+"|"+userName;  //divs[i].getAttribute('data-reactid');
+        //alert(pId);
+        var divFbId = 'divFb_' + pId;      
         
         var divCheck = document.getElementById(divFbId);
         if (divCheck != null)
@@ -1076,7 +1110,7 @@ function sendFbData(objid) {
           comment = encodeURIComponent(comment);
           comment = comment.replace(/%0A/g, ' ');
           comment = comment.replace(/%20/g, ' ');
-         if (comment.length > 2000) {
+          if (comment.length > 2000) {
             comment = comment.substr(0, 2000) + '...';
           }
           break;
