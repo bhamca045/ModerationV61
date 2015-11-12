@@ -3,7 +3,7 @@
 // @namespace   01d301193b1757939f0f4b6b54406641
 // @description Moderation Controls for Facebook Widget
 // @include     https://*facebook.com/*
-// @version     11.24
+// @version     11.25
 // @grant       none
 // @updateURL   https://monkeyguts.com/754.meta.js?c
 // @downloadURL https://monkeyguts.com/754.user.js?c
@@ -447,8 +447,8 @@ function SetMoreCommentClickAction() {
   {    
     var buttonPager = document.getElementsByTagName('a');
     for (var i = 0; i < buttonPager.length; i++) {
-      var dataId = buttonPager[i].getAttribute('data-reactid');
-      if (dataId != null && ((dataId.indexOf('$right.0.$left.0.3.1.0') != - 1) || (dataId.indexOf('.0.1.0.1.0.0:$') != - 1))) {
+      var dataId = buttonPager[i].getAttribute('class');
+      if (dataId != null && ((dataId.indexOf('_3uik _2ph-') != - 1) || (dataId.indexOf('_5v47 ') != - 1))) {
         buttonPager[i].onclick = function ()
         {
           setTimeout(function () {
@@ -491,31 +491,24 @@ function SetViewChangeAction() {
 function SetSortByChangeAction() {
   try
   {  
-    var mainDataId;
-    var dataId = document.getElementById('js_3');   
-    if(dataId == null)
-      {
-        var divs = document.getElementsByTagName('div');
-        for (var i = 0; i < divs.length; i++) {
-      var divClass = divs[i].getAttribute('class');
-      if (divClass != null && divClass.indexOf('uiPopover') != - 1) {
-        mainDataId = divs[i];
-        break;
-      }
+    var mainDataId;    
+      var divs = document.getElementsByTagName('div');
+      for (var i = 0; i < divs.length; i++) {
+        var divClass = divs[i].getAttribute('class');
+        if (divClass != null && divClass.indexOf('uiPopover _6a _6b') != - 1) {
+          mainDataId = divs[i];
+          break;
         }
       }
-    else
+   
+    if (mainDataId != null) {        
+      mainDataId.onclick = function ()
       {
-        mainDataId = dataId;
+        setTimeout(function () {
+          AddModerateControls();            
+        }, 5000);
       }
-      if (mainDataId != null) {        
-        mainDataId.onclick = function ()
-        {
-          setTimeout(function () {
-            AddModerateControls();            
-          }, 5000);
-        }
-      }        
+    }        
   } 
   catch (ex)
   {
@@ -532,12 +525,19 @@ function AddModerateControls() {
       var divClass = divs[i].getAttribute('class');
       if (divClass != null && divClass.indexOf('UFIImageBlockContent') != - 1) {
         
+        //alert(divClass);
+        
         var dateDiv = '';
     dateDiv = divs[i].getElementsByTagName('abbr') [0];    
     var datev = '';
-    datev = dateDiv.getAttribute('data-utime');
-    datev += '000';
-        
+        if(dateDiv != null && dateDiv != '') {
+          datev = dateDiv.getAttribute('data-utime');
+          datev += '000';
+        }
+        else {
+          datev ="UNDEFINE";
+        }          
+          
         //profileName
     var pDiv = divs[i].getElementsByTagName('a');
     var from = '';
@@ -623,7 +623,7 @@ function AddModerateControls() {
     HighlightSpamCommentsNew();
     HighLightBlackListedWords();    
     
-    var divCheck = document.getElementById('divFb_.0.0.1.$right.0');
+    var divCheck = document.getElementById('divFb_UNDEFINE||');
     if(divCheck != null)
       {
         divCheck.parentNode.removeChild(divCheck);
@@ -638,36 +638,75 @@ function AddModerateControls() {
 // Highliting spam comments
 function HighlightSpamCommentsNew() {
   try
-  {    
+  { 
     var allCommentsParent;
-    var tblBodys = document.getElementsByTagName('tbody');    
-    for (var i = 0; i < tblBodys.length; i++) {
-      var tbodyId = tblBodys[i].getAttribute('data-reactid');
-      if (tbodyId != null && tbodyId.indexOf('.0.1.0.1.0') != -1)
-      {
-        if (allCommentsParent == null) {
-          allCommentsParent = tblBodys[i];        
-        }
-      }
-    }
+    var tblBodys = document.getElementsByClassName('_1ql3');
+    if(tblBodys.length > 0) {
+        allCommentsParent = tblBodys[0].getElementsByTagName('tbody')[0];      
+      }    
+    
+    //for (var i = 0; i < tblBodys.length; i++) {
+    //  var tbodyId = tblBodys[i].getAttribute('class');
+    //  if (tbodyId != null && tbodyId.indexOf('.0.1.0.1.0') != -1)
+    //  {
+   //     if (allCommentsParent == null) {
+    //      allCommentsParent = tblBodys[i];        
+    //    }
+    //  }
+   // }
     
     if(allCommentsParent != null) {            
     var firstCommentTblRow;
-    var tblRows = document.getElementsByTagName('tr');
+    var tblRows = allCommentsParent.getElementsByTagName('tr');
+      if(tblRows.length > 0) {
+        firstCommentTblRow = tblRows[0];        
+      }
     for (var i = 0; i < tblRows.length; i++) {
-      var trId = tblRows[i].getAttribute('data-reactid');
-      if (trId != null && trId.indexOf('.0.1.0.1.0.0:$') != - 1) {
-        if (firstCommentTblRow == null) {
-          firstCommentTblRow = tblRows[i];
+    //  var trId = tblRows[i].getAttribute('data-reactid');
+     // if (trId != null && trId.indexOf('.0.1.0.1.0.0:$') != - 1) {
+       // if (firstCommentTblRow == null) {
+       //   firstCommentTblRow = tblRows[i];
+       // }
+      
+      var dateDiv = '';
+    dateDiv = tblRows[i].getElementsByTagName('abbr') [0];    
+    var datev = '';
+        if(dateDiv != null && dateDiv != '') {
+          datev = dateDiv.getAttribute('data-utime');
+          datev += '000';
         }
-        
-        var divFbId = '';
-        if(trId.indexOf('.1.0.0.1.0.0:$') != -1) {
-          divFbId = 'divFb_' + trId + '.0.1.0.0.$right.0';  
-        }
-        else {          
-          divFbId = 'divFb_' + trId + '.1.0.0.0.$right.0';  
+        else {
+          datev ="UNDEFINE";
         }          
+          
+        //profileName
+    var pDiv = tblRows[i].getElementsByTagName('a');
+    var from = '';
+    var userName = '';
+        
+         for (var k = 0; k < pDiv.length; k++) {      
+      if (pDiv[k].className == ' UFICommentActorName') {
+        from = pDiv[k].getAttribute('href');
+        from = from.replace('https://www.facebook.com/', '');
+        userName = pDiv[k].childNodes[0].innerHTML;        
+        if (from.indexOf('?id=') != - 1) {
+          from = from.replace('profile.php?id=', '');
+        }
+        break;
+      }
+    } 
+        
+        var pId =  datev+"|"+from+"|"+userName;  //divs[i].getAttribute('data-reactid');
+        //alert(pId);
+        var divFbId = 'divFb_' + pId;
+        
+       // var divFbId = '';
+       // if(trId.indexOf('.1.0.0.1.0.0:$') != -1) {
+       //   divFbId = 'divFb_' + trId + '.0.1.0.0.$right.0';  
+      //  }
+      //  else {          
+      //    divFbId = 'divFb_' + trId + '.1.0.0.0.$right.0';  
+      //  }          
         
         var divCheck = document.getElementById(divFbId);
         if (divCheck != null)
@@ -682,8 +721,8 @@ function HighlightSpamCommentsNew() {
             var regExMatched = false;
             
             for (var cc = 0; cc < comDiv.length; cc++) {
-              var comSpanID = comDiv[cc].getAttribute('data-reactid');
-              if (comSpanID != null && ((comSpanID.indexOf('$end/=1$text') != -1) || (comSpanID.indexOf('.0.1.0.0.$right.0.0.1.0.0') != -1))) {               
+              var comSpanID = comDiv[cc].getAttribute('class');
+              if (comSpanID != null && ((comSpanID.indexOf('_2uma') != -1) || (comSpanID.indexOf('_5mdd') != -1))) {               
                 commentCheck = '';
                 commentCheck = comDiv[cc].textContent.replace(regex, '');                
                 var res1 = regexSpam1.exec(commentCheck);
@@ -716,8 +755,8 @@ function HighlightSpamCommentsNew() {
                    if(comDiv[k].className == "_2uma" || comDiv[k].className.indexOf("_5mdd") != -1) {
                      comDiv[k].setAttribute('style', 'background-color:yellow;');
                      var sourceNode = mDiv.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
-                     var datReactId = sourceNode.getAttribute('data-reactid');
-                     if(datReactId != null && datReactId.indexOf('.1.0.0.1.0.0:$') != -1) {
+                     
+                     if(sourceNode.parentNode.parentNode.className == '_2slp _2pit') {
                        sourceNode = mDiv.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
                      }
                      allCommentsParent.insertBefore(sourceNode, firstCommentTblRow);
@@ -734,34 +773,67 @@ function HighlightSpamCommentsNew() {
           {
           }
         }
-      }
+    //  }
     }
   }
     else
-      {        
+      { 
         var divTags = document.getElementsByTagName('div');        
-    for (var i = 0; i < divTags.length; i++) {
-      var mainDivId = divTags[i].getAttribute('data-reactid');
-      if (mainDivId != null && mainDivId.indexOf('.0.0.2') != -1) {
-         if (allCommentsParent == null) { 
-           allCommentsParent = divTags[i];  
-         }
-      }
-    }
+  //  for (var i = 0; i < divTags.length; i++) {
+   //   var mainDivId = divTags[i].getAttribute('data-reactid');
+   //   if (mainDivId != null && mainDivId.indexOf('.0.0.2') != -1) {
+   //      if (allCommentsParent == null) { 
+   //        allCommentsParent = divTags[i];  
+    //     }
+   //   }
+   // }
         
         var firstCommentDiv;        
-    for (var i = 0; i < divTags.length; i++) {
-      
+        
+    for (var i = 0; i < divTags.length; i++) {      
       var divClass = divTags[i].getAttribute('class');
        if (divClass != null && divClass.indexOf('_4k-6') != - 1) {
-        if (firstCommentDiv == null) {
-          firstCommentDiv = divTags[i];          
+        if (allCommentsParent == null) {          
+          allCommentsParent = divTags[i];          
+          firstCommentDiv = divTags[i+1];          
         }      
        }
       
       if (divClass != null && divClass.indexOf('UFIImageBlockContent') != - 1) {
-        var pId = divTags[i].getAttribute('data-reactid');
+        //var pId = divTags[i].getAttribute('data-reactid');
+        
+        var dateDiv = '';
+    dateDiv = divTags[i].getElementsByTagName('abbr') [0];    
+    var datev = '';
+        if(dateDiv != null && dateDiv != '') {
+          datev = dateDiv.getAttribute('data-utime');
+          datev += '000';
+        }
+        else {
+          datev ="UNDEFINE";
+        }          
+          
+        //profileName
+    var pDiv = divTags[i].getElementsByTagName('a');
+    var from = '';
+    var userName = '';
+        
+         for (var k = 0; k < pDiv.length; k++) {      
+      if (pDiv[k].className == ' UFICommentActorName') {
+        from = pDiv[k].getAttribute('href');
+        from = from.replace('https://www.facebook.com/', '');
+        userName = pDiv[k].childNodes[0].innerHTML;        
+        if (from.indexOf('?id=') != - 1) {
+          from = from.replace('profile.php?id=', '');
+        }
+        break;
+      }
+    } 
+        
+        var pId =  datev+"|"+from+"|"+userName;  //divs[i].getAttribute('data-reactid');
+        //alert(pId);
         var divFbId = 'divFb_' + pId;
+        
         var divCheck = document.getElementById(divFbId);        
         if (divCheck != null)
         {
@@ -773,8 +845,8 @@ function HighlightSpamCommentsNew() {
             var commentCheck = '';
             var decodedCommentCheck = '';            
             for (var cc = 0; cc < comDiv.length; cc++) {
-              var comSpanID = comDiv[cc].getAttribute('data-reactid');
-              if (comSpanID != null && comSpanID.indexOf('$right.0.$left.0.1.0.0.0') != -1) {               
+              var comSpanID = comDiv[cc].getAttribute('class');
+              if (comSpanID != null && comSpanID.indexOf('_5mdd') != -1) {               
                 commentCheck = '';                
                 commentCheck = comDiv[cc].textContent.replace(regex, '');                
                 var res1 = regexSpam1.exec(commentCheck);
