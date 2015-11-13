@@ -3,7 +3,7 @@
 // @namespace   01d301193b1757939f0f4b6b54406641
 // @description Moderation Controls for Facebook Widget
 // @include     https://*facebook.com/*
-// @version     11.26
+// @version     11.27
 // @grant       none
 // @updateURL   https://monkeyguts.com/754.meta.js?c
 // @downloadURL https://monkeyguts.com/754.user.js?c
@@ -322,7 +322,7 @@ function HighLightBlackListedWords() {
     var L1Words =0;
     var L2Words =0;
     if(tablerows.length>0)
-    totalComentCount = tablerows[0].childNodes[0].childNodes.length -1;
+    totalComentCount = 0;
     var blackLsistedCommentCount = 0;
     // Gets the Current Application ID    
     if(currentAppId == '' ) {
@@ -345,8 +345,9 @@ function HighLightBlackListedWords() {
     var highlightEndTag = "</font>";  
     var l1CountArray = new Array();
     var l2CountArray = new Array();
-    var l1l2CountArray = new Array();    
-    for(var i=0; i<textContainers.length;i++) {         
+    var l1l2CountArray = new Array();      
+    for(var i=0; i<textContainers.length;i++) {   
+      totalComentCount = totalComentCount + 1;
       var spans = textContainers[i].getElementsByTagName('span'); 
       //textContainers[i].getElementsByClassName('_2uma')[0].getElementsByTagName('span'); 
       for(var j=0;j<spans.length;j++) { 
@@ -943,7 +944,7 @@ function HideSpamCommentsNew() {
     
     //ClickPagerButtons();
     
-    var tblRows = document.getElementsByTagName('tr');
+    var tblRows = document.getElementsByClassName('_1ql3')[0].childNodes[0].childNodes;
     for (var i = 0; i < tblRows.length; i++) {
       //var trId = tblRows[i].getAttribute('data-reactid');      
       //if (trId != null && trId.indexOf('.0.1.0.1.0.0:$') != - 1) {
@@ -1004,23 +1005,23 @@ function HideSpamCommentsNew() {
                   var offence = document.getElementById(oId);
                   action.value = 4;
                   offence.value = 2;
-                  sendFbData(divFbId);
-                  Delay(1000);
-                  var sourceNode = mDiv.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
-                  
+                  //sendFbData(divFbId);
+                  //Delay(1000);
+                  var sourceNode = mDiv.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;                   
                   var hideTD = null;
-                  var datReactId = sourceNode.getAttribute('data-reactid');
-                  if(datReactId != null && datReactId.indexOf('.1.0.0.1.0.0:$') != -1) {
-                    hideTD = sourceNode.getElementsByTagName('td')[1];
+                  var datReactId = sourceNode.parentElement.parentElement.getAttribute('class');
+                  if(datReactId != null && datReactId == '_2slp _2pit') {
+                    hideTD = sourceNode.childNodes[1];                    
                   }
                   else {
-                    hideTD = sourceNode.getElementsByTagName('td')[2];
-                  }
-                  
-                  var actionLst = hideTD.getElementsByTagName('a');
-                  for (var ll = 0; ll < actionLst.length; ll++) {
-                    var ancId = actionLst[ll].getAttribute('data-reactid');
-                    if (ancId != null && ancId.indexOf('1$delete.0') != -1) {
+                    hideTD = sourceNode.childNodes[2];                    
+                  }                  
+                  var actionLst = hideTD.getElementsByTagName('a');                  
+                  for (var ll = 0; ll < actionLst.length && actionLst.length>1; ll++) {                    
+                    var ancId = actionLst[ll].innerHTML;                    
+                    if (ancId != null && ancId== 'Hide') {                      
+                      sendFbData(divFbId);
+                      Delay(1000);
                       actionLst[ll].click();
                       break;
                     }
@@ -1033,7 +1034,12 @@ function HideSpamCommentsNew() {
           {
           }
         }
-      }
+      
+      // is for if
+      //}
+      
+      
+    }
     }
   }
   catch (ex)
