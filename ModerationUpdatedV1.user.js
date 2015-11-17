@@ -60,7 +60,8 @@ new RegExp('(?:^|[\s\.;\?\!,])(freaks|assinine|Axx|B_A_L_L_S!|bullocks|fracking|
 'islamo facist|putz|demoskanks|Focks|ragheads|Snatch|numbskull|half breed|nit wit|dummy|dole bludging|filth|Bozo|shagging|ball-less|peabrain|libtard|Jesus|Christ|refugee|muslims|Hookers|adultplayground|adultsite|'+
 'americunt|assed|back-scuttle|back-scuttler|back-scuttlers|back-scuttling|beastiality|bestiality|bint|bints|bitched|bitchery|bitchier|bitchin\'|bleeth|bongs|canibus|ceemen|cyberbabe|cybererotica|dildoes|dildos|'+
 'ejaculates|foreskin|ganja|genitals|hussies|hussy|ladyboy|lady-boy|ladyboys|lady-boys|naked girl|naked girls|naked-girl|naked-girls|naked-woman|naked-women|nipples|nookie|nooky|sadomasochist|shemale|'+
-           'wench|wenches|wenching|buggers|refugee|refugees|barbaric|butcher|butchering|isis)(?:$|[\s\.;\?\!,])','i'));
+           'wench|wenches|wenching|buggers|refugee|refugees|barbaric|butcher|butchering|isis|isis|stupidest|all you clowns|imbeciles|fool|Idots|Demon-Rats|ILLEGAL RATS|coyotes|terrorism|Except for his middle leg|'+
+           'RAT boy|blowhard|Drop more bombs|Just drop bombs everywhere|jihadists|black male|clowns|idiotic|buffoon|rodent community)(?:$|[\s\.;\?\!,])','i'));
  
 var deL2RegPatts = new Array(new RegExp('(?!\>)(agedream|bdm|candy|cutegirlfriend|cutemodel|cute-model|cutiefrutti|doll|entwuerdigt|entw[ü]rdigt|erniedrigt|erzwungen|forbiddenvideo|fresh-girls|gedemuetigt|gefesselt|girlfriendgalleries|girlfriendshowoff|'+
 'girlfun|girllover|girl-lover|girlranch|girls-and-pics|girls-are-pretty|girlshost|girlvid|grossdeutsch|gross-deutsch|hess|innocentdream|innocent-youth|jungfrau|jungsforum|jungundblond|kindersch[ä]nder|massacre|massaker|momandboy|mord|mutterundtochter|mybestboy|netbunnies|'+
