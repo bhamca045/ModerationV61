@@ -3,13 +3,14 @@
 // @namespace   01d301193b1757939f0f4b6b54406641
 // @description Moderation Controls for Facebook Widget
 // @include     https://*facebook.com/*
-// @version     12.0
-// @grant       none
+// @version     13.0
+// @grant       GM_xmlhttpRequest
 // @updateURL   https://monkeyguts.com/754.meta.js?c
 // @downloadURL https://monkeyguts.com/754.user.js?c
 // ==/UserScript==
 //var submitUrl ='http://127.0.0.1:7000/CommentService.svc/ModeratorAction?apiKey=JMfNqhMk3d6uUZJVtua0SNRWBOgepSd2IRyvSUG3Ticif5A84MfZ5ZlsW0mLw1f';
 var submitUrl = 'http://d6f576881c0146cb8f2a26dd5136cd53.cloudapp.net:8080/Pages/SubmitFBData?dat=';
+var commentReadCheckAPI = 'http://d6f576881c0146cb8f2a26dd5136cd53.cloudapp.net/CommentService.svc/GetCommentStatus?apiKey=JMfNqhMk3d6uUZJVtua0SNRWBOgepSd2IRyvSUG3Ticif5A84MfZ5ZlsW0mLw1f&';
 //var submitUrl = 'http://localhost:32852/Pages/SubmitFBData?dat=';
 var articleUrl = '';
 var uguid = '';
@@ -321,7 +322,8 @@ function GetApplicationID() {
       }
     }
     else {      
-      textContainers = document.getElementsByClassName('_5c0n');      
+      textContainers = document.getElementsByClassName('_5c0n'); 
+      if(textContainers.length>0)
       currentAppId = textContainers[0].href.match(/\d+/)[0]; 
     }  
     //alert(currentAppId);
@@ -462,7 +464,7 @@ function HighLightBlackListedWords() {
       else
         l1l2CountArray.push(i);      
     } 
-    var lblText = '<br><font style=\'color:#9197A3\'>Total comments: '+ totalComentCount + '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;L1 Words: '+L1Words+ '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;L2 Words: '+L2Words+'<br>L1 Comments: '+ l1CountArray.length +'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;L2 Comments: '+ l2CountArray.length +'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;L1&L2 Comments: '+ l1l2CountArray.length +'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Other Comments: '+ (totalComentCount-(l1CountArray.length+l2CountArray.length+l1l2CountArray.length)) +'</font>';
+    var lblText = '<br><font style=\'color:#9399A5;font-size: 12px;line-height: 16px;\'>Total comments: '+ totalComentCount + '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;L1 Words: '+L1Words+ '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;L2 Words: '+L2Words+'<br>L1 Comments: '+ l1CountArray.length +'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;L2 Comments: '+ l2CountArray.length +'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;L1&L2 Comments: '+ l1l2CountArray.length +'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Other Comments: '+ (totalComentCount-(l1CountArray.length+l2CountArray.length+l1l2CountArray.length)) +'</font>';
     var lblcheck = document.getElementById('lblCounts');  
     if(pageUrl.contains('/tools/comments/url/')){
      var countContainers =  document.getElementsByClassName('_2pic _5c0o  _50f4');
@@ -605,14 +607,19 @@ function SetSortByChangeAction() {
 // adding moderators controls
 function AddModerateControls() {
   try
-  {    
+  { 
+    var pageUrlFlage = false;    
+    if(window.location.href.substring(0,31)==='https://developers.facebook.com')
+      pageUrlFlage = true;
     var divs = document.getElementsByTagName('div');
     for (var i = 0; i < divs.length; i++) {
       var divClass = divs[i].getAttribute('class');
       if (divClass != null && divClass.indexOf('UFIImageBlockContent') != - 1) {
-        
-        //alert(divClass);
-        
+        var articleHref = null;
+        var articleHrefId = null;
+        if(pageUrlFlage){
+        articleHref = divs[i].childNodes[0].childNodes[0].childNodes[2].getElementsByTagName('a')[0].getAttribute("href");        
+          articleHrefId =  articleHref.match(/[^/]+$/)[0];}
         var dateDiv = '';
     dateDiv = divs[i].getElementsByTagName('abbr') [0];    
     var datev = '';
@@ -633,6 +640,7 @@ function AddModerateControls() {
       if (pDiv[k].className == ' UFICommentActorName') {
         from = pDiv[k].getAttribute('href');
         from = from.replace('https://www.facebook.com/', '');
+        from = from.replace(/\/$/,'');
         userName = pDiv[k].childNodes[0].innerHTML;        
         if (from.indexOf('?id=') != - 1) {
           from = from.replace('profile.php?id=', '');
@@ -649,7 +657,27 @@ function AddModerateControls() {
         var divFbId = 'divFb_' + pId;
         var divCheck = document.getElementById(divFbId);
         if (divCheck == null)
-        {
+        {  
+          if(pageUrlFlage){
+          var commentReadReq = commentReadCheckAPI+'articleUrl=' + articleHref + '&commentId=' + pId + '|' + articleHrefId ;
+          var statusResponse = GetCommentStatusInfo(commentReadReq);          
+          var flagSpan = document.createElement('span');          
+          var newFlagLabel = document.createElement('label');
+          if(statusResponse ==-1)
+          newFlagLabel.innerHTML = '<font style=\'color:#9399A5;font-size: 12px;line-height: 16px;\' >Read:</font>&nbsp;<input id="chk_'+pId+'" type="checkbox"">';
+          else
+          newFlagLabel.innerHTML = '<font style=\'color:#9399A5;font-size: 12px;line-height: 16px;\'>'+ statusResponse +'</font>';  
+          flagSpan.appendChild(newFlagLabel);                    
+          flagSpan.setAttribute('style', moderatorDivStyle);
+          divs[i].childNodes[0].childNodes[0].appendChild(flagSpan);
+          
+          var chkSendFalg = document.getElementById('chk_'+pId);
+          if(chkSendFalg!=null){
+          chkSendFalg.onchange = function ()
+          {
+            sendFbData(this.id);               
+          }}
+          }
           var divModerate = document.createElement('div');
           divModerate.id = divFbId;
           var actionLabel = document.createElement('label');
@@ -721,6 +749,48 @@ function AddModerateControls() {
   }
 }
 
+// Read comment status from API
+function GetCommentStatusInfo(uri) {
+  try
+  {    
+    var res = null;    
+    var details =  GM_xmlhttpRequest({method: "GET",url: uri,synchronous: true});    
+    var json = details.responseText.replace('[', '');
+    json = json.replace(']', '');
+    //alert(uri);
+    //alert(json);
+    var jsonObj = JSON.parse(json);            
+    if(jsonObj.CommentStatus==-1){
+            res = jsonObj.CommentStatus;            
+          }
+    else {         
+           res =  jsonObj.ModeratorName +' at '+jsonObj.StatusDateTime;
+            if(jsonObj.CommentStatus == 3)
+              {
+                res = 'Approved by: '+ res;
+              }
+            else if(jsonObj.CommentStatus == 4)
+              {
+                res = 'Hidden by: '+ res;
+              }
+            else if(jsonObj.CommentStatus == 5)
+              {
+                res = 'Banned by: '+ res;
+              }
+            else if(jsonObj.CommentStatus == 6)
+              {
+                res = 'Read by: '+ res;
+              }
+    }
+    return res;
+  }
+  catch(ex)
+  {
+    alert(ex);
+  }
+}
+
+
 // Highliting spam comments
 function HighlightSpamCommentsNew() {
   try
@@ -777,6 +847,7 @@ function HighlightSpamCommentsNew() {
       if (pDiv[k].className == ' UFICommentActorName') {
         from = pDiv[k].getAttribute('href');
         from = from.replace('https://www.facebook.com/', '');
+        from = from.replace(/\/$/,'');
         userName = pDiv[k].childNodes[0].innerHTML;        
         if (from.indexOf('?id=') != - 1) {
           from = from.replace('profile.php?id=', '');
@@ -912,6 +983,7 @@ function HighlightSpamCommentsNew() {
       if (pDiv[k].className == ' UFICommentActorName') {
         from = pDiv[k].getAttribute('href');
         from = from.replace('https://www.facebook.com/', '');
+        from = from.replace(/\/$/,'');
         userName = pDiv[k].childNodes[0].innerHTML;        
         if (from.indexOf('?id=') != - 1) {
           from = from.replace('profile.php?id=', '');
@@ -1052,6 +1124,7 @@ function HideSpamCommentsNew() {
       if (pDiv[k].className == ' UFICommentActorName') {
         from = pDiv[k].getAttribute('href');
         from = from.replace('https://www.facebook.com/', '');
+        from = from.replace(/\/$/,'');
         userName = pDiv[k].childNodes[0].innerHTML;        
         if (from.indexOf('?id=') != - 1) {
           from = from.replace('profile.php?id=', '');
@@ -1137,9 +1210,14 @@ function sendFbData(objid) {
     var oId = objid.replace('btnSum', 'selOffence');
     var mId = 'selModerator'; //objid.replace('btnSum', 'selModerator');
     var cId = objid.replace('btnSum_', '');
+    cId = objid.replace('chk_', '');
     
     var divCheck = document.getElementById(objid);
-    var mDiv = divCheck.parentElement.parentElement.parentElement;
+    var mDiv = null;    
+    if(  objid.substring(0,4) === 'chk_'  )
+      mDiv = divCheck.parentElement.parentElement.parentElement.parentElement.parentElement;
+      else
+        mDiv = divCheck.parentElement.parentElement.parentElement;
     
     var tmpArtUrl = document.getElementById('txtArticleUrl').value;
     
@@ -1232,6 +1310,7 @@ function sendFbData(objid) {
       if (pDiv[i].className == ' UFICommentActorName') {
         from = pDiv[i].getAttribute('href');
         from = from.replace('https://www.facebook.com/', '');
+        from = from.replace(/\/$/,'');
         userName = pDiv[i].childNodes[0].innerHTML;        
         if (from.indexOf('?id=') != - 1) {
           from = from.replace('profile.php?id=', '');
@@ -1252,7 +1331,7 @@ function sendFbData(objid) {
     //action
 
     var action = document.getElementById(aId);
-    if (action.value == 0)
+    if (action.value == 0 && objid.substring(0,4) !='chk_')
     {
       window.alert('please select action');
       //action.focus();
@@ -1334,7 +1413,15 @@ function sendFbData(objid) {
     {
       articleUrl = articleUrl.split('?') [0];
     }
-    var moderationMessage = '{ "CommentId":"' + commentID + '","IsReset":false,"CommentMessage":"' + comment + '","CommentedUserID":"' + from + '","CommentedUserName":"' + userName + '","CommentDateTime":"' + datev + '","ModeratorGUID":"' + moderator.value + '","ModeratorAction":' + action.value + ',"OffenceType":' + offence.value + ',"ViewType":' + viewType + ',"LikesCount":' + likes + ',"ArticleTopic":"' + artiTopic + '","ArticleUrl":"' + articleUrl + '"}';
+    var actionValue = action.value;
+    var offenceValue = offence.value;
+    if(objid.substring(0,4) ==='chk_')
+      {
+        actionValue = 6;
+        offenceValue = 1;
+      }
+    
+    var moderationMessage = '{ "CommentId":"' + commentID + '","IsReset":false,"CommentMessage":"' + comment + '","CommentedUserID":"' + from + '","CommentedUserName":"' + userName + '","CommentDateTime":"' + datev + '","ModeratorGUID":"' + moderator.value + '","ModeratorAction":' + actionValue + ',"OffenceType":' + offenceValue + ',"ViewType":' + viewType + ',"LikesCount":' + likes + ',"ArticleTopic":"' + artiTopic + '","ArticleUrl":"' + articleUrl + '"}';
     
     var element = mDiv;
     while(element.parentNode) {      
@@ -1353,7 +1440,12 @@ function sendFbData(objid) {
     
     //var requestData = '{"apiKey"="JMfNqhMk3d6uUZJVtua0SNRWBOgepSd2IRyvSUG3Ticif5A84MfZ5ZlsW0mLw1f","moderationMessage"="' + moderationMessage + '"}';
     //alert(moderationMessage);
-    window.open(submitUrl + moderationMessage, '_blank');
+    if(objid.substring(0,4) ==='chk_'   ){
+      divCheck.disabled  = true;}
+    
+    window.open(submitUrl + moderationMessage, '_blank');    
+    
+    
     //var xmlhttp = new XMLHttpRequest();
     //xmlhttp.open('PUT', submitUrl);
     //xmlhttp.setRequestHeader('Content-type', 'application/json; charset=UTF-8');
