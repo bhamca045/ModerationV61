@@ -3,7 +3,7 @@
 // @namespace   01d301193b1757939f0f4b6b54406641
 // @description Moderation Controls for Facebook Widget
 // @include     https://*facebook.com/*
-// @version     14.0
+// @version     14.1
 // @grant       GM_xmlhttpRequest
 // @updateURL   https://monkeyguts.com/754.meta.js?c
 // @downloadURL https://monkeyguts.com/754.user.js?c
@@ -680,7 +680,11 @@ function AddModerateControls() {
           var statusResponse = GetCommentStatusInfo(commentReadReq);          
           var flagSpan = document.createElement('span');          
           var newFlagLabel = document.createElement('label');
-          if(statusResponse ==-1){
+          if(statusResponse ==-1){            
+            if(window.location.href.contains("/deleted/")){
+                                             // do nothing
+                                             }
+            else{
           newFlagLabel.innerHTML = '<font style=\'color:#9399A5;font-size: 12px;line-height: 16px;\' >Read:</font>&nbsp;';
           var chkElement = document.createElement('input');
           chkElement.type = 'checkbox';            
@@ -691,7 +695,7 @@ function AddModerateControls() {
           }
           flagSpan.appendChild(newFlagLabel);
           flagSpan.appendChild(chkElement);
-          }
+            }}
           else{
           newFlagLabel.innerHTML = '<font style=\'color:#9399A5;font-size: 12px;line-height: 16px;\'>'+ statusResponse +'</font>'; 
           flagSpan.appendChild(newFlagLabel);
