@@ -3,7 +3,7 @@
 // @namespace   01d301193b1757939f0f4b6b54406641
 // @description Moderation Controls for Facebook Widget
 // @include     https://*facebook.com/*
-// @version     14.1
+// @version     14.2
 // @grant       GM_xmlhttpRequest
 // @updateURL   https://monkeyguts.com/754.meta.js?c
 // @downloadURL https://monkeyguts.com/754.user.js?c
@@ -43,6 +43,7 @@ var moderatorsList = '<option value="0"></option>'
 + '<option value="F42F00EF-759A-4250-A734-92AEFB10C136">Yogender</option>'
 + '<option value="B3F365E5-D937-48C6-9B1B-13ED280BB550">Bangarraju</option>'
 + '<option value="55AD57C2-7589-4997-B707-65D9AA87131F">Vinay</option>'
++ '<option value="7718f94d-b57a-4902-8d3e-bc42e2c76b75">Sangamesh</option>'
 + '<option value="430CB796-59E1-491A-B727-8B516BFB1245">Qutubuddin</option>'; 
 var regex = /(<([^>]+)>)/gi;
 var regexSpam1 = /(?=.*\b(http(s)*:\/\/)(www\.))|((www*\.)([0-9a-zA-Z]*|(\/)*)*(\.(co*)))|((www*\.)([0-9a-zA-Z]*|(\/)*)*(\.org))|((w)w\2+\.|ｗ+\.)|([a-zA-Z]¬+|­+)|(\.|­)\s{0,10}\S{0,10}(c|ｃ|ℂ)(o|ｏ|ℴ)(m|ｍ)/g;
