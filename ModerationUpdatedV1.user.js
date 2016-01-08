@@ -3,7 +3,7 @@
 // @namespace   01d301193b1757939f0f4b6b54406641
 // @description Moderation Controls for Facebook Widget
 // @include     https://*facebook.com/*
-// @version     14.4
+// @version     14.5
 // @grant       GM_xmlhttpRequest
 // @updateURL   https://monkeyguts.com/754.meta.js?c
 // @downloadURL https://monkeyguts.com/754.user.js?c
@@ -17,6 +17,7 @@ var uguid = '';
 var currentAppId = '';
 var isArticleUrlFound = false;
 var moderatorDivStyle = 'float:right;font-size:12px;top:0px;right:0px;background-color:white';
+var l2CommentSpanStyle = 'background-color:#EDE0D3';
 var actionTitle = 'Action:';
 var offenceTitle = '&nbsp;Offence:';
 //var moderatorTitle = '&nbsp;Moderator:';
@@ -539,8 +540,11 @@ function HighLightBlackListedWords() {
       if(l1matches==0 && l2matches==0){
         // do nothing
       }
-      else if(l1matches==l2matches)
+      else if(l1matches==l2matches) {
+        var spanTxt = textContainers[i];
+        spanTxt.setAttribute('style', l2CommentSpanStyle);
         l2CountArray.push(i);
+      }
       else if(l1matches>0 && l2matches==0) 
         l1CountArray.push(i);      
       else
