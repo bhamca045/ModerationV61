@@ -247,25 +247,6 @@ new RegExp('(?!\>)\\b[^\\w>]*(wench|wenches|wenching|buggers|refugee|refugees|ba
 'cock|crackhead|cummin|curtir|dix|godamnit|knucklehead|nipple|penis|penus|redskin|scrotum|scum|skank|suckers|tit|t[*][*]t|kiddy fiddler|bds|anus|beddable|bfd|bollocked|centerfolds|diesel-dike|dp|fornik|gay cancer|'+
 'gay lord|gay second base|heifer|hooters|hotchat|humpers|hymies|ifintermyself|kanibis|kannabis|kannibis|muff|nymphet|nympho|pikeys|reefers|spaffs|topless|wad|wazzak|wazzaks|wencher|wenchers|woofter|woolly-woofters|gay)[^\\w<]*\\b(?!\<)','i'));
 
-var plL2RegPatts = new Array(new RegExp('(?!\>)\\b[^\\w>]*(kule (Użyj ~ ponad 2 \' o \')|Bettencourt|Bixinho|plamienie-|Boiola|BROSZKA|Chupa-mos|Niech to cholera|kurde!|Cholernie|Jeleń|opóźnione / idiota|desgraã§ADO|Dick|drwong postino|'+
-                                        'Dyke|jeść mi!|enraba me / me enraba|Ewer|pedałem|Cegielnia|Karmienie|Fernand carmel|dziewczyna do Internetu!|do Internetu z ã © wody!|Floriane-lefevre|głupiec|Lis raport|Lis ankieta|fudidosafados fuder imbecil|'+
-                                        'gagnpierre fernand-carmel|chłopiec gej|iść za piątą piekło!!!|Osoby homoseksualne w więzieniu|róg|napalone|Idiota|istpravda ru|JeanRichard-roland|Mela twarz £ o!|brakuje mi!|mój najlepszy przyjaciel zarabia ponad|'+
-                                        'negocio proprio|dziewczynki|sierota lub bezużyteczne|otã¡Rio|Smoczek mnie głupie|świnia!|Pila|kufel|PIRIGUETE|Piru małe|Prosimy nie podawać tylko|Poker face pqfudendo|wkręcić coś daleko w górę biegu?|shorx click4surveys|'+
-                                        'Zamknij się!|chory idiota|głupie|Sodomizowania|kij|Syrakuzy|dwadzieścia cztery [24]|VA do piekła|Vagabond|będzie bzdura!|Możesz ã © a £ Marica go!|Możesz ã © a £ sikanie to!|Ciebie ciota|Twoja mama)[^\\w<]*\\b(?!\<)','i'),
-                            // en l2 words list
-new RegExp('(?!\>)\\b[^\\w>]*(adultsex|amaTeur|asexualox|badass|balls|bigoted|bitching|bitchy|boned|butt|buttocks|clitoritis|clitorus|cybersex|dick|erotic|escort|fagging|'+
-'faggot|faggotry|faggots|faggott|fagot|fagots|freesex|freex|Gay Bow|gay bOy|gay dog|gay man|gay men|gay sEx|gaybert|gaybob|gaybor|gayboy|gaydo|gaygirl|dumb|dumbs|dumbest|gaylord|gays|gaysex|gaysian|'+
-'gaytard|gayteens|gayteenz|gaywad|suck|sucking|god damn|god-dam|redneck|slope|horny|hot chiCk|hotsex|idiot|jerk|lesbain|lesbayn|lusting|masturbat|mormon|pervert|pissant|pissed off|pisspIg|porn|prick|rapist|'+
-'sex|sexx|sexxx|sexY|shoot|stupid|teabaggers|transsexual|voyeur|willy|troll|scrounger|sow|crapped|immigrant|immigrants|imigrants Moslem|Muslim|Moslim|scrounge|Islam|islamists|Jew|Jewry|slits)[^\\w<]*\\b(?!\<)','i'),
-new RegExp('(?!\>)\\b[^\\w>]*(freaks|assinine|Axx|B_A_L_L_S!|bullocks|fracking|fricking|i.d.i.o.t.|idiots|idoit|jerks|knuckleheads|load of crap|loser|perverts|pi[*][*][*]ed|retarded|sucked|SUCKS|Terroristen|w[*]nkers|'+
-'islamo facist|putz|demoskanks|ragheads|Snatch|numbskull|half breed|nit wit|dummy|dole bludging|filth|Bozo|shagging|ball-less|peabrain|libtard|Jesus|Christ|refugee|muslims|Hookers|adultplayground|adultsite|'+
-'assed|beastiality|bestiality|bint|bints|bitched|bitchery|bitchier|bitchin\'|bleeth|bongs|canibus|ceemen|cyberbabe|cybererotica|dildoes|dildos|'+
-'ejaculates|foreskin|ganja|genitals|hussies|hussy|ladyboy|lady-boy|ladyboys|lady-boys|naked girl|naked girls|naked-girl|naked-girls|naked-woman|naked-women|nipples|nookie|nooky|sadomasochist|shemale)[^\\w<]*\\b(?!\<)','i'),
-new RegExp('(?!\>)\\b[^\\w>]*(wench|wenches|wenching|buggers|refugee|refugees|barbaric|butcher|butchering|isis|stupidest|all you clowns|imbeciles|fool|idots|demon-rats|illegal rats|coyotes|terrorism|except for his middle leg|'+
-'rat boy|blowhard|drop more bombs|just drop bombs everywhere|jihadists|black male|clowns|idiotic|buffoon|rodent community|anal|ball kicking|bigot|bigots|bookie|bootee|bootie|breastman|bung hole|childporn|'+
-'cock|crackhead|cummin|curtir|dix|godamnit|knucklehead|nipple|penis|penus|redskin|scrotum|scum|skank|suckers|tit|t[*][*]t|kiddy fiddler|bds|anus|beddable|bfd|bollocked|centerfolds|diesel-dike|dp|fornik|gay cancer|'+
-'gay lord|gay second base|heifer|hooters|hotchat|humpers|hymies|ifintermyself|kanibis|kannabis|kannibis|muff|nymphet|nympho|pikeys|reefers|spaffs|topless|wad|wazzak|wazzaks|wencher|wenchers|woofter|woolly-woofters|gay)[^\\w<]*\\b(?!\<)','i'));
-
 var ruL2RegPatts = new Array(new RegExp('(?!\>)\\b[^\\w>]*(hooyÃ³vo|Drochit\'|Durak|Gandon|HooyeÃ©lo|Hooyovi / zayebÃ¡telski|Hui|Huiplet|Loh (лох)|MalafyÃ¡|Na hooyÃ¡?|Ostyn\'|Oyah Dah Papakina|Yoscho Papakina|'+
                                         'P\'yan v stel-ku|Past\' zakroi|PeetoÃ³kh|Peezdit\'|Perdet\'|PoloochÃ­t PizdyoolÃ©y|PÃ©ezdit|Sosat\'|Tee Karova|Trajat\'sya|Tvar\'|Yeban\'ko maloletnee|eban\'ko|goluboi|'+
                                         'pedik|заткнись|ey|padla (моргала выколю)|ugrainform)[^\\w<]*\\b(?!\<)','i'),
@@ -653,11 +634,6 @@ function LoadApplicationRegExs() {
       //'NB-MSN#1452940268301780'
     case '1452940268301780':
       regExDict['review'] = nbL2RegPatts;
-      regExDict['public'] = enL3RegPatts;
-      break;
-      //'PL-MSN#689527477782682'
-    case '689527477782682':
-      regExDict['review'] = plL2RegPatts;
       regExDict['public'] = enL3RegPatts;
       break;
        //'RU-MSN#760049184057705'
