@@ -3,7 +3,7 @@
 // @namespace   01d301193b1757939f0f4b6b54406641
 // @description Moderation Controls for Facebook Widget
 // @include     https://*facebook.com/*
-// @version     14.6
+// @version     14.7
 // @grant       GM_xmlhttpRequest
 // @updateURL   https://monkeyguts.com/754.meta.js?c
 // @downloadURL https://monkeyguts.com/754.user.js?c
@@ -48,7 +48,10 @@ var moderatorsList = '<option value="0"></option>'
 + '<option value="430CB796-59E1-491A-B727-8B516BFB1245">Qutubuddin</option>'; 
 var regex = /(<([^>]+)>)/gi;
 var regexSpam1 = /(?=.*\b(http(s)*:\/\/)(www\.))|((www*\.)([0-9a-zA-Z]*|(\/)*)*(\.(co*)))|((www*\.)([0-9a-zA-Z]*|(\/)*)*(\.org))|((w)w\2+\.|ｗ+\.)|([a-zA-Z]¬+|­+)|(\.|­)\s{0,10}\S{0,10}(c|ｃ|ℂ)(o|ｏ|ℴ)(m|ｍ)/g;
-var regexSpam2 = /(https?:\/\/([0-9a-zA-Z]*|(\/)*)*\.co*)|(?:https?:\/\/)?(?:(?:0rz\.tw)|(?:1link\.in)|(?:1url\.com)|(?:2\.gp)|(?:2big\.at)|(?:2tu\.us)|(?:3\.ly)|(?:307\.to)|(?:4ms\.me)|(?:4sq\.com)|(?:4url\.cc)|(?:6url\.com)|(?:7\.ly)|(?:a\.gg)|(?:a\.nf)|(?:aa\.cx)|(?:abcurl\.net)|(?:ad\.vu)|(?:adf\.ly)|(?:adjix\.com)|(?:afx\.cc)|(?:all\.fuseurl.com)|(?:alturl\.com)|(?:amzn\.to)|(?:ar\.gy)|(?:arst\.ch)|(?:atu\.ca)|(?:azc\.cc)|(?:b23\.ru)|(?:b2l\.me)|(?:bacn\.me)|(?:bcool\.bz)|(?:binged\.it)|(?:bit\.ly)|(?:bizj\.us)|(?:bloat\.me)|(?:bravo\.ly)|(?:bsa\.ly)|(?:budurl\.com)|(?:canurl\.com)|(?:chilp\.it)|(?:chzb\.gr)|(?:cl\.lk)|(?:cl\.ly)|(?:clck\.ru)|(?:cli\.gs)|(?:cliccami\.info)|(?:clickthru\.ca)|(?:clop\.in)|(?:conta\.cc)|(?:cort\.as)|(?:cot\.ag)|(?:crks\.me)|(?:ctvr\.us)|(?:cutt\.us)|(?:dai\.ly)|(?:decenturl\.com)|(?:dfl8\.me)|(?:digbig\.com)|(?:digg\.com)|(?:disq\.us)|(?:dld\.bz)|(?:dlvr\.it)|(?:do\.my)|(?:doiop\.com)|(?:dopen\.us)|(?:easyuri\.com)|(?:easyurl\.net)|(?:eepurl\.com)|(?:eweri\.com)|(?:fa\.by)|(?:fav\.me)|(?:fb\.me)|(?:fbshare\.me)|(?:ff\.im)|(?:fff\.to)|(?:fire\.to)|(?:firsturl\.de)|(?:firsturl\.net)|(?:flic\.kr)|(?:flq\.us)|(?:fly2\.ws)|(?:fon\.gs)|(?:freak\.to)|(?:fuseurl\.com)|(?:fuzzy\.to)|(?:fwd4\.me)|(?:fwib\.net)|(?:g\.ro.lt)|(?:gizmo\.do)|(?:gl\.am)|(?:go\.9nl.com)|(?:go\.ign.com)|(?:go\.usa.gov)|(?:goo\.gl)|(?:goshrink\.com)|(?:gurl\.es)|(?:hex\.io)|(?:hiderefer\.com)|(?:hmm\.ph)|(?:href\.in)|(?:hsblinks\.com)|(?:htxt\.it)|(?:huff\.to)|(?:hulu\.com)|(?:hurl\.me)|(?:hurl\.ws)|(?:icanhaz\.com)|(?:idek\.net)|(?:ilix\.in)|(?:is\.gd)|(?:its\.my)|(?:ix\.lt)|(?:j\.mp)|(?:jijr\.com)|(?:kl\.am)|(?:klck\.me)|(?:korta\.nu)|(?:krunchd\.com)|(?:l9k\.net)|(?:lat\.ms)|(?:liip\.to)|(?:liltext\.com)|(?:linkbee\.com)|(?:linkbun\.ch)|(?:liurl\.cn)|(?:ln-s\.net)|(?:ln-s\.ru)|(?:lnk\.gd)|(?:lnk\.ms)|(?:lnkd\.in)|(?:lnkurl\.com)|(?:lru\.jp)|(?:lt\.tl)|(?:lurl\.no)|(?:macte\.ch)|(?:mash\.to)|(?:merky\.de)|(?:migre\.me)|(?:miniurl\.com)|(?:minurl\.fr)|(?:mke\.me)|(?:moby\.to)|(?:moourl\.com)|(?:mrte\.ch)|(?:myloc\.me)|(?:myurl\.in)|(?:n\.pr)|(?:nbc\.co)|(?:nblo\.gs)|(?:nn\.nf)|(?:not\.my)|(?:notlong\.com)|(?:nsfw\.in)|(?:nutshellurl\.com)|(?:nxy\.in)|(?:nyti\.ms)|(?:o-x\.fr)|(?:oc1\.us)|(?:om\.ly)|(?:omf\.gd)|(?:omoikane\.net)|(?:on\.cnn.com)|(?:on\.mktw.net)|(?:onforb\.es)|(?:orz\.se)|(?:ow\.ly)|(?:ping\.fm)|(?:pli\.gs)|(?:pnt\.me)|(?:politi\.co)|(?:post\.ly)|(?:pp\.gg)|(?:profile\.to)|(?:ptiturl\.com)|(?:pub\.vitrue.com)|(?:qlnk\.net)|(?:qte\.me)|(?:qu\.tc)|(?:qy\.fi)|(?:r\.im)|(?:rb6\.me)|(?:read\.bi)|(?:readthis\.ca)|(?:reallytinyurl\.com)|(?:redir\.ec)|(?:redirects\.ca)|(?:redirx\.com)|(?:retwt\.me)|(?:ri\.ms)|(?:rickroll\.it)|(?:riz\.gd)|(?:rt\.nu)|(?:ru\.ly)|(?:rubyurl\.com)|(?:rurl\.org)|(?:rww\.tw)|(?:s4c\.in)|(?:s7y\.us)|(?:safe\.mn)|(?:sameurl\.com)|(?:sdut\.us)|(?:shar\.es)|(?:shink\.de)|(?:shorl\.com)|(?:short\.ie)|(?:short\.to)|(?:shortlinks\.co.uk)|(?:shorturl\.com)|(?:shout\.to)|(?:show\.my)|(?:shrinkify\.com)|(?:shrinkr\.com)|(?:shrt\.fr)|(?:shrt\.st)|(?:shrten\.com)|(?:shrunkin\.com)|(?:simurl\.com)|(?:slate\.me)|(?:smallr\.com)|(?:smsh\.me)|(?:smurl\.name)|(?:sn\.im)|(?:snipr\.com)|(?:snipurl\.com)|(?:snurl\.com)|(?:sp2\.ro)|(?:spedr\.com)|(?:srnk\.net)|(?:srs\.li)|(?:starturl\.com)|(?:su\.pr)|(?:surl\.co.uk)|(?:surl\.hu)|(?:t\.cn)|(?:t\.co)|(?:t\.lh.com)|(?:ta\.gd)|(?:tbd\.ly)|(?:tcrn\.ch)|(?:tgr\.me)|(?:tgr\.ph)|(?:tighturl\.com)|(?:tiniuri\.com)|(?:tiny\.cc)|(?:tiny\.ly)|(?:tiny\.pl)|(?:tinylink\.in)|(?:tinyuri\.ca)|(?:tinyurl\.com)|(?:tl\.gd)|(?:tmi\.me)|(?:tnij\.org)|(?:tnw\.to)|(?:tny\.com)|(?:to\.ly)|(?:togoto\.us)|(?:totc\.us)|(?:toysr\.us)|(?:tpm\.ly)|(?:tr\.im)|(?:tra\.kz)|(?:trunc\.it)|(?:twhub\.com)|(?:twirl\.at)|(?:twitclicks\.com)|(?:twitterurl\.net)|(?:twitterurl\.org)|(?:twiturl\.de)|(?:twurl\.cc)|(?:twurl\.nl)|(?:u\.mavrev.com)|(?:u\.nu)|(?:u76\.org)|(?:ub0\.cc)|(?:ulu\.lu)|(?:updating\.me)|(?:ur1\.ca)|(?:url\.az)|(?:url\.co.uk)|(?:url\.ie)|(?:url360\.me)|(?:url4\.eu)|(?:urlborg\.com)|(?:urlbrief\.com)|(?:urlcover\.com)|(?:urlcut\.com)|(?:urlenco\.de)|(?:urli\.nl)|(?:urls\.im)|(?:urlshorteningservicefortwitter\.com)|(?:urlx\.ie)|(?:urlzen\.com)|(?:usat\.ly)|(?:use\.my)|(?:vb\.ly)|(?:vgn\.am)|(?:vl\.am)|(?:vm\.lc)|(?:w55\.de)|(?:wapo\.st)|(?:wapurl\.co.uk)|(?:wipi\.es)|(?:wp\.me)|(?:x\.vu)|(?:xr\.com)|(?:xrl\.in)|(?:xrl\.us)|(?:xurl\.es)|(?:xurl\.jp)|(?:y\.ahoo.it)|(?:yatuc\.com)|(?:ye\.pe)|(?:yep\.it)|(?:yfrog\.com)|(?:yhoo\.it)|(?:yiyd\.com)|(?:youtu\.be)|(?:yuarel\.com)|(?:z0p\.de)|(?:zi\.ma)|(?:zi\.mu)|(?:zipmyurl\.com)|(?:zud\.me)|(?:zurl\.ws)|(?:zz\.gd)|(?:zzang\.kr)|(?:›\.ws)|(?:✩\.ws)|(?:✿\.ws)|(?:❥\.ws)|(?:➔\.ws)|(?:➞\.ws)|(?:➡\.ws)|(?:➨\.ws)|(?:➯\.ws)|(?:➹\.ws)|(?:➽\.ws))\/[a-z0-9]*|(https?:\/\/([0-9a-zA-Z]*|(\/)*)*\.org)/g;
+var regexSpam2 = /(https?:\/\/([0-9a-zA-Z]*|(\/)*)*\.co*)|(?:https?:\/\/)?(?:(?:0rz\.tw)|(?:1link\.in)|(?:1url\.com)|(?:2\.gp)|(?:2big\.at)|(?:2tu\.us)|(?:3\.ly)|(?:307\.to)|(?:4ms\.me)|(?:4sq\.com)|(?:4url\.cc)|(?:6url\.com)|(?:7\.ly)|(?:a\.gg)|(?:a\.nf)|(?:aa\.cx)|(?:abcurl\.net)|(?:ad\.vu)|(?:adf\.ly)|(?:adjix\.com)|(?:afx\.cc)|(?:all\.fuseurl.com)|(?:alturl\.com)|(?:amzn\.to)|(?:ar\.gy)|(?:arst\.ch)|(?:atu\.ca)|(?:azc\.cc)|(?:b23\.ru)|(?:b2l\.me)|(?:bacn\.me)|(?:bcool\.bz)|(?:binged\.it)|(?:bit\.ly)|(?:bizj\.us)|(?:bloat\.me)|(?:bravo\.ly)|(?:bsa\.ly)|(?:budurl\.com)|(?:canurl\.com)|(?:chilp\.it)|(?:chzb\.gr)|(?:cl\.lk)|(?:cl\.ly)|(?:clck\.ru)|(?:cli\.gs)|(?:cliccami\.info)|(?:clickthru\.ca)|(?:clop\.in)|(?:conta\.cc)|(?:cort\.as)|(?:cot\.ag)|(?:crks\.me)|(?:ctvr\.us)|(?:cutt\.us)|(?:dai\.ly)|(?:decenturl\.com)|(?:dfl8\.me)|(?:digbig\.com)|(?:digg\.com)|(?:disq\.us)|(?:dld\.bz)|(?:dlvr\.it)|(?:do\.my)|(?:doiop\.com)|(?:dopen\.us)|(?:easyuri\.com)|(?:easyurl\.net)|(?:eepurl\.com)|(?:eweri\.com)|(?:fa\.by)|(?:fav\.me)|(?:fb\.me)|(?:fbshare\.me)|(?:ff\.im)|(?:fff\.to)|(?:fire\.to)/g;
+var regexSpam7 = /(?:firsturl\.de)|(?:firsturl\.net)|(?:flic\.kr)|(?:flq\.us)|(?:fly2\.ws)|(?:fon\.gs)|(?:freak\.to)|(?:fuseurl\.com)|(?:fuzzy\.to)|(?:fwd4\.me)|(?:fwib\.net)|(?:g\.ro.lt)|(?:gizmo\.do)|(?:gl\.am)|(?:go\.9nl.com)|(?:go\.ign.com)|(?:go\.usa.gov)|(?:goo\.gl)|(?:goshrink\.com)|(?:gurl\.es)|(?:hex\.io)|(?:hiderefer\.com)|(?:hmm\.ph)|(?:href\.in)|(?:hsblinks\.com)|(?:htxt\.it)|(?:huff\.to)|(?:hulu\.com)|(?:hurl\.me)|(?:hurl\.ws)|(?:icanhaz\.com)|(?:idek\.net)|(?:ilix\.in)|(?:is\.gd)|(?:its\.my)|(?:ix\.lt)|(?:j\.mp)|(?:jijr\.com)|(?:kl\.am)|(?:klck\.me)|(?:korta\.nu)|(?:krunchd\.com)|(?:l9k\.net)|(?:lat\.ms)|(?:liip\.to)|(?:liltext\.com)|(?:linkbee\.com)|(?:linkbun\.ch)|(?:liurl\.cn)|(?:ln-s\.net)|(?:ln-s\.ru)|(?:lnk\.gd)|(?:lnk\.ms)|(?:lnkd\.in)|(?:lnkurl\.com)|(?:lru\.jp)|(?:lt\.tl)|(?:lurl\.no)|(?:macte\.ch)|(?:mash\.to)|(?:merky\.de)|(?:migre\.me)|(?:miniurl\.com)|(?:minurl\.fr)|(?:mke\.me)|(?:moby\.to)|(?:moourl\.com)|(?:mrte\.ch)|(?:myloc\.me)|(?:myurl\.in)|(?:n\.pr)|(?:nbc\.co)|(?:nblo\.gs)|(?:nn\.nf)|(?:not\.my)|(?:notlong\.com)|(?:nsfw\.in)|(?:nutshellurl\.com)|(?:nxy\.in)|(?:nyti\.ms)/g;
+var regexSpam8 = /(?:o-x\.fr)|(?:oc1\.us)|(?:om\.ly)|(?:omf\.gd)|(?:omoikane\.net)|(?:on\.cnn.com)|(?:on\.mktw.net)|(?:onforb\.es)|(?:orz\.se)|(?:ow\.ly)|(?:ping\.fm)|(?:pli\.gs)|(?:pnt\.me)|(?:politi\.co)|(?:post\.ly)|(?:pp\.gg)|(?:profile\.to)|(?:ptiturl\.com)|(?:pub\.vitrue.com)|(?:qlnk\.net)|(?:qte\.me)|(?:qu\.tc)|(?:qy\.fi)|(?:r\.im)|(?:rb6\.me)|(?:read\.bi)|(?:readthis\.ca)|(?:reallytinyurl\.com)|(?:redir\.ec)|(?:redirects\.ca)|(?:redirx\.com)|(?:retwt\.me)|(?:ri\.ms)|(?:rickroll\.it)|(?:riz\.gd)|(?:rt\.nu)|(?:ru\.ly)|(?:rubyurl\.com)|(?:rurl\.org)|(?:rww\.tw)|(?:s4c\.in)|(?:s7y\.us)|(?:safe\.mn)|(?:sameurl\.com)|(?:sdut\.us)|(?:shar\.es)|(?:shink\.de)|(?:shorl\.com)|(?:short\.ie)|(?:short\.to)|(?:shortlinks\.co.uk)|(?:shorturl\.com)|(?:shout\.to)|(?:show\.my)|(?:shrinkify\.com)|(?:shrinkr\.com)|(?:shrt\.fr)|(?:shrt\.st)|(?:shrten\.com)|(?:shrunkin\.com)|(?:simurl\.com)|(?:slate\.me)|(?:smallr\.com)|(?:smsh\.me)|(?:smurl\.name)|(?:sn\.im)|(?:snipr\.com)|(?:snipurl\.com)|(?:snurl\.com)|(?:sp2\.ro)|(?:spedr\.com)|(?:srnk\.net)|(?:srs\.li)|(?:starturl\.com)|(?:su\.pr)|(?:surl\.co.uk)|(?:surl\.hu)|(?:t\.cn)/g;
+var regexSpam9 = /(?:t\.co)|(?:t\.lh.com)|(?:ta\.gd)|(?:tbd\.ly)|(?:tcrn\.ch)|(?:tgr\.me)|(?:tgr\.ph)|(?:tighturl\.com)|(?:tiniuri\.com)|(?:tiny\.cc)|(?:tiny\.ly)|(?:tiny\.pl)|(?:tinylink\.in)|(?:tinyuri\.ca)|(?:tinyurl\.com)|(?:tl\.gd)|(?:tmi\.me)|(?:tnij\.org)|(?:tnw\.to)|(?:tny\.com)|(?:to\.ly)|(?:togoto\.us)|(?:totc\.us)|(?:toysr\.us)|(?:tpm\.ly)|(?:tr\.im)|(?:tra\.kz)|(?:trunc\.it)|(?:twhub\.com)|(?:twirl\.at)|(?:twitclicks\.com)|(?:twitterurl\.net)|(?:twitterurl\.org)|(?:twiturl\.de)|(?:twurl\.cc)|(?:twurl\.nl)|(?:u\.mavrev.com)|(?:u\.nu)|(?:u76\.org)|(?:ub0\.cc)|(?:ulu\.lu)|(?:updating\.me)|(?:ur1\.ca)|(?:url\.az)|(?:url\.co.uk)|(?:url\.ie)|(?:url360\.me)|(?:url4\.eu)|(?:urlborg\.com)|(?:urlbrief\.com)|(?:urlcover\.com)|(?:urlcut\.com)|(?:urlenco\.de)|(?:urli\.nl)|(?:urls\.im)|(?:urlshorteningservicefortwitter\.com)|(?:urlx\.ie)|(?:urlzen\.com)|(?:usat\.ly)|(?:use\.my)|(?:vb\.ly)|(?:vgn\.am)|(?:vl\.am)|(?:vm\.lc)|(?:w55\.de)|(?:wapo\.st)|(?:wapurl\.co.uk)|(?:wipi\.es)|(?:wp\.me)|(?:x\.vu)|(?:xr\.com)|(?:xrl\.in)|(?:xrl\.us)|(?:xurl\.es)|(?:xurl\.jp)|(?:y\.ahoo.it)|(?:yatuc\.com)|(?:ye\.pe)|(?:yep\.it)|(?:yfrog\.com)|(?:yhoo\.it)|(?:yiyd\.com)|(?:youtu\.be)|(?:yuarel\.com)|(?:z0p\.de)|(?:zi\.ma)|(?:zi\.mu)|(?:zipmyurl\.com)|(?:zud\.me)|(?:zurl\.ws)|(?:zz\.gd)|(?:zzang\.kr)|(?:›\.ws)|(?:✩\.ws)|(?:✿\.ws)|(?:❥\.ws)|(?:➔\.ws)|(?:➞\.ws)|(?:➡\.ws)|(?:➨\.ws)|(?:➯\.ws)|(?:➹\.ws)|(?:➽\.ws))\/[a-z0-9]*|(https?:\/\/([0-9a-zA-Z]*|(\/)*)*\.org)/g;
 var regexSpam3 = /(?=.*(w(\W+)w(\W+)w.))/g;
 var regexSpam4 = /^(?=.*\$[0-9]+)(?=.*(work|home)).*/g;
 var regexSpam5 = /^(?=.*\$[0-9]+)(?=.*(got paid))/g;
@@ -109,35 +112,10 @@ var deL2RegPatts = new Array(new RegExp('(?!\>)\\b[^\\w>]*(agedream|bdm|candy|cu
 'xxpasswordxx|xxx|yourwastedgirlfriend|zensiert|zensurfrei|zensur-frei|zweitfrau|zweit-frau|ana-4life|anaengel|ana-hanna|anamia|ana-mia|ana-perfection|anasbrief|anas-brief|anasdiary|anasgebote|anas-gebote|anashome|ana-till-the-end|anorexic|drogendealer|drogen-forum|'+
 'drugworld|fur-alle-ana-neulinge|highway-to-ana|lady-ana|me-and-ana|morbid-alcoholica|proana|pro-ana|pro-anorexia|promia|pro-mia|romancingthebone|saufen|skinny|thinspiration|thinspo|valerie-ana-freundschaft|Drecksau|Fett backe|Horst|Onanieren|Pisser|Schei[ß]e|Schwuchtel|'+
 'Schwuler|Shishkoff|der Schwanz|die Titten|missgeburt|dummes huhn|trottel|der teufel|der abschaum|dumme kuh|wichser|Dreckschweine|scheiss auf die|was die schei[ß]|Die M[ö]pse|Drecksack!|die Schei[ß]e|geil|mieser stricher|schwanz lecker|so ein beschi[ß]!|der abschaum der menschlichen gesellschaft|'+
-'der drecksack|du dumme kuh|duncauf|homofuerst|Fl[ü]chtlinge)[^\\w<]*\\b(?!\<)','i'),
-                             // en l2 words list
-new RegExp('(?!\>)\\b[^\\w>]*(adultsex|amaTeur|asexualox|badass|balls|bigoted|bitching|bitchy|boned|butt|buttocks|clitoritis|clitorus|cybersex|dick|erotic|escort|fagging|'+
-'faggot|faggotry|faggots|faggott|fagot|fagots|freesex|freex|Gay Bow|gay bOy|gay dog|gay man|gay men|gay sEx|gaybert|gaybob|gaybor|gayboy|gaydo|gaygirl|dumb|dumbs|dumbest|gaylord|gays|gaysex|gaysian|'+
-'gaytard|gayteens|gayteenz|gaywad|suck|sucking|god damn|god-dam|redneck|slope|horny|hot chiCk|hotsex|idiot|jerk|lesbain|lesbayn|lusting|masturbat|mormon|pervert|pissant|pissed off|pisspIg|porn|prick|rapist|'+
-'sex|sexx|sexxx|sexY|shoot|stupid|teabaggers|transsexual|voyeur|willy|troll|scrounger|sow|crapped|immigrant|immigrants|imigrants Moslem|Muslim|Moslim|scrounge|Islam|islamists|Jew|Jewry|slits)[^\\w<]*\\b(?!\<)','i'),
-new RegExp('(?!\>)\\b[^\\w>]*(freaks|assinine|Axx|B_A_L_L_S!|bullocks|fracking|fricking|i.d.i.o.t.|idiots|idoit|jerks|knuckleheads|load of crap|loser|perverts|pi[*][*][*]ed|retarded|sucked|SUCKS|Terroristen|w[*]nkers|'+
-'islamo facist|putz|demoskanks|ragheads|Snatch|numbskull|half breed|nit wit|dummy|dole bludging|filth|Bozo|shagging|ball-less|peabrain|libtard|Jesus|Christ|refugee|muslims|Hookers|adultplayground|adultsite|'+
-'assed|beastiality|bestiality|bint|bints|bitched|bitchery|bitchier|bitchin\'|bleeth|bongs|canibus|ceemen|cyberbabe|cybererotica|dildoes|dildos|'+
-'ejaculates|foreskin|ganja|genitals|hussies|hussy|ladyboy|lady-boy|ladyboys|lady-boys|naked girl|naked girls|naked-girl|naked-girls|naked-woman|naked-women|nipples|nookie|nooky|sadomasochist|shemale)[^\\w<]*\\b(?!\<)','i'),
-new RegExp('(?!\>)\\b[^\\w>]*(wench|wenches|wenching|buggers|refugee|refugees|barbaric|butcher|butchering|isis|stupidest|all you clowns|imbeciles|fool|idots|demon-rats|illegal rats|coyotes|terrorism|except for his middle leg|'+
-'rat boy|blowhard|drop more bombs|just drop bombs everywhere|jihadists|black male|clowns|idiotic|buffoon|rodent community|anal|ball kicking|bigot|bigots|bookie|bootee|bootie|breastman|bung hole|childporn|'+
-'cock|crackhead|cummin|curtir|dix|godamnit|knucklehead|nipple|penis|penus|redskin|scrotum|scum|skank|suckers|tit|t[*][*]t|kiddy fiddler|bds|anus|beddable|bfd|bollocked|centerfolds|diesel-dike|dp|fornik|gay cancer|'+
-'gay lord|gay second base|heifer|hooters|hotchat|humpers|hymies|ifintermyself|kanibis|kannabis|kannibis|muff|nymphet|nympho|pikeys|reefers|spaffs|topless|wad|wazzak|wazzaks|wencher|wenchers|woofter|woolly-woofters|gay)[^\\w<]*\\b(?!\<)','i'));
+'der drecksack|du dumme kuh|duncauf|homofuerst|Fl[ü]chtlinge)[^\\w<]*\\b(?!\<)','i'));
 
-var ptL2RegPatts = new Array(new RegExp('(?!\>)\\b[^\\w>]*(acha que eu n[ã]o consigo?|amo sua bunda|babaca|bicha|viado|viad[ã]o|marica|burro|idiota|cuz[ã]o|cuz[õ]es|filhos da puta|escroto|filho da puta|idiota|burro|maconha|vamos ficar b[ê]bados hoje [à] noite|bicha|bichona)[^\\w<]*\\b(?!\<)','i'),
-                            // en l2 words list
-new RegExp('(?!\>)\\b[^\\w>]*(adultsex|amaTeur|asexualox|badass|balls|bigoted|bitching|bitchy|boned|butt|buttocks|clitoritis|clitorus|cybersex|dick|erotic|escort|fagging|'+
-'faggot|faggotry|faggots|faggott|fagot|fagots|freesex|freex|Gay Bow|gay bOy|gay dog|gay man|gay men|gay sEx|gaybert|gaybob|gaybor|gayboy|gaydo|gaygirl|dumb|dumbs|dumbest|gaylord|gays|gaysex|gaysian|'+
-'gaytard|gayteens|gayteenz|gaywad|suck|sucking|god damn|god-dam|redneck|slope|horny|hot chiCk|hotsex|idiot|jerk|lesbain|lesbayn|lusting|masturbat|mormon|pervert|pissant|pissed off|pisspIg|porn|prick|rapist|'+
-'sex|sexx|sexxx|sexY|shoot|stupid|teabaggers|transsexual|voyeur|willy|troll|scrounger|sow|crapped|immigrant|immigrants|imigrants Moslem|Muslim|Moslim|scrounge|Islam|islamists|Jew|Jewry|slits)[^\\w<]*\\b(?!\<)','i'),
-new RegExp('(?!\>)\\b[^\\w>]*(freaks|assinine|Axx|B_A_L_L_S!|bullocks|fracking|fricking|i.d.i.o.t.|idiots|idoit|jerks|knuckleheads|load of crap|loser|perverts|pi[*][*][*]ed|retarded|sucked|SUCKS|Terroristen|w[*]nkers|'+
-'islamo facist|putz|demoskanks|ragheads|Snatch|numbskull|half breed|nit wit|dummy|dole bludging|filth|Bozo|shagging|ball-less|peabrain|libtard|Jesus|Christ|refugee|muslims|Hookers|adultplayground|adultsite|'+
-'assed|beastiality|bestiality|bint|bints|bitched|bitchery|bitchier|bitchin\'|bleeth|bongs|canibus|ceemen|cyberbabe|cybererotica|dildoes|dildos|'+
-'ejaculates|foreskin|ganja|genitals|hussies|hussy|ladyboy|lady-boy|ladyboys|lady-boys|naked girl|naked girls|naked-girl|naked-girls|naked-woman|naked-women|nipples|nookie|nooky|sadomasochist|shemale)[^\\w<]*\\b(?!\<)','i'),
-new RegExp('(?!\>)\\b[^\\w>]*(wench|wenches|wenching|buggers|refugee|refugees|barbaric|butcher|butchering|isis|stupidest|all you clowns|imbeciles|fool|idots|demon-rats|illegal rats|coyotes|terrorism|except for his middle leg|'+
-'rat boy|blowhard|drop more bombs|just drop bombs everywhere|jihadists|black male|clowns|idiotic|buffoon|rodent community|anal|ball kicking|bigot|bigots|bookie|bootee|bootie|breastman|bung hole|childporn|'+
-'cock|crackhead|cummin|curtir|dix|godamnit|knucklehead|nipple|penis|penus|redskin|scrotum|scum|skank|suckers|tit|t[*][*]t|kiddy fiddler|bds|anus|beddable|bfd|bollocked|centerfolds|diesel-dike|dp|fornik|gay cancer|'+
-'gay lord|gay second base|heifer|hooters|hotchat|humpers|hymies|ifintermyself|kanibis|kannabis|kannibis|muff|nymphet|nympho|pikeys|reefers|spaffs|topless|wad|wazzak|wazzaks|wencher|wenchers|woofter|woolly-woofters|gay)[^\\w<]*\\b(?!\<)','i'));
+var ptL2RegPatts = new Array(new RegExp('(?!\>)\\b[^\\w>]*(acha que eu n[ã]o consigo?|amo sua bunda|babaca|bicha|viado|viad[ã]o|marica|burro|idiota|cuz[ã]o|cuz[õ]es|filhos da puta|escroto|filho da puta|idiota|burro|maconha|vamos ficar b[ê]bados hoje [à] noite|bicha|bichona)[^\\w<]*\\b(?!\<)','i'));
+                           
 
 var esL2RegPatts = new Array(new RegExp('(?!\>)\\b[^\\w>]*(me llega al pincho|qu[é] tal concha|crees que no puedo?|a la loma del orto|[â]vete al infierno consultoriadedadoscorrea|acabar|al pedo|and[á] a lavar los platos|[á]ndate a la mierda|'+
 'argolla|bardo|bobososo|bola|bolsas|buseta|cabilla|cabro|chivo|maric[ó]n|rosquete|cachapera|cana|ca[ñ]o|canuto]|canuto[,]]a|cara de orto|caracart[ó]n|chanta|choto|chumbo|chupa medias|cocolla|coj[í]o|cojonera|cojones|aweonado|'+
@@ -149,37 +127,12 @@ var esL2RegPatts = new Array(new RegExp('(?!\>)\\b[^\\w>]*(me llega al pincho|qu
 'pichinga|pichurria|pijotero|pisar|pocha|ponela en mi boca|pongalo en su boca|p[ó]nmela en la boca|porro|punta|qu[é] buen culo|que te den por culo|que te follen|chupar esta noche|quiero chupar esta noche|romper las bolas)[^\\w<]*\\b(?!\<)','i'),
    new RegExp('(?!\>)\\b[^\\w>]*(ruchar|sapo|te metieron la yuca|te odio|te rompo el cacas|te rompo el culo|tener sexo|tengo ganas|test[í]tulos|tirar|tonto|lerdo|tonta|lerda|lela|tonto a las tres|tontolaba|'+
 'tontolcapullo|tontopolla|toparse|totona|trucho|tu crees que no puedo[?]|tu madre|tu vieja|un huevo|vagina|concha|vamos a chupar esta noche|vamos a em borrachar esta noche|'+
-'vamos a emborracharnos esta noche|vamos a mamarnos esta noche|verdugo|vete al infierno|vete a la mierda|wepota|y tu mama tambien|y tu mam[á] tambi[é]n|yuta|zunga)[^\\w<]*\\b(?!\<)','i'),
-                             // en l2 words list
-new RegExp('(?!\>)\\b[^\\w>]*(adultsex|amaTeur|asexualox|badass|balls|bigoted|bitching|bitchy|boned|butt|buttocks|clitoritis|clitorus|cybersex|dick|erotic|escort|fagging|'+
-'faggot|faggotry|faggots|faggott|fagot|fagots|freesex|freex|Gay Bow|gay bOy|gay dog|gay man|gay men|gay sEx|gaybert|gaybob|gaybor|gayboy|gaydo|gaygirl|dumb|dumbs|dumbest|gaylord|gays|gaysex|gaysian|'+
-'gaytard|gayteens|gayteenz|gaywad|suck|sucking|god damn|god-dam|redneck|slope|horny|hot chiCk|hotsex|idiot|jerk|lesbain|lesbayn|lusting|masturbat|mormon|pervert|pissant|pissed off|pisspIg|porn|prick|rapist|'+
-'sex|sexx|sexxx|sexY|shoot|stupid|teabaggers|transsexual|voyeur|willy|troll|scrounger|sow|crapped|immigrant|immigrants|imigrants Moslem|Muslim|Moslim|scrounge|Islam|islamists|Jew|Jewry|slits)[^\\w<]*\\b(?!\<)','i'),
-new RegExp('(?!\>)\\b[^\\w>]*(freaks|assinine|Axx|B_A_L_L_S!|bullocks|fracking|fricking|i.d.i.o.t.|idiots|idoit|jerks|knuckleheads|load of crap|loser|perverts|pi[*][*][*]ed|retarded|sucked|SUCKS|Terroristen|w[*]nkers|'+
-'islamo facist|putz|demoskanks|ragheads|Snatch|numbskull|half breed|nit wit|dummy|dole bludging|filth|Bozo|shagging|ball-less|peabrain|libtard|Jesus|Christ|refugee|muslims|Hookers|adultplayground|adultsite|'+
-'assed|beastiality|bestiality|bint|bints|bitched|bitchery|bitchier|bitchin\'|bleeth|bongs|canibus|ceemen|cyberbabe|cybererotica|dildoes|dildos|'+
-'ejaculates|foreskin|ganja|genitals|hussies|hussy|ladyboy|lady-boy|ladyboys|lady-boys|naked girl|naked girls|naked-girl|naked-girls|naked-woman|naked-women|nipples|nookie|nooky|sadomasochist|shemale)[^\\w<]*\\b(?!\<)','i'),
-new RegExp('(?!\>)\\b[^\\w>]*(wench|wenches|wenching|buggers|refugee|refugees|barbaric|butcher|butchering|isis|stupidest|all you clowns|imbeciles|fool|idots|demon-rats|illegal rats|coyotes|terrorism|except for his middle leg|'+
-'rat boy|blowhard|drop more bombs|just drop bombs everywhere|jihadists|black male|clowns|idiotic|buffoon|rodent community|anal|ball kicking|bigot|bigots|bookie|bootee|bootie|breastman|bung hole|childporn|'+
-'cock|crackhead|cummin|curtir|dix|godamnit|knucklehead|nipple|penis|penus|redskin|scrotum|scum|skank|suckers|tit|t[*][*]t|kiddy fiddler|bds|anus|beddable|bfd|bollocked|centerfolds|diesel-dike|dp|fornik|gay cancer|'+
-'gay lord|gay second base|heifer|hooters|hotchat|humpers|hymies|ifintermyself|kanibis|kannabis|kannibis|muff|nymphet|nympho|pikeys|reefers|spaffs|topless|wad|wazzak|wazzaks|wencher|wenchers|woofter|woolly-woofters|gay)[^\\w<]*\\b(?!\<)','i'));
+'vamos a emborracharnos esta noche|vamos a mamarnos esta noche|verdugo|vete al infierno|vete a la mierda|wepota|y tu mama tambien|y tu mam[á] tambi[é]n|yuta|zunga)[^\\w<]*\\b(?!\<)','i'));
 
 var frL2RegPatts = new Array(new RegExp('(?!\>)\\b[^\\w>]*(abruti|anulingus|attard[é]|beur|bordel de merde|calisse|branleur|[ç]a pue|[ç]a schlingue!|[ç]a schlingue|casse toi|casse-toi|c[\']est quoi ce bordel|c[\']est quoi ce bordel ?|c[\']est quoi ton de probl[è]me|c[\']est quoi ton ostie de probl[è]me|cochonneries|couille|d[é]bile|'+
 'd[é]foncer|d[é]gage|d[é]gage[ !]|d[é]g[é]n[é]r[é]|enfoir[é]|face de cul|ferme ta gueule|fille|fous le camp|fous le camps|f[ü]hrer|glande|idiot|idiot[e]|idiot[(e)]|idiot[(e)][\!]|imbecile|imb[é]cile|jouir|la chatte|mort [à]|mort aux|mouchard|p[é]dale|p[é]d[é]|petite fille|petites filles|pouf|racailles|'+
-'raton|rebeu|sac [à] vin|sac [à] vin [\!]|sacrer|seins|sexe|sexe en direct|SEXUELLE|sperme|suce|ta gueule|tais-toi|tapette|tarlouse va|tarlouse va [\!]|transexuelle|[à] m[\']enmerder|m[\']enmerder|tu commence [à] m[\']enmerder|tu commence [à] m[\']enmerder [\!]|tuyau|vache|vibreur|violer|youpin|youpins)[^\\w<]*\\b(?!\<)','i'),
-                              // en l2 words list
-new RegExp('(?!\>)\\b[^\\w>]*(adultsex|amaTeur|asexualox|badass|balls|bigoted|bitching|bitchy|boned|butt|buttocks|clitoritis|clitorus|cybersex|dick|erotic|escort|fagging|'+
-'faggot|faggotry|faggots|faggott|fagot|fagots|freesex|freex|Gay Bow|gay bOy|gay dog|gay man|gay men|gay sEx|gaybert|gaybob|gaybor|gayboy|gaydo|gaygirl|dumb|dumbs|dumbest|gaylord|gays|gaysex|gaysian|'+
-'gaytard|gayteens|gayteenz|gaywad|suck|sucking|god damn|god-dam|redneck|slope|horny|hot chiCk|hotsex|idiot|jerk|lesbain|lesbayn|lusting|masturbat|mormon|pervert|pissant|pissed off|pisspIg|porn|prick|rapist|'+
-'sex|sexx|sexxx|sexY|shoot|stupid|teabaggers|transsexual|voyeur|willy|troll|scrounger|sow|crapped|immigrant|immigrants|imigrants Moslem|Muslim|Moslim|scrounge|Islam|islamists|Jew|Jewry|slits)[^\\w<]*\\b(?!\<)','i'),
-new RegExp('(?!\>)\\b[^\\w>]*(freaks|assinine|Axx|B_A_L_L_S!|bullocks|fracking|fricking|i.d.i.o.t.|idiots|idoit|jerks|knuckleheads|load of crap|loser|perverts|pi[*][*][*]ed|retarded|sucked|SUCKS|Terroristen|w[*]nkers|'+
-'islamo facist|putz|demoskanks|ragheads|Snatch|numbskull|half breed|nit wit|dummy|dole bludging|filth|Bozo|shagging|ball-less|peabrain|libtard|Jesus|Christ|refugee|muslims|Hookers|adultplayground|adultsite|'+
-'assed|beastiality|bestiality|bint|bints|bitched|bitchery|bitchier|bitchin\'|bleeth|bongs|canibus|ceemen|cyberbabe|cybererotica|dildoes|dildos|'+
-'ejaculates|foreskin|ganja|genitals|hussies|hussy|ladyboy|lady-boy|ladyboys|lady-boys|naked girl|naked girls|naked-girl|naked-girls|naked-woman|naked-women|nipples|nookie|nooky|sadomasochist|shemale)[^\\w<]*\\b(?!\<)','i'),
-new RegExp('(?!\>)\\b[^\\w>]*(wench|wenches|wenching|buggers|refugee|refugees|barbaric|butcher|butchering|isis|stupidest|all you clowns|imbeciles|fool|idots|demon-rats|illegal rats|coyotes|terrorism|except for his middle leg|'+
-'rat boy|blowhard|drop more bombs|just drop bombs everywhere|jihadists|black male|clowns|idiotic|buffoon|rodent community|anal|ball kicking|bigot|bigots|bookie|bootee|bootie|breastman|bung hole|childporn|'+
-'cock|crackhead|cummin|curtir|dix|godamnit|knucklehead|nipple|penis|penus|redskin|scrotum|scum|skank|suckers|tit|t[*][*]t|kiddy fiddler|bds|anus|beddable|bfd|bollocked|centerfolds|diesel-dike|dp|fornik|gay cancer|'+
-'gay lord|gay second base|heifer|hooters|hotchat|humpers|hymies|ifintermyself|kanibis|kannabis|kannibis|muff|nymphet|nympho|pikeys|reefers|spaffs|topless|wad|wazzak|wazzaks|wencher|wenchers|woofter|woolly-woofters|gay)[^\\w<]*\\b(?!\<)','i'));
+'raton|rebeu|sac [à] vin|sac [à] vin [\!]|sacrer|seins|sexe|sexe en direct|SEXUELLE|sperme|suce|ta gueule|tais-toi|tapette|tarlouse va|tarlouse va [\!]|transexuelle|[à] m[\']enmerder|m[\']enmerder|tu commence [à] m[\']enmerder|tu commence [à] m[\']enmerder [\!]|tuyau|vache|vibreur|violer|youpin|youpins)[^\\w<]*\\b(?!\<)','i'));
+
 
 var itL2RegPatts = new Array(new RegExp('(?!\>)\\b[^\\w>]*(allupate|allupato|ammucchiata|ammucchiate|ano|arrapata|arrapate|arrapati|arrapato|bagardona|bagardone|bagascione|balle|bamba|battone|bega|beghe|belini|bernarde|bocchinare|bocchinari|bocchinaro|'+
  'boiate|bordelli|bordello|broda|brode|bucaiola|bucaiole|bucaioli|bus del cu|busoni|cacche|cagate|cappelle|casini|casino|checca|ciospa|ciospe|cippa|cippe|ciulata|ciulate|coglionazzo|coglione|cornuta|cornute|cornuti|diio|dio cane|fave|fetente|fetenti|'+
@@ -187,20 +140,7 @@ var itL2RegPatts = new Array(new RegExp('(?!\>)\\b[^\\w>]*(allupate|allupato|amm
  'merlotti|merlotto|mignottone|mignottoni|minchione|minchioni|minna|minne|mnchie|mone|monta|musse|nculammammate|ndrocchia|nerchie|orca madonna|orco dio|orcodigel|pacchi|pacco|paduli|padulo|palla|palle|pallosa|pallose|pallosi|palloso|patonze|pecorine)[^\\w<]*\\b(?!\<)','i'),
   new RegExp('(?!\>)\\b[^\\w>]*(pesce|pici|picio|pipe|pippa|pisciate|piscio|piselli|pisello|pistola|pistolotto|pomiciare|pompa|pompe|poppa|poppe|porcodio|puppare|puttanone|puzzona|puzzone|recchione|renza|renze|ricchione|ricchioni|rincoglionirsi|sbattimenti|sbattimento'+
  'sborrone|sborroni|sbroda|sbrodolare|sbrodolata|sbrodolate|scoregge|scoreggia|scoreggiare|scoreggiona|scoreggione|scoreggioni|scorreggione|seghe|segone|segoni|sfondare|slinguare|slinguata|slinguate|sminchiare|sorche|soreta|spompinare|stronzona|sucare|'+
- 'succhiacappella|succhiacappelle|sukare|tarzanelli|tarzanello|terronacci|terronaccio|terronazzi|terronazzo|terrone|terroni|topa|tope|uccelli|uccello|vacca|vacche|zio cantante)[^\\w<]*\\b(?!\<)','i'),
-                              // en l2 words list
-new RegExp('(?!\>)\\b[^\\w>]*(adultsex|amaTeur|asexualox|badass|balls|bigoted|bitching|bitchy|boned|butt|buttocks|clitoritis|clitorus|cybersex|dick|erotic|escort|fagging|'+
-'faggot|faggotry|faggots|faggott|fagot|fagots|freesex|freex|Gay Bow|gay bOy|gay dog|gay man|gay men|gay sEx|gaybert|gaybob|gaybor|gayboy|gaydo|gaygirl|dumb|dumbs|dumbest|gaylord|gays|gaysex|gaysian|'+
-'gaytard|gayteens|gayteenz|gaywad|suck|sucking|god damn|god-dam|redneck|slope|horny|hot chiCk|hotsex|idiot|jerk|lesbain|lesbayn|lusting|masturbat|mormon|pervert|pissant|pissed off|pisspIg|porn|prick|rapist|'+
-'sex|sexx|sexxx|sexY|shoot|stupid|teabaggers|transsexual|voyeur|willy|troll|scrounger|sow|crapped|immigrant|immigrants|imigrants Moslem|Muslim|Moslim|scrounge|Islam|islamists|Jew|Jewry|slits)[^\\w<]*\\b(?!\<)','i'),
-new RegExp('(?!\>)\\b[^\\w>]*(freaks|assinine|Axx|B_A_L_L_S!|bullocks|fracking|fricking|i.d.i.o.t.|idiots|idoit|jerks|knuckleheads|load of crap|loser|perverts|pi[*][*][*]ed|retarded|sucked|SUCKS|Terroristen|w[*]nkers|'+
-'islamo facist|putz|demoskanks|ragheads|Snatch|numbskull|half breed|nit wit|dummy|dole bludging|filth|Bozo|shagging|ball-less|peabrain|libtard|Jesus|Christ|refugee|muslims|Hookers|adultplayground|adultsite|'+
-'assed|beastiality|bestiality|bint|bints|bitched|bitchery|bitchier|bitchin\'|bleeth|bongs|canibus|ceemen|cyberbabe|cybererotica|dildoes|dildos|'+
-'ejaculates|foreskin|ganja|genitals|hussies|hussy|ladyboy|lady-boy|ladyboys|lady-boys|naked girl|naked girls|naked-girl|naked-girls|naked-woman|naked-women|nipples|nookie|nooky|sadomasochist|shemale)[^\\w<]*\\b(?!\<)','i'),
-new RegExp('(?!\>)\\b[^\\w>]*(wench|wenches|wenching|buggers|refugee|refugees|barbaric|butcher|butchering|isis|stupidest|all you clowns|imbeciles|fool|idots|demon-rats|illegal rats|coyotes|terrorism|except for his middle leg|'+
-'rat boy|blowhard|drop more bombs|just drop bombs everywhere|jihadists|black male|clowns|idiotic|buffoon|rodent community|anal|ball kicking|bigot|bigots|bookie|bootee|bootie|breastman|bung hole|childporn|'+
-'cock|crackhead|cummin|curtir|dix|godamnit|knucklehead|nipple|penis|penus|redskin|scrotum|scum|skank|suckers|tit|t[*][*]t|kiddy fiddler|bds|anus|beddable|bfd|bollocked|centerfolds|diesel-dike|dp|fornik|gay cancer|'+
-'gay lord|gay second base|heifer|hooters|hotchat|humpers|hymies|ifintermyself|kanibis|kannabis|kannibis|muff|nymphet|nympho|pikeys|reefers|spaffs|topless|wad|wazzak|wazzaks|wencher|wenchers|woofter|woolly-woofters|gay)[^\\w<]*\\b(?!\<)','i'));
+ 'succhiacappella|succhiacappelle|sukare|tarzanelli|tarzanello|terronacci|terronaccio|terronazzi|terronazzo|terrone|terroni|topa|tope|uccelli|uccello|vacca|vacche|zio cantante)[^\\w<]*\\b(?!\<)','i'));
 
 
 var nlL2RegPatts = new Array(new RegExp('(?!\>)\\b[^\\w>]*(adultsex|amaTeur|asexualox|badass|balls|bigoted|bitching|bitchy|boned|butt|buttocks|clitoritis|clitorus|cunilingus|cunillingus|cunnilingus|cybersex|dick|erotic|escoRt|fagging|'+
@@ -214,261 +154,57 @@ new RegExp('(?!\>)\\b[^\\w>]*(freaks|assinine|Axx|B_A_L_L_S!|bullocks|fracking|f
  new RegExp('(?!\>)\\b[^\\w>]*(wench|wenches|wenching|buggers|refugee|refugees|barbaric|butcher|butchering|isis|'+
  'dombo|rot op|vieze dikke pad|vieze vuile gore smeerlap|debiel|homo|kanker|sukkeltje|hairy |gatverdamme|getverderrie|godverdomme|jezus christus|verdomme|kak|kattenkop|muil|nicht|pissig|poep|'+
  'trut|kaaskop|kakker|medelander|mocro|rapalje|rapaille|nsb\'er|oelewapper|koekert|koekwaus|kk|klere|kolere|krijg de|lazarus|lijer|pleur(it)is|pokke(n)|tering|tyfus|vinkentering|kutmarokkaan|'+
- 'terug naar je land|vluchterling |tiefuskop|kankerventje|randdebiel)[^\\w<]*\\b(?!\<)','i'),
-                             // en l2 words list
-new RegExp('(?!\>)\\b[^\\w>]*(adultsex|amaTeur|asexualox|badass|balls|bigoted|bitching|bitchy|boned|butt|buttocks|clitoritis|clitorus|cybersex|dick|erotic|escort|fagging|'+
-'faggot|faggotry|faggots|faggott|fagot|fagots|freesex|freex|Gay Bow|gay bOy|gay dog|gay man|gay men|gay sEx|gaybert|gaybob|gaybor|gayboy|gaydo|gaygirl|dumb|dumbs|dumbest|gaylord|gays|gaysex|gaysian|'+
-'gaytard|gayteens|gayteenz|gaywad|suck|sucking|god damn|god-dam|redneck|slope|horny|hot chiCk|hotsex|idiot|jerk|lesbain|lesbayn|lusting|masturbat|mormon|pervert|pissant|pissed off|pisspIg|porn|prick|rapist|'+
-'sex|sexx|sexxx|sexY|shoot|stupid|teabaggers|transsexual|voyeur|willy|troll|scrounger|sow|crapped|immigrant|immigrants|imigrants Moslem|Muslim|Moslim|scrounge|Islam|islamists|Jew|Jewry|slits)[^\\w<]*\\b(?!\<)','i'),
-new RegExp('(?!\>)\\b[^\\w>]*(freaks|assinine|Axx|B_A_L_L_S!|bullocks|fracking|fricking|i.d.i.o.t.|idiots|idoit|jerks|knuckleheads|load of crap|loser|perverts|pi[*][*][*]ed|retarded|sucked|SUCKS|Terroristen|w[*]nkers|'+
-'islamo facist|putz|demoskanks|ragheads|Snatch|numbskull|half breed|nit wit|dummy|dole bludging|filth|Bozo|shagging|ball-less|peabrain|libtard|Jesus|Christ|refugee|muslims|Hookers|adultplayground|adultsite|'+
-'assed|beastiality|bestiality|bint|bints|bitched|bitchery|bitchier|bitchin\'|bleeth|bongs|canibus|ceemen|cyberbabe|cybererotica|dildoes|dildos|'+
-'ejaculates|foreskin|ganja|genitals|hussies|hussy|ladyboy|lady-boy|ladyboys|lady-boys|naked girl|naked girls|naked-girl|naked-girls|naked-woman|naked-women|nipples|nookie|nooky|sadomasochist|shemale)[^\\w<]*\\b(?!\<)','i'),
-new RegExp('(?!\>)\\b[^\\w>]*(wench|wenches|wenching|buggers|refugee|refugees|barbaric|butcher|butchering|isis|stupidest|all you clowns|imbeciles|fool|idots|demon-rats|illegal rats|coyotes|terrorism|except for his middle leg|'+
-'rat boy|blowhard|drop more bombs|just drop bombs everywhere|jihadists|black male|clowns|idiotic|buffoon|rodent community|anal|ball kicking|bigot|bigots|bookie|bootee|bootie|breastman|bung hole|childporn|'+
-'cock|crackhead|cummin|curtir|dix|godamnit|knucklehead|nipple|penis|penus|redskin|scrotum|scum|skank|suckers|tit|t[*][*]t|kiddy fiddler|bds|anus|beddable|bfd|bollocked|centerfolds|diesel-dike|dp|fornik|gay cancer|'+
-'gay lord|gay second base|heifer|hooters|hotchat|humpers|hymies|ifintermyself|kanibis|kannabis|kannibis|muff|nymphet|nympho|pikeys|reefers|spaffs|topless|wad|wazzak|wazzaks|wencher|wenchers|woofter|woolly-woofters|gay)[^\\w<]*\\b(?!\<)','i'));
+ 'terug naar je land|vluchterling |tiefuskop|kankerventje|randdebiel)[^\\w<]*\\b(?!\<)','i'));
 
 var nbL2RegPatts = new Array(new RegExp('(?!\>)\\b[^\\w>]*(dra til helvete|dust|faen ta deg|g[ã¥] og pul deg selv|helvete|herregud|homsebull|j\'vla bonde|jeg driter i melka di|jeg har runka bestefaren din|jãšvla idiot[!])[^\\w<]*\\b(?!\<)','i'),
      new RegExp('(?!\>)\\b[^\\w>]*(kug sugar (stavnger)|kukskalle|kuksuger|kuktryne|lille satan|mordi|pikk|pokker|rasshull|rasstapp|ronkefjes|s\'dgurgler|s\'dsprut|slyngel|steikje|sug kukken min|barometeret te\'n far)[^\\w<]*\\b(?!\<)','i'),
     new RegExp('(?!\>)\\b[^\\w>]*(dã¥sa|fattig!|fetta|jãšvla hora|jãšvla pikkhue|kukost|lassaron|pikkantilope og firkant raev|pikkhue|rasshãžl|rãšvpuler|skitliv|slingrefitte|soppspiste pitbulkukkforhud|svela te mor e sã¥ frãžktele stor)[^\\w<]*\\b(?!\<)','i'),
- new RegExp('(?!\>)\\b[^\\w>]*(pikk|trekukk|Depp|Die MÃ¶pse|Drecksack!|Fettbacke|Lude|Schwuchtel|Schwuler|geil|pestbaeule)[^\\w<]*\\b(?!\<)','i'),
-                            // en l2 words list
-new RegExp('(?!\>)\\b[^\\w>]*(adultsex|amaTeur|asexualox|badass|balls|bigoted|bitching|bitchy|boned|butt|buttocks|clitoritis|clitorus|cybersex|dick|erotic|escort|fagging|'+
-'faggot|faggotry|faggots|faggott|fagot|fagots|freesex|freex|Gay Bow|gay bOy|gay dog|gay man|gay men|gay sEx|gaybert|gaybob|gaybor|gayboy|gaydo|gaygirl|dumb|dumbs|dumbest|gaylord|gays|gaysex|gaysian|'+
-'gaytard|gayteens|gayteenz|gaywad|suck|sucking|god damn|god-dam|redneck|slope|horny|hot chiCk|hotsex|idiot|jerk|lesbain|lesbayn|lusting|masturbat|mormon|pervert|pissant|pissed off|pisspIg|porn|prick|rapist|'+
-'sex|sexx|sexxx|sexY|shoot|stupid|teabaggers|transsexual|voyeur|willy|troll|scrounger|sow|crapped|immigrant|immigrants|imigrants Moslem|Muslim|Moslim|scrounge|Islam|islamists|Jew|Jewry|slits)[^\\w<]*\\b(?!\<)','i'),
-new RegExp('(?!\>)\\b[^\\w>]*(freaks|assinine|Axx|B_A_L_L_S!|bullocks|fracking|fricking|i.d.i.o.t.|idiots|idoit|jerks|knuckleheads|load of crap|loser|perverts|pi[*][*][*]ed|retarded|sucked|SUCKS|Terroristen|w[*]nkers|'+
-'islamo facist|putz|demoskanks|ragheads|Snatch|numbskull|half breed|nit wit|dummy|dole bludging|filth|Bozo|shagging|ball-less|peabrain|libtard|Jesus|Christ|refugee|muslims|Hookers|adultplayground|adultsite|'+
-'assed|beastiality|bestiality|bint|bints|bitched|bitchery|bitchier|bitchin\'|bleeth|bongs|canibus|ceemen|cyberbabe|cybererotica|dildoes|dildos|'+
-'ejaculates|foreskin|ganja|genitals|hussies|hussy|ladyboy|lady-boy|ladyboys|lady-boys|naked girl|naked girls|naked-girl|naked-girls|naked-woman|naked-women|nipples|nookie|nooky|sadomasochist|shemale)[^\\w<]*\\b(?!\<)','i'),
-new RegExp('(?!\>)\\b[^\\w>]*(wench|wenches|wenching|buggers|refugee|refugees|barbaric|butcher|butchering|isis|stupidest|all you clowns|imbeciles|fool|idots|demon-rats|illegal rats|coyotes|terrorism|except for his middle leg|'+
-'rat boy|blowhard|drop more bombs|just drop bombs everywhere|jihadists|black male|clowns|idiotic|buffoon|rodent community|anal|ball kicking|bigot|bigots|bookie|bootee|bootie|breastman|bung hole|childporn|'+
-'cock|crackhead|cummin|curtir|dix|godamnit|knucklehead|nipple|penis|penus|redskin|scrotum|scum|skank|suckers|tit|t[*][*]t|kiddy fiddler|bds|anus|beddable|bfd|bollocked|centerfolds|diesel-dike|dp|fornik|gay cancer|'+
-'gay lord|gay second base|heifer|hooters|hotchat|humpers|hymies|ifintermyself|kanibis|kannabis|kannibis|muff|nymphet|nympho|pikeys|reefers|spaffs|topless|wad|wazzak|wazzaks|wencher|wenchers|woofter|woolly-woofters|gay)[^\\w<]*\\b(?!\<)','i'));
+ new RegExp('(?!\>)\\b[^\\w>]*(pikk|trekukk|Depp|Die MÃ¶pse|Drecksack!|Fettbacke|Lude|Schwuchtel|Schwuler|geil|pestbaeule)[^\\w<]*\\b(?!\<)','i'));
+
+var plL2RegPatts = new Array(new RegExp('(?!\>)\\b[^\\w>]*(kule (Użyj ~ ponad 2 \' o \')|Bettencourt|Bixinho|plamienie-|Boiola|BROSZKA|Chupa-mos|Niech to cholera|kurde!|Cholernie|Jeleń|opóźnione / idiota|desgraã§ADO|Dick|drwong postino|'+
+                                        'Dyke|jeść mi!|enraba me / me enraba|Ewer|pedałem|Cegielnia|Karmienie|Fernand carmel|dziewczyna do Internetu!|do Internetu z ã © wody!|Floriane-lefevre|głupiec|Lis raport|Lis ankieta|fudidosafados fuder imbecil|'+
+                                        'gagnpierre fernand-carmel|chłopiec gej|iść za piątą piekło!!!|Osoby homoseksualne w więzieniu|róg|napalone|Idiota|istpravda ru|JeanRichard-roland|Mela twarz £ o!|brakuje mi!|mój najlepszy przyjaciel zarabia ponad|'+
+                                        'negocio proprio|dziewczynki|sierota lub bezużyteczne|otã¡Rio|Smoczek mnie głupie|świnia!|Pila|kufel|PIRIGUETE|Piru małe|Prosimy nie podawać tylko|Poker face pqfudendo|wkręcić coś daleko w górę biegu?|shorx click4surveys|'+
+                                        'Zamknij się!|chory idiota|głupie|Sodomizowania|kij|Syrakuzy|dwadzieścia cztery [24]|VA do piekła|Vagabond|będzie bzdura!|Możesz ã © a £ Marica go!|Możesz ã © a £ sikanie to!|Ciebie ciota|Twoja mama)[^\\w<]*\\b(?!\<)','i'));
 
 var ruL2RegPatts = new Array(new RegExp('(?!\>)\\b[^\\w>]*(hooyÃ³vo|Drochit\'|Durak|Gandon|HooyeÃ©lo|Hooyovi / zayebÃ¡telski|Hui|Huiplet|Loh (лох)|MalafyÃ¡|Na hooyÃ¡?|Ostyn\'|Oyah Dah Papakina|Yoscho Papakina|'+
                                         'P\'yan v stel-ku|Past\' zakroi|PeetoÃ³kh|Peezdit\'|Perdet\'|PoloochÃ­t PizdyoolÃ©y|PÃ©ezdit|Sosat\'|Tee Karova|Trajat\'sya|Tvar\'|Yeban\'ko maloletnee|eban\'ko|goluboi|'+
-                                        'pedik|заткнись|ey|padla (моргала выколю)|ugrainform)[^\\w<]*\\b(?!\<)','i'),
-                            // en l2 words list
-new RegExp('(?!\>)\\b[^\\w>]*(adultsex|amaTeur|asexualox|badass|balls|bigoted|bitching|bitchy|boned|butt|buttocks|clitoritis|clitorus|cybersex|dick|erotic|escort|fagging|'+
-'faggot|faggotry|faggots|faggott|fagot|fagots|freesex|freex|Gay Bow|gay bOy|gay dog|gay man|gay men|gay sEx|gaybert|gaybob|gaybor|gayboy|gaydo|gaygirl|dumb|dumbs|dumbest|gaylord|gays|gaysex|gaysian|'+
-'gaytard|gayteens|gayteenz|gaywad|suck|sucking|god damn|god-dam|redneck|slope|horny|hot chiCk|hotsex|idiot|jerk|lesbain|lesbayn|lusting|masturbat|mormon|pervert|pissant|pissed off|pisspIg|porn|prick|rapist|'+
-'sex|sexx|sexxx|sexY|shoot|stupid|teabaggers|transsexual|voyeur|willy|troll|scrounger|sow|crapped|immigrant|immigrants|imigrants Moslem|Muslim|Moslim|scrounge|Islam|islamists|Jew|Jewry|slits)[^\\w<]*\\b(?!\<)','i'),
-new RegExp('(?!\>)\\b[^\\w>]*(freaks|assinine|Axx|B_A_L_L_S!|bullocks|fracking|fricking|i.d.i.o.t.|idiots|idoit|jerks|knuckleheads|load of crap|loser|perverts|pi[*][*][*]ed|retarded|sucked|SUCKS|Terroristen|w[*]nkers|'+
-'islamo facist|putz|demoskanks|ragheads|Snatch|numbskull|half breed|nit wit|dummy|dole bludging|filth|Bozo|shagging|ball-less|peabrain|libtard|Jesus|Christ|refugee|muslims|Hookers|adultplayground|adultsite|'+
-'assed|beastiality|bestiality|bint|bints|bitched|bitchery|bitchier|bitchin\'|bleeth|bongs|canibus|ceemen|cyberbabe|cybererotica|dildoes|dildos|'+
-'ejaculates|foreskin|ganja|genitals|hussies|hussy|ladyboy|lady-boy|ladyboys|lady-boys|naked girl|naked girls|naked-girl|naked-girls|naked-woman|naked-women|nipples|nookie|nooky|sadomasochist|shemale)[^\\w<]*\\b(?!\<)','i'),
-new RegExp('(?!\>)\\b[^\\w>]*(wench|wenches|wenching|buggers|refugee|refugees|barbaric|butcher|butchering|isis|stupidest|all you clowns|imbeciles|fool|idots|demon-rats|illegal rats|coyotes|terrorism|except for his middle leg|'+
-'rat boy|blowhard|drop more bombs|just drop bombs everywhere|jihadists|black male|clowns|idiotic|buffoon|rodent community|anal|ball kicking|bigot|bigots|bookie|bootee|bootie|breastman|bung hole|childporn|'+
-'cock|crackhead|cummin|curtir|dix|godamnit|knucklehead|nipple|penis|penus|redskin|scrotum|scum|skank|suckers|tit|t[*][*]t|kiddy fiddler|bds|anus|beddable|bfd|bollocked|centerfolds|diesel-dike|dp|fornik|gay cancer|'+
-'gay lord|gay second base|heifer|hooters|hotchat|humpers|hymies|ifintermyself|kanibis|kannabis|kannibis|muff|nymphet|nympho|pikeys|reefers|spaffs|topless|wad|wazzak|wazzaks|wencher|wenchers|woofter|woolly-woofters|gay)[^\\w<]*\\b(?!\<)','i'));
+                                        'pedik|заткнись|ey|padla (моргала выколю)|ugrainform)[^\\w<]*\\b(?!\<)','i'));
 
 var svL2RegPatts = new Array(new RegExp('(?!\>)\\b[^\\w>]*(Balle|Blatte|BÃ¥nge|Din mamma|Dra Ã¥t helvete|Fjolla|Hjon|Inte ens din mamma gillar dig.|Kuk|KÃ¶tthuvud|Pajas|Pucko|Sarre|Satan|Sosse|Vad fan|VÃ¥ldtÃ€ktsman|dra Ã¥t helvete!|'+
-                                        'fan|fÃ¶rbÃ¶veln|kÃ€rring|rÃ¶ding|zigenare| tattare|jã€vla|djã€vla|jã€kla|zigenare|tattare)[^\\w<]*\\b(?!\<)','i'),
-                            // en l2 words list
-new RegExp('(?!\>)\\b[^\\w>]*(adultsex|amaTeur|asexualox|badass|balls|bigoted|bitching|bitchy|boned|butt|buttocks|clitoritis|clitorus|cybersex|dick|erotic|escort|fagging|'+
-'faggot|faggotry|faggots|faggott|fagot|fagots|freesex|freex|Gay Bow|gay bOy|gay dog|gay man|gay men|gay sEx|gaybert|gaybob|gaybor|gayboy|gaydo|gaygirl|dumb|dumbs|dumbest|gaylord|gays|gaysex|gaysian|'+
-'gaytard|gayteens|gayteenz|gaywad|suck|sucking|god damn|god-dam|redneck|slope|horny|hot chiCk|hotsex|idiot|jerk|lesbain|lesbayn|lusting|masturbat|mormon|pervert|pissant|pissed off|pisspIg|porn|prick|rapist|'+
-'sex|sexx|sexxx|sexY|shoot|stupid|teabaggers|transsexual|voyeur|willy|troll|scrounger|sow|crapped|immigrant|immigrants|imigrants Moslem|Muslim|Moslim|scrounge|Islam|islamists|Jew|Jewry|slits)[^\\w<]*\\b(?!\<)','i'),
-new RegExp('(?!\>)\\b[^\\w>]*(freaks|assinine|Axx|B_A_L_L_S!|bullocks|fracking|fricking|i.d.i.o.t.|idiots|idoit|jerks|knuckleheads|load of crap|loser|perverts|pi[*][*][*]ed|retarded|sucked|SUCKS|Terroristen|w[*]nkers|'+
-'islamo facist|putz|demoskanks|ragheads|Snatch|numbskull|half breed|nit wit|dummy|dole bludging|filth|Bozo|shagging|ball-less|peabrain|libtard|Jesus|Christ|refugee|muslims|Hookers|adultplayground|adultsite|'+
-'assed|beastiality|bestiality|bint|bints|bitched|bitchery|bitchier|bitchin\'|bleeth|bongs|canibus|ceemen|cyberbabe|cybererotica|dildoes|dildos|'+
-'ejaculates|foreskin|ganja|genitals|hussies|hussy|ladyboy|lady-boy|ladyboys|lady-boys|naked girl|naked girls|naked-girl|naked-girls|naked-woman|naked-women|nipples|nookie|nooky|sadomasochist|shemale)[^\\w<]*\\b(?!\<)','i'),
-new RegExp('(?!\>)\\b[^\\w>]*(wench|wenches|wenching|buggers|refugee|refugees|barbaric|butcher|butchering|isis|stupidest|all you clowns|imbeciles|fool|idots|demon-rats|illegal rats|coyotes|terrorism|except for his middle leg|'+
-'rat boy|blowhard|drop more bombs|just drop bombs everywhere|jihadists|black male|clowns|idiotic|buffoon|rodent community|anal|ball kicking|bigot|bigots|bookie|bootee|bootie|breastman|bung hole|childporn|'+
-'cock|crackhead|cummin|curtir|dix|godamnit|knucklehead|nipple|penis|penus|redskin|scrotum|scum|skank|suckers|tit|t[*][*]t|kiddy fiddler|bds|anus|beddable|bfd|bollocked|centerfolds|diesel-dike|dp|fornik|gay cancer|'+
-'gay lord|gay second base|heifer|hooters|hotchat|humpers|hymies|ifintermyself|kanibis|kannabis|kannibis|muff|nymphet|nympho|pikeys|reefers|spaffs|topless|wad|wazzak|wazzaks|wencher|wenchers|woofter|woolly-woofters|gay)[^\\w<]*\\b(?!\<)','i'));
+                                        'fan|fÃ¶rbÃ¶veln|kÃ€rring|rÃ¶ding|zigenare| tattare|jã€vla|djã€vla|jã€kla|zigenare|tattare)[^\\w<]*\\b(?!\<)','i'));
 
-var thL2RegPatts = new Array(new RegExp('(?!\>)\\b[^\\w>]*(กะเทย|เพศ|ดูด|ทางทวารหนัก|หัวนม|หัวนม)[^\\w<]*\\b(?!\<)','i'),
-                            // en l2 words list
-new RegExp('(?!\>)\\b[^\\w>]*(adultsex|amaTeur|asexualox|badass|balls|bigoted|bitching|bitchy|boned|butt|buttocks|clitoritis|clitorus|cybersex|dick|erotic|escort|fagging|'+
-'faggot|faggotry|faggots|faggott|fagot|fagots|freesex|freex|Gay Bow|gay bOy|gay dog|gay man|gay men|gay sEx|gaybert|gaybob|gaybor|gayboy|gaydo|gaygirl|dumb|dumbs|dumbest|gaylord|gays|gaysex|gaysian|'+
-'gaytard|gayteens|gayteenz|gaywad|suck|sucking|god damn|god-dam|redneck|slope|horny|hot chiCk|hotsex|idiot|jerk|lesbain|lesbayn|lusting|masturbat|mormon|pervert|pissant|pissed off|pisspIg|porn|prick|rapist|'+
-'sex|sexx|sexxx|sexY|shoot|stupid|teabaggers|transsexual|voyeur|willy|troll|scrounger|sow|crapped|immigrant|immigrants|imigrants Moslem|Muslim|Moslim|scrounge|Islam|islamists|Jew|Jewry|slits)[^\\w<]*\\b(?!\<)','i'),
-new RegExp('(?!\>)\\b[^\\w>]*(freaks|assinine|Axx|B_A_L_L_S!|bullocks|fracking|fricking|i.d.i.o.t.|idiots|idoit|jerks|knuckleheads|load of crap|loser|perverts|pi[*][*][*]ed|retarded|sucked|SUCKS|Terroristen|w[*]nkers|'+
-'islamo facist|putz|demoskanks|ragheads|Snatch|numbskull|half breed|nit wit|dummy|dole bludging|filth|Bozo|shagging|ball-less|peabrain|libtard|Jesus|Christ|refugee|muslims|Hookers|adultplayground|adultsite|'+
-'assed|beastiality|bestiality|bint|bints|bitched|bitchery|bitchier|bitchin\'|bleeth|bongs|canibus|ceemen|cyberbabe|cybererotica|dildoes|dildos|'+
-'ejaculates|foreskin|ganja|genitals|hussies|hussy|ladyboy|lady-boy|ladyboys|lady-boys|naked girl|naked girls|naked-girl|naked-girls|naked-woman|naked-women|nipples|nookie|nooky|sadomasochist|shemale)[^\\w<]*\\b(?!\<)','i'),
-new RegExp('(?!\>)\\b[^\\w>]*(wench|wenches|wenching|buggers|refugee|refugees|barbaric|butcher|butchering|isis|stupidest|all you clowns|imbeciles|fool|idots|demon-rats|illegal rats|coyotes|terrorism|except for his middle leg|'+
-'rat boy|blowhard|drop more bombs|just drop bombs everywhere|jihadists|black male|clowns|idiotic|buffoon|rodent community|anal|ball kicking|bigot|bigots|bookie|bootee|bootie|breastman|bung hole|childporn|'+
-'cock|crackhead|cummin|curtir|dix|godamnit|knucklehead|nipple|penis|penus|redskin|scrotum|scum|skank|suckers|tit|t[*][*]t|kiddy fiddler|bds|anus|beddable|bfd|bollocked|centerfolds|diesel-dike|dp|fornik|gay cancer|'+
-'gay lord|gay second base|heifer|hooters|hotchat|humpers|hymies|ifintermyself|kanibis|kannabis|kannibis|muff|nymphet|nympho|pikeys|reefers|spaffs|topless|wad|wazzak|wazzaks|wencher|wenchers|woofter|woolly-woofters|gay)[^\\w<]*\\b(?!\<)','i'));
+var thL2RegPatts = new Array(new RegExp('(?!\>)\\b[^\\w>]*(กะเทย|เพศ|ดูด|ทางทวารหนัก|หัวนม|หัวนม)[^\\w<]*\\b(?!\<)','i'));
 
 var trL2RegPatts = new Array(new RegExp('(?!\>)\\b[^\\w>]*([Ş]apka|Al babayı|Ass tulip|Budala|Deyus - Deyyus|Ezik|Gerizekalý|Pezevenk|Travesti|Turk Bozi Tgha|Yarak|anam avradÃœm olsun ki|ass hole|daÃŸak geÃ§me lan|'+
-                                        'it oğlu it|kalantor|keriz|ossurturum bÃ¶yle|sik kili|som agizli ibne|yedinmi yarraÃ°Ãœ ÃŸimdi|Ýbne)[^\\w<]*\\b(?!\<)','i'),
-                            // en l2 words list
-new RegExp('(?!\>)\\b[^\\w>]*(adultsex|amaTeur|asexualox|badass|balls|bigoted|bitching|bitchy|boned|butt|buttocks|clitoritis|clitorus|cybersex|dick|erotic|escort|fagging|'+
-'faggot|faggotry|faggots|faggott|fagot|fagots|freesex|freex|Gay Bow|gay bOy|gay dog|gay man|gay men|gay sEx|gaybert|gaybob|gaybor|gayboy|gaydo|gaygirl|dumb|dumbs|dumbest|gaylord|gays|gaysex|gaysian|'+
-'gaytard|gayteens|gayteenz|gaywad|suck|sucking|god damn|god-dam|redneck|slope|horny|hot chiCk|hotsex|idiot|jerk|lesbain|lesbayn|lusting|masturbat|mormon|pervert|pissant|pissed off|pisspIg|porn|prick|rapist|'+
-'sex|sexx|sexxx|sexY|shoot|stupid|teabaggers|transsexual|voyeur|willy|troll|scrounger|sow|crapped|immigrant|immigrants|imigrants Moslem|Muslim|Moslim|scrounge|Islam|islamists|Jew|Jewry|slits)[^\\w<]*\\b(?!\<)','i'),
-new RegExp('(?!\>)\\b[^\\w>]*(freaks|assinine|Axx|B_A_L_L_S!|bullocks|fracking|fricking|i.d.i.o.t.|idiots|idoit|jerks|knuckleheads|load of crap|loser|perverts|pi[*][*][*]ed|retarded|sucked|SUCKS|Terroristen|w[*]nkers|'+
-'islamo facist|putz|demoskanks|ragheads|Snatch|numbskull|half breed|nit wit|dummy|dole bludging|filth|Bozo|shagging|ball-less|peabrain|libtard|Jesus|Christ|refugee|muslims|Hookers|adultplayground|adultsite|'+
-'assed|beastiality|bestiality|bint|bints|bitched|bitchery|bitchier|bitchin\'|bleeth|bongs|canibus|ceemen|cyberbabe|cybererotica|dildoes|dildos|'+
-'ejaculates|foreskin|ganja|genitals|hussies|hussy|ladyboy|lady-boy|ladyboys|lady-boys|naked girl|naked girls|naked-girl|naked-girls|naked-woman|naked-women|nipples|nookie|nooky|sadomasochist|shemale)[^\\w<]*\\b(?!\<)','i'),
-new RegExp('(?!\>)\\b[^\\w>]*(wench|wenches|wenching|buggers|refugee|refugees|barbaric|butcher|butchering|isis|stupidest|all you clowns|imbeciles|fool|idots|demon-rats|illegal rats|coyotes|terrorism|except for his middle leg|'+
-'rat boy|blowhard|drop more bombs|just drop bombs everywhere|jihadists|black male|clowns|idiotic|buffoon|rodent community|anal|ball kicking|bigot|bigots|bookie|bootee|bootie|breastman|bung hole|childporn|'+
-'cock|crackhead|cummin|curtir|dix|godamnit|knucklehead|nipple|penis|penus|redskin|scrotum|scum|skank|suckers|tit|t[*][*]t|kiddy fiddler|bds|anus|beddable|bfd|bollocked|centerfolds|diesel-dike|dp|fornik|gay cancer|'+
-'gay lord|gay second base|heifer|hooters|hotchat|humpers|hymies|ifintermyself|kanibis|kannabis|kannibis|muff|nymphet|nympho|pikeys|reefers|spaffs|topless|wad|wazzak|wazzaks|wencher|wenchers|woofter|woolly-woofters|gay)[^\\w<]*\\b(?!\<)','i'));
+                                        'it oğlu it|kalantor|keriz|ossurturum bÃ¶yle|sik kili|som agizli ibne|yedinmi yarraÃ°Ãœ ÃŸimdi|Ýbne)[^\\w<]*\\b(?!\<)','i'));
 
-var viL2RegPatts = new Array(new RegExp('(?!\>)\\b[^\\w>]*(Du mot minh|cảm thấy ham đụ|cặc|chÃ³ chết|con bÃ mÃ y|con bán hoa|con cac|cu|cÃ¢m mồm|goo|con me may|du ma may|giã vịt)[^\\w<]*\\b(?!\<)','i'),
-                            // en l2 words list
-new RegExp('(?!\>)\\b[^\\w>]*(adultsex|amaTeur|asexualox|badass|balls|bigoted|bitching|bitchy|boned|butt|buttocks|clitoritis|clitorus|cybersex|dick|erotic|escort|fagging|'+
-'faggot|faggotry|faggots|faggott|fagot|fagots|freesex|freex|Gay Bow|gay bOy|gay dog|gay man|gay men|gay sEx|gaybert|gaybob|gaybor|gayboy|gaydo|gaygirl|dumb|dumbs|dumbest|gaylord|gays|gaysex|gaysian|'+
-'gaytard|gayteens|gayteenz|gaywad|suck|sucking|god damn|god-dam|redneck|slope|horny|hot chiCk|hotsex|idiot|jerk|lesbain|lesbayn|lusting|masturbat|mormon|pervert|pissant|pissed off|pisspIg|porn|prick|rapist|'+
-'sex|sexx|sexxx|sexY|shoot|stupid|teabaggers|transsexual|voyeur|willy|troll|scrounger|sow|crapped|immigrant|immigrants|imigrants Moslem|Muslim|Moslim|scrounge|Islam|islamists|Jew|Jewry|slits)[^\\w<]*\\b(?!\<)','i'),
-new RegExp('(?!\>)\\b[^\\w>]*(freaks|assinine|Axx|B_A_L_L_S!|bullocks|fracking|fricking|i.d.i.o.t.|idiots|idoit|jerks|knuckleheads|load of crap|loser|perverts|pi[*][*][*]ed|retarded|sucked|SUCKS|Terroristen|w[*]nkers|'+
-'islamo facist|putz|demoskanks|ragheads|Snatch|numbskull|half breed|nit wit|dummy|dole bludging|filth|Bozo|shagging|ball-less|peabrain|libtard|Jesus|Christ|refugee|muslims|Hookers|adultplayground|adultsite|'+
-'assed|beastiality|bestiality|bint|bints|bitched|bitchery|bitchier|bitchin\'|bleeth|bongs|canibus|ceemen|cyberbabe|cybererotica|dildoes|dildos|'+
-'ejaculates|foreskin|ganja|genitals|hussies|hussy|ladyboy|lady-boy|ladyboys|lady-boys|naked girl|naked girls|naked-girl|naked-girls|naked-woman|naked-women|nipples|nookie|nooky|sadomasochist|shemale)[^\\w<]*\\b(?!\<)','i'),
-new RegExp('(?!\>)\\b[^\\w>]*(wench|wenches|wenching|buggers|refugee|refugees|barbaric|butcher|butchering|isis|stupidest|all you clowns|imbeciles|fool|idots|demon-rats|illegal rats|coyotes|terrorism|except for his middle leg|'+
-'rat boy|blowhard|drop more bombs|just drop bombs everywhere|jihadists|black male|clowns|idiotic|buffoon|rodent community|anal|ball kicking|bigot|bigots|bookie|bootee|bootie|breastman|bung hole|childporn|'+
-'cock|crackhead|cummin|curtir|dix|godamnit|knucklehead|nipple|penis|penus|redskin|scrotum|scum|skank|suckers|tit|t[*][*]t|kiddy fiddler|bds|anus|beddable|bfd|bollocked|centerfolds|diesel-dike|dp|fornik|gay cancer|'+
-'gay lord|gay second base|heifer|hooters|hotchat|humpers|hymies|ifintermyself|kanibis|kannabis|kannibis|muff|nymphet|nympho|pikeys|reefers|spaffs|topless|wad|wazzak|wazzaks|wencher|wenchers|woofter|woolly-woofters|gay)[^\\w<]*\\b(?!\<)','i'));
+var viL2RegPatts = new Array(new RegExp('(?!\>)\\b[^\\w>]*(Du mot minh|cảm thấy ham đụ|cặc|chÃ³ chết|con bÃ mÃ y|con bán hoa|con cac|cu|cÃ¢m mồm|goo|con me may|du ma may|giã vịt)[^\\w<]*\\b(?!\<)','i'));
 
 var zhL2RegPatts = new Array(new RegExp('(?!\>)\\b[^\\w>]*(Bi Zui|Ni shi shen jiing bing|Qu Ni De!|chiang jian|ji ba|ji bai|ju tou mo lou|now tsan|tou ni ma|yu dam ful|ÃÃÃÂ±ÃÃ liu mao zi|交媾|做愛|发骚|台狗|处女膜|毛片|淫叫|'+
-                                        '淫娃|淫水|淫蕩|溝女|狗操|處女膜|姦|屙民|幹|幹炮)[^\\w<]*\\b(?!\<)','i'),
-                            // en l2 words list
-new RegExp('(?!\>)\\b[^\\w>]*(adultsex|amaTeur|asexualox|badass|balls|bigoted|bitching|bitchy|boned|butt|buttocks|clitoritis|clitorus|cybersex|dick|erotic|escort|fagging|'+
-'faggot|faggotry|faggots|faggott|fagot|fagots|freesex|freex|Gay Bow|gay bOy|gay dog|gay man|gay men|gay sEx|gaybert|gaybob|gaybor|gayboy|gaydo|gaygirl|dumb|dumbs|dumbest|gaylord|gays|gaysex|gaysian|'+
-'gaytard|gayteens|gayteenz|gaywad|suck|sucking|god damn|god-dam|redneck|slope|horny|hot chiCk|hotsex|idiot|jerk|lesbain|lesbayn|lusting|masturbat|mormon|pervert|pissant|pissed off|pisspIg|porn|prick|rapist|'+
-'sex|sexx|sexxx|sexY|shoot|stupid|teabaggers|transsexual|voyeur|willy|troll|scrounger|sow|crapped|immigrant|immigrants|imigrants Moslem|Muslim|Moslim|scrounge|Islam|islamists|Jew|Jewry|slits)[^\\w<]*\\b(?!\<)','i'),
-new RegExp('(?!\>)\\b[^\\w>]*(freaks|assinine|Axx|B_A_L_L_S!|bullocks|fracking|fricking|i.d.i.o.t.|idiots|idoit|jerks|knuckleheads|load of crap|loser|perverts|pi[*][*][*]ed|retarded|sucked|SUCKS|Terroristen|w[*]nkers|'+
-'islamo facist|putz|demoskanks|ragheads|Snatch|numbskull|half breed|nit wit|dummy|dole bludging|filth|Bozo|shagging|ball-less|peabrain|libtard|Jesus|Christ|refugee|muslims|Hookers|adultplayground|adultsite|'+
-'assed|beastiality|bestiality|bint|bints|bitched|bitchery|bitchier|bitchin\'|bleeth|bongs|canibus|ceemen|cyberbabe|cybererotica|dildoes|dildos|'+
-'ejaculates|foreskin|ganja|genitals|hussies|hussy|ladyboy|lady-boy|ladyboys|lady-boys|naked girl|naked girls|naked-girl|naked-girls|naked-woman|naked-women|nipples|nookie|nooky|sadomasochist|shemale)[^\\w<]*\\b(?!\<)','i'),
-new RegExp('(?!\>)\\b[^\\w>]*(wench|wenches|wenching|buggers|refugee|refugees|barbaric|butcher|butchering|isis|stupidest|all you clowns|imbeciles|fool|idots|demon-rats|illegal rats|coyotes|terrorism|except for his middle leg|'+
-'rat boy|blowhard|drop more bombs|just drop bombs everywhere|jihadists|black male|clowns|idiotic|buffoon|rodent community|anal|ball kicking|bigot|bigots|bookie|bootee|bootie|breastman|bung hole|childporn|'+
-'cock|crackhead|cummin|curtir|dix|godamnit|knucklehead|nipple|penis|penus|redskin|scrotum|scum|skank|suckers|tit|t[*][*]t|kiddy fiddler|bds|anus|beddable|bfd|bollocked|centerfolds|diesel-dike|dp|fornik|gay cancer|'+
-'gay lord|gay second base|heifer|hooters|hotchat|humpers|hymies|ifintermyself|kanibis|kannabis|kannibis|muff|nymphet|nympho|pikeys|reefers|spaffs|topless|wad|wazzak|wazzaks|wencher|wenchers|woofter|woolly-woofters|gay)[^\\w<]*\\b(?!\<)','i'));
+                                        '淫娃|淫水|淫蕩|溝女|狗操|處女膜|姦|屙民|幹|幹炮)[^\\w<]*\\b(?!\<)','i'));
 
-var arL2RegPatts = new Array(new RegExp('(?!\>)\\b[^\\w>]*(الموت عليكم!|الشيطان عليكم!|كرات|حزمة الحطب|مثلي الجنس|غبي|ديك|يتم حرق منزلك.|مصاصة اللحوم|أقرن|شاذ جنسيا|قبيح|أقسم الدم|القواد|قضيب|يا والدي|أنت شخص مستوى منخفض|كنت قصيرة|يا إلهي|لمثلي الجنس من صحم|أقسم موتاكم)[^\\w<]*\\b(?!\<)','i'),
-                            // en l2 words list
-new RegExp('(?!\>)\\b[^\\w>]*(adultsex|amaTeur|asexualox|badass|balls|bigoted|bitching|bitchy|boned|butt|buttocks|clitoritis|clitorus|cybersex|dick|erotic|escort|fagging|'+
-'faggot|faggotry|faggots|faggott|fagot|fagots|freesex|freex|Gay Bow|gay bOy|gay dog|gay man|gay men|gay sEx|gaybert|gaybob|gaybor|gayboy|gaydo|gaygirl|dumb|dumbs|dumbest|gaylord|gays|gaysex|gaysian|'+
-'gaytard|gayteens|gayteenz|gaywad|suck|sucking|god damn|god-dam|redneck|slope|horny|hot chiCk|hotsex|idiot|jerk|lesbain|lesbayn|lusting|masturbat|mormon|pervert|pissant|pissed off|pisspIg|porn|prick|rapist|'+
-'sex|sexx|sexxx|sexY|shoot|stupid|teabaggers|transsexual|voyeur|willy|troll|scrounger|sow|crapped|immigrant|immigrants|imigrants Moslem|Muslim|Moslim|scrounge|Islam|islamists|Jew|Jewry|slits)[^\\w<]*\\b(?!\<)','i'),
-new RegExp('(?!\>)\\b[^\\w>]*(freaks|assinine|Axx|B_A_L_L_S!|bullocks|fracking|fricking|i.d.i.o.t.|idiots|idoit|jerks|knuckleheads|load of crap|loser|perverts|pi[*][*][*]ed|retarded|sucked|SUCKS|Terroristen|w[*]nkers|'+
-'islamo facist|putz|demoskanks|ragheads|Snatch|numbskull|half breed|nit wit|dummy|dole bludging|filth|Bozo|shagging|ball-less|peabrain|libtard|Jesus|Christ|refugee|muslims|Hookers|adultplayground|adultsite|'+
-'assed|beastiality|bestiality|bint|bints|bitched|bitchery|bitchier|bitchin\'|bleeth|bongs|canibus|ceemen|cyberbabe|cybererotica|dildoes|dildos|'+
-'ejaculates|foreskin|ganja|genitals|hussies|hussy|ladyboy|lady-boy|ladyboys|lady-boys|naked girl|naked girls|naked-girl|naked-girls|naked-woman|naked-women|nipples|nookie|nooky|sadomasochist|shemale)[^\\w<]*\\b(?!\<)','i'),
-new RegExp('(?!\>)\\b[^\\w>]*(wench|wenches|wenching|buggers|refugee|refugees|barbaric|butcher|butchering|isis|stupidest|all you clowns|imbeciles|fool|idots|demon-rats|illegal rats|coyotes|terrorism|except for his middle leg|'+
-'rat boy|blowhard|drop more bombs|just drop bombs everywhere|jihadists|black male|clowns|idiotic|buffoon|rodent community|anal|ball kicking|bigot|bigots|bookie|bootee|bootie|breastman|bung hole|childporn|'+
-'cock|crackhead|cummin|curtir|dix|godamnit|knucklehead|nipple|penis|penus|redskin|scrotum|scum|skank|suckers|tit|t[*][*]t|kiddy fiddler|bds|anus|beddable|bfd|bollocked|centerfolds|diesel-dike|dp|fornik|gay cancer|'+
-'gay lord|gay second base|heifer|hooters|hotchat|humpers|hymies|ifintermyself|kanibis|kannabis|kannibis|muff|nymphet|nympho|pikeys|reefers|spaffs|topless|wad|wazzak|wazzaks|wencher|wenchers|woofter|woolly-woofters|gay)[^\\w<]*\\b(?!\<)','i'));
+var arL2RegPatts = new Array(new RegExp('(?!\>)\\b[^\\w>]*(الموت عليكم!|الشيطان عليكم!|كرات|حزمة الحطب|مثلي الجنس|غبي|ديك|يتم حرق منزلك.|مصاصة اللحوم|أقرن|شاذ جنسيا|قبيح|أقسم الدم|القواد|قضيب|يا والدي|أنت شخص مستوى منخفض|كنت قصيرة|يا إلهي|لمثلي الجنس من صحم|أقسم موتاكم)[^\\w<]*\\b(?!\<)','i'));
 
 var daL2RegPatts = new Array(new RegExp('(?!\>)\\b[^\\w>]*(bãšskubber|din mor|din mor!|dumme k\'lling|fj\'s|for helvede|grimme k\'lling|hold k\'ft|klaphat|ko!|kãžter|ludertãšve|osteged|pik|pikansjos|pikspiller|rãžvguitar|'+
-                                        'slik omkring mit pikhovede|sut rãžv|svans|tudefj\'s|tãžs|bãžsserãžv|klamme luderso|klamme so|rãžvbanan|ãlfisse)[^\\w<]*\\b(?!\<)','i'),
-                            // en l2 words list
-new RegExp('(?!\>)\\b[^\\w>]*(adultsex|amaTeur|asexualox|badass|balls|bigoted|bitching|bitchy|boned|butt|buttocks|clitoritis|clitorus|cybersex|dick|erotic|escort|fagging|'+
-'faggot|faggotry|faggots|faggott|fagot|fagots|freesex|freex|Gay Bow|gay bOy|gay dog|gay man|gay men|gay sEx|gaybert|gaybob|gaybor|gayboy|gaydo|gaygirl|dumb|dumbs|dumbest|gaylord|gays|gaysex|gaysian|'+
-'gaytard|gayteens|gayteenz|gaywad|suck|sucking|god damn|god-dam|redneck|slope|horny|hot chiCk|hotsex|idiot|jerk|lesbain|lesbayn|lusting|masturbat|mormon|pervert|pissant|pissed off|pisspIg|porn|prick|rapist|'+
-'sex|sexx|sexxx|sexY|shoot|stupid|teabaggers|transsexual|voyeur|willy|troll|scrounger|sow|crapped|immigrant|immigrants|imigrants Moslem|Muslim|Moslim|scrounge|Islam|islamists|Jew|Jewry|slits)[^\\w<]*\\b(?!\<)','i'),
-new RegExp('(?!\>)\\b[^\\w>]*(freaks|assinine|Axx|B_A_L_L_S!|bullocks|fracking|fricking|i.d.i.o.t.|idiots|idoit|jerks|knuckleheads|load of crap|loser|perverts|pi[*][*][*]ed|retarded|sucked|SUCKS|Terroristen|w[*]nkers|'+
-'islamo facist|putz|demoskanks|ragheads|Snatch|numbskull|half breed|nit wit|dummy|dole bludging|filth|Bozo|shagging|ball-less|peabrain|libtard|Jesus|Christ|refugee|muslims|Hookers|adultplayground|adultsite|'+
-'assed|beastiality|bestiality|bint|bints|bitched|bitchery|bitchier|bitchin\'|bleeth|bongs|canibus|ceemen|cyberbabe|cybererotica|dildoes|dildos|'+
-'ejaculates|foreskin|ganja|genitals|hussies|hussy|ladyboy|lady-boy|ladyboys|lady-boys|naked girl|naked girls|naked-girl|naked-girls|naked-woman|naked-women|nipples|nookie|nooky|sadomasochist|shemale)[^\\w<]*\\b(?!\<)','i'),
-new RegExp('(?!\>)\\b[^\\w>]*(wench|wenches|wenching|buggers|refugee|refugees|barbaric|butcher|butchering|isis|stupidest|all you clowns|imbeciles|fool|idots|demon-rats|illegal rats|coyotes|terrorism|except for his middle leg|'+
-'rat boy|blowhard|drop more bombs|just drop bombs everywhere|jihadists|black male|clowns|idiotic|buffoon|rodent community|anal|ball kicking|bigot|bigots|bookie|bootee|bootie|breastman|bung hole|childporn|'+
-'cock|crackhead|cummin|curtir|dix|godamnit|knucklehead|nipple|penis|penus|redskin|scrotum|scum|skank|suckers|tit|t[*][*]t|kiddy fiddler|bds|anus|beddable|bfd|bollocked|centerfolds|diesel-dike|dp|fornik|gay cancer|'+
-'gay lord|gay second base|heifer|hooters|hotchat|humpers|hymies|ifintermyself|kanibis|kannabis|kannibis|muff|nymphet|nympho|pikeys|reefers|spaffs|topless|wad|wazzak|wazzaks|wencher|wenchers|woofter|woolly-woofters|gay)[^\\w<]*\\b(?!\<)','i'));
+                                        'slik omkring mit pikhovede|sut rãžv|svans|tudefj\'s|tãžs|bãžsserãžv|klamme luderso|klamme so|rãžvbanan|ãlfisse)[^\\w<]*\\b(?!\<)','i'));
 
-var elL2RegPatts = new Array(new RegExp('(?!\>)\\b[^\\w>]*(Πηγαίνετε στην κόλαση|Όρχις|Ομοφυλόφιλος|Άσχημη γυναίκα (κυριολεκτικά μια σαύρα)|Αηδιαστικό πράγμα / άτομο|ηλίθια (κεφάλι είναι ένα άδειο κέλυφος)|πηγαίνετε στις αγελάδες!|φύλο|ψωλή|σκληρός|παλιές μπάλες)[^\\w<]*\\b(?!\<)','i'),
-                            // en l2 words list
-new RegExp('(?!\>)\\b[^\\w>]*(adultsex|amaTeur|asexualox|badass|balls|bigoted|bitching|bitchy|boned|butt|buttocks|clitoritis|clitorus|cybersex|dick|erotic|escort|fagging|'+
-'faggot|faggotry|faggots|faggott|fagot|fagots|freesex|freex|Gay Bow|gay bOy|gay dog|gay man|gay men|gay sEx|gaybert|gaybob|gaybor|gayboy|gaydo|gaygirl|dumb|dumbs|dumbest|gaylord|gays|gaysex|gaysian|'+
-'gaytard|gayteens|gayteenz|gaywad|suck|sucking|god damn|god-dam|redneck|slope|horny|hot chiCk|hotsex|idiot|jerk|lesbain|lesbayn|lusting|masturbat|mormon|pervert|pissant|pissed off|pisspIg|porn|prick|rapist|'+
-'sex|sexx|sexxx|sexY|shoot|stupid|teabaggers|transsexual|voyeur|willy|troll|scrounger|sow|crapped|immigrant|immigrants|imigrants Moslem|Muslim|Moslim|scrounge|Islam|islamists|Jew|Jewry|slits)[^\\w<]*\\b(?!\<)','i'),
-new RegExp('(?!\>)\\b[^\\w>]*(freaks|assinine|Axx|B_A_L_L_S!|bullocks|fracking|fricking|i.d.i.o.t.|idiots|idoit|jerks|knuckleheads|load of crap|loser|perverts|pi[*][*][*]ed|retarded|sucked|SUCKS|Terroristen|w[*]nkers|'+
-'islamo facist|putz|demoskanks|ragheads|Snatch|numbskull|half breed|nit wit|dummy|dole bludging|filth|Bozo|shagging|ball-less|peabrain|libtard|Jesus|Christ|refugee|muslims|Hookers|adultplayground|adultsite|'+
-'assed|beastiality|bestiality|bint|bints|bitched|bitchery|bitchier|bitchin\'|bleeth|bongs|canibus|ceemen|cyberbabe|cybererotica|dildoes|dildos|'+
-'ejaculates|foreskin|ganja|genitals|hussies|hussy|ladyboy|lady-boy|ladyboys|lady-boys|naked girl|naked girls|naked-girl|naked-girls|naked-woman|naked-women|nipples|nookie|nooky|sadomasochist|shemale)[^\\w<]*\\b(?!\<)','i'),
-new RegExp('(?!\>)\\b[^\\w>]*(wench|wenches|wenching|buggers|refugee|refugees|barbaric|butcher|butchering|isis|stupidest|all you clowns|imbeciles|fool|idots|demon-rats|illegal rats|coyotes|terrorism|except for his middle leg|'+
-'rat boy|blowhard|drop more bombs|just drop bombs everywhere|jihadists|black male|clowns|idiotic|buffoon|rodent community|anal|ball kicking|bigot|bigots|bookie|bootee|bootie|breastman|bung hole|childporn|'+
-'cock|crackhead|cummin|curtir|dix|godamnit|knucklehead|nipple|penis|penus|redskin|scrotum|scum|skank|suckers|tit|t[*][*]t|kiddy fiddler|bds|anus|beddable|bfd|bollocked|centerfolds|diesel-dike|dp|fornik|gay cancer|'+
-'gay lord|gay second base|heifer|hooters|hotchat|humpers|hymies|ifintermyself|kanibis|kannabis|kannibis|muff|nymphet|nympho|pikeys|reefers|spaffs|topless|wad|wazzak|wazzaks|wencher|wenchers|woofter|woolly-woofters|gay)[^\\w<]*\\b(?!\<)','i'));
+var elL2RegPatts = new Array(new RegExp('(?!\>)\\b[^\\w>]*(Πηγαίνετε στην κόλαση|Όρχις|Ομοφυλόφιλος|Άσχημη γυναίκα (κυριολεκτικά μια σαύρα)|Αηδιαστικό πράγμα / άτομο|ηλίθια (κεφάλι είναι ένα άδειο κέλυφος)|πηγαίνετε στις αγελάδες!|φύλο|ψωλή|σκληρός|παλιές μπάλες)[^\\w<]*\\b(?!\<)','i'));
 
-var fiL2RegPatts = new Array(new RegExp('(?!\>)\\b[^\\w>]*(Hinttari|Homo|Idiootti|KyrpÃ€|Mee hervantaan|Painu Helvettin!|Perkele|Saatana|helvetti|muna|rotta|ãpã€rã€|ãpã€rã€lapsi)[^\\w<]*\\b(?!\<)','i'),
-                            // en l2 words list
-new RegExp('(?!\>)\\b[^\\w>]*(adultsex|amaTeur|asexualox|badass|balls|bigoted|bitching|bitchy|boned|butt|buttocks|clitoritis|clitorus|cybersex|dick|erotic|escort|fagging|'+
-'faggot|faggotry|faggots|faggott|fagot|fagots|freesex|freex|Gay Bow|gay bOy|gay dog|gay man|gay men|gay sEx|gaybert|gaybob|gaybor|gayboy|gaydo|gaygirl|dumb|dumbs|dumbest|gaylord|gays|gaysex|gaysian|'+
-'gaytard|gayteens|gayteenz|gaywad|suck|sucking|god damn|god-dam|redneck|slope|horny|hot chiCk|hotsex|idiot|jerk|lesbain|lesbayn|lusting|masturbat|mormon|pervert|pissant|pissed off|pisspIg|porn|prick|rapist|'+
-'sex|sexx|sexxx|sexY|shoot|stupid|teabaggers|transsexual|voyeur|willy|troll|scrounger|sow|crapped|immigrant|immigrants|imigrants Moslem|Muslim|Moslim|scrounge|Islam|islamists|Jew|Jewry|slits)[^\\w<]*\\b(?!\<)','i'),
-new RegExp('(?!\>)\\b[^\\w>]*(freaks|assinine|Axx|B_A_L_L_S!|bullocks|fracking|fricking|i.d.i.o.t.|idiots|idoit|jerks|knuckleheads|load of crap|loser|perverts|pi[*][*][*]ed|retarded|sucked|SUCKS|Terroristen|w[*]nkers|'+
-'islamo facist|putz|demoskanks|ragheads|Snatch|numbskull|half breed|nit wit|dummy|dole bludging|filth|Bozo|shagging|ball-less|peabrain|libtard|Jesus|Christ|refugee|muslims|Hookers|adultplayground|adultsite|'+
-'assed|beastiality|bestiality|bint|bints|bitched|bitchery|bitchier|bitchin\'|bleeth|bongs|canibus|ceemen|cyberbabe|cybererotica|dildoes|dildos|'+
-'ejaculates|foreskin|ganja|genitals|hussies|hussy|ladyboy|lady-boy|ladyboys|lady-boys|naked girl|naked girls|naked-girl|naked-girls|naked-woman|naked-women|nipples|nookie|nooky|sadomasochist|shemale)[^\\w<]*\\b(?!\<)','i'),
-new RegExp('(?!\>)\\b[^\\w>]*(wench|wenches|wenching|buggers|refugee|refugees|barbaric|butcher|butchering|isis|stupidest|all you clowns|imbeciles|fool|idots|demon-rats|illegal rats|coyotes|terrorism|except for his middle leg|'+
-'rat boy|blowhard|drop more bombs|just drop bombs everywhere|jihadists|black male|clowns|idiotic|buffoon|rodent community|anal|ball kicking|bigot|bigots|bookie|bootee|bootie|breastman|bung hole|childporn|'+
-'cock|crackhead|cummin|curtir|dix|godamnit|knucklehead|nipple|penis|penus|redskin|scrotum|scum|skank|suckers|tit|t[*][*]t|kiddy fiddler|bds|anus|beddable|bfd|bollocked|centerfolds|diesel-dike|dp|fornik|gay cancer|'+
-'gay lord|gay second base|heifer|hooters|hotchat|humpers|hymies|ifintermyself|kanibis|kannabis|kannibis|muff|nymphet|nympho|pikeys|reefers|spaffs|topless|wad|wazzak|wazzaks|wencher|wenchers|woofter|woolly-woofters|gay)[^\\w<]*\\b(?!\<)','i'));
+var fiL2RegPatts = new Array(new RegExp('(?!\>)\\b[^\\w>]*(Hinttari|Homo|Idiootti|KyrpÃ€|Mee hervantaan|Painu Helvettin!|Perkele|Saatana|helvetti|muna|rotta|ãpã€rã€|ãpã€rã€lapsi)[^\\w<]*\\b(?!\<)','i'));
 
 var heL2RegPatts = new Array(new RegExp('(?!\>)\\b[^\\w>]*(כדורים|האמא שלך מת|אימך!|נערה סקסית|עבור למכור קרח!|מסטול|הספיקו לי!|עזוב אותי בשקט|אלוהים שייקח אותך כבר!|תעשה לי טוב|Die|תישרף בגיהינום|זין|עופות Garbadge|'+
-                                        'שלך|תוצאה או חוסר מזל רע|הוֹמוֹסֶקסוּאָל|ללכת ולחפש חברים|אשפה)[^\\w<]*\\b(?!\<)','i'),
-                            // en l2 words list
-new RegExp('(?!\>)\\b[^\\w>]*(adultsex|amaTeur|asexualox|badass|balls|bigoted|bitching|bitchy|boned|butt|buttocks|clitoritis|clitorus|cybersex|dick|erotic|escort|fagging|'+
-'faggot|faggotry|faggots|faggott|fagot|fagots|freesex|freex|Gay Bow|gay bOy|gay dog|gay man|gay men|gay sEx|gaybert|gaybob|gaybor|gayboy|gaydo|gaygirl|dumb|dumbs|dumbest|gaylord|gays|gaysex|gaysian|'+
-'gaytard|gayteens|gayteenz|gaywad|suck|sucking|god damn|god-dam|redneck|slope|horny|hot chiCk|hotsex|idiot|jerk|lesbain|lesbayn|lusting|masturbat|mormon|pervert|pissant|pissed off|pisspIg|porn|prick|rapist|'+
-'sex|sexx|sexxx|sexY|shoot|stupid|teabaggers|transsexual|voyeur|willy|troll|scrounger|sow|crapped|immigrant|immigrants|imigrants Moslem|Muslim|Moslim|scrounge|Islam|islamists|Jew|Jewry|slits)[^\\w<]*\\b(?!\<)','i'),
-new RegExp('(?!\>)\\b[^\\w>]*(freaks|assinine|Axx|B_A_L_L_S!|bullocks|fracking|fricking|i.d.i.o.t.|idiots|idoit|jerks|knuckleheads|load of crap|loser|perverts|pi[*][*][*]ed|retarded|sucked|SUCKS|Terroristen|w[*]nkers|'+
-'islamo facist|putz|demoskanks|ragheads|Snatch|numbskull|half breed|nit wit|dummy|dole bludging|filth|Bozo|shagging|ball-less|peabrain|libtard|Jesus|Christ|refugee|muslims|Hookers|adultplayground|adultsite|'+
-'assed|beastiality|bestiality|bint|bints|bitched|bitchery|bitchier|bitchin\'|bleeth|bongs|canibus|ceemen|cyberbabe|cybererotica|dildoes|dildos|'+
-'ejaculates|foreskin|ganja|genitals|hussies|hussy|ladyboy|lady-boy|ladyboys|lady-boys|naked girl|naked girls|naked-girl|naked-girls|naked-woman|naked-women|nipples|nookie|nooky|sadomasochist|shemale)[^\\w<]*\\b(?!\<)','i'),
-new RegExp('(?!\>)\\b[^\\w>]*(wench|wenches|wenching|buggers|refugee|refugees|barbaric|butcher|butchering|isis|stupidest|all you clowns|imbeciles|fool|idots|demon-rats|illegal rats|coyotes|terrorism|except for his middle leg|'+
-'rat boy|blowhard|drop more bombs|just drop bombs everywhere|jihadists|black male|clowns|idiotic|buffoon|rodent community|anal|ball kicking|bigot|bigots|bookie|bootee|bootie|breastman|bung hole|childporn|'+
-'cock|crackhead|cummin|curtir|dix|godamnit|knucklehead|nipple|penis|penus|redskin|scrotum|scum|skank|suckers|tit|t[*][*]t|kiddy fiddler|bds|anus|beddable|bfd|bollocked|centerfolds|diesel-dike|dp|fornik|gay cancer|'+
-'gay lord|gay second base|heifer|hooters|hotchat|humpers|hymies|ifintermyself|kanibis|kannabis|kannibis|muff|nymphet|nympho|pikeys|reefers|spaffs|topless|wad|wazzak|wazzaks|wencher|wenchers|woofter|woolly-woofters|gay)[^\\w<]*\\b(?!\<)','i'));
+                                        'שלך|תוצאה או חוסר מזל רע|הוֹמוֹסֶקסוּאָל|ללכת ולחפש חברים|אשפה)[^\\w<]*\\b(?!\<)','i'));
 
 var idL2RegPatts = new Array(new RegExp('(?!\>)\\b[^\\w>]*(Anjing!|Bencong|Binor (Bini Orang)|Blo\'on|Jayus lo!|Mak lu!|Monyet !|Monyong|Peler|Sampah|Sempak|Sempak/kolor|Terkutuklah engkau semua!|anak yatim|bajingan tengik|brengsek|geblek|'+
-                                        'goblok|kalempong|kampungan|kontol/titit|maho|orang (pria/wanita) miskin|palaji|pepsi|tengkorak hidup|tukang bohong|bodoh|tolol|goblok|orang udik |orang kampung)[^\\w<]*\\b(?!\<)','i'),
-                            // en l2 words list
-new RegExp('(?!\>)\\b[^\\w>]*(adultsex|amaTeur|asexualox|badass|balls|bigoted|bitching|bitchy|boned|butt|buttocks|clitoritis|clitorus|cybersex|dick|erotic|escort|fagging|'+
-'faggot|faggotry|faggots|faggott|fagot|fagots|freesex|freex|Gay Bow|gay bOy|gay dog|gay man|gay men|gay sEx|gaybert|gaybob|gaybor|gayboy|gaydo|gaygirl|dumb|dumbs|dumbest|gaylord|gays|gaysex|gaysian|'+
-'gaytard|gayteens|gayteenz|gaywad|suck|sucking|god damn|god-dam|redneck|slope|horny|hot chiCk|hotsex|idiot|jerk|lesbain|lesbayn|lusting|masturbat|mormon|pervert|pissant|pissed off|pisspIg|porn|prick|rapist|'+
-'sex|sexx|sexxx|sexY|shoot|stupid|teabaggers|transsexual|voyeur|willy|troll|scrounger|sow|crapped|immigrant|immigrants|imigrants Moslem|Muslim|Moslim|scrounge|Islam|islamists|Jew|Jewry|slits)[^\\w<]*\\b(?!\<)','i'),
-new RegExp('(?!\>)\\b[^\\w>]*(freaks|assinine|Axx|B_A_L_L_S!|bullocks|fracking|fricking|i.d.i.o.t.|idiots|idoit|jerks|knuckleheads|load of crap|loser|perverts|pi[*][*][*]ed|retarded|sucked|SUCKS|Terroristen|w[*]nkers|'+
-'islamo facist|putz|demoskanks|ragheads|Snatch|numbskull|half breed|nit wit|dummy|dole bludging|filth|Bozo|shagging|ball-less|peabrain|libtard|Jesus|Christ|refugee|muslims|Hookers|adultplayground|adultsite|'+
-'assed|beastiality|bestiality|bint|bints|bitched|bitchery|bitchier|bitchin\'|bleeth|bongs|canibus|ceemen|cyberbabe|cybererotica|dildoes|dildos|'+
-'ejaculates|foreskin|ganja|genitals|hussies|hussy|ladyboy|lady-boy|ladyboys|lady-boys|naked girl|naked girls|naked-girl|naked-girls|naked-woman|naked-women|nipples|nookie|nooky|sadomasochist|shemale)[^\\w<]*\\b(?!\<)','i'),
-new RegExp('(?!\>)\\b[^\\w>]*(wench|wenches|wenching|buggers|refugee|refugees|barbaric|butcher|butchering|isis|stupidest|all you clowns|imbeciles|fool|idots|demon-rats|illegal rats|coyotes|terrorism|except for his middle leg|'+
-'rat boy|blowhard|drop more bombs|just drop bombs everywhere|jihadists|black male|clowns|idiotic|buffoon|rodent community|anal|ball kicking|bigot|bigots|bookie|bootee|bootie|breastman|bung hole|childporn|'+
-'cock|crackhead|cummin|curtir|dix|godamnit|knucklehead|nipple|penis|penus|redskin|scrotum|scum|skank|suckers|tit|t[*][*]t|kiddy fiddler|bds|anus|beddable|bfd|bollocked|centerfolds|diesel-dike|dp|fornik|gay cancer|'+
-'gay lord|gay second base|heifer|hooters|hotchat|humpers|hymies|ifintermyself|kanibis|kannabis|kannibis|muff|nymphet|nympho|pikeys|reefers|spaffs|topless|wad|wazzak|wazzaks|wencher|wenchers|woofter|woolly-woofters|gay)[^\\w<]*\\b(?!\<)','i'));
+                                        'goblok|kalempong|kampungan|kontol/titit|maho|orang (pria/wanita) miskin|palaji|pepsi|tengkorak hidup|tukang bohong|bodoh|tolol|goblok|orang udik |orang kampung)[^\\w<]*\\b(?!\<)','i'));
 
 var jaL2RegPatts = new Array(new RegExp('(?!\>)\\b[^\\w>]*(乳首|精子|愛を作るために、|あいつ/ばか|白痴|超醜い女の子|ディック|ペニス|ジャークや白痴|あなたが行くオフ|金玉|卵巣|コック|おしっこするには|ああがらくた！ （または：くそーああ！）|角質|あなたの「ツール」が小さいです！|'+
                                         'うんち|死にあなたを打ちます|アウトにするには|臭い老人|敗者|にヒットするには、少女[または少年]をピックアップ|男性同性愛者|あなたのアップ|バカじゃありませんの？|胸|バット|男女|死にます|小便をします|バカメース|ホモ|セックス|吸います|アナル|'+
                                         '威勢のいい|baltringueは|格好いい|ボタンヘッド|チェーピン|コクー|詐欺|甲介|クーリー|クラック常用者|サイバーセックス|総統|腺|小型テント|掩撃|ばか|ラディノ|レズビアン|愚か者|マカク|マリカ|採掘できます|モアー|ムール貝|ゴック|腸詰|虚弱な|堤防|'+
-                                        'ドン|刺します|ラージャ|向け無料|セックスドラマ|シーメール|風袋重量|アップスカート|シンガ|ふしだらな女|円顱|黒穂病|エロチック|ズシーン|ポラック|fagots|のabo|鍋)[^\\w<]*\\b(?!\<)','i'),
-                            // en l2 words list
-new RegExp('(?!\>)\\b[^\\w>]*(adultsex|amaTeur|asexualox|badass|balls|bigoted|bitching|bitchy|boned|butt|buttocks|clitoritis|clitorus|cybersex|dick|erotic|escort|fagging|'+
-'faggot|faggotry|faggots|faggott|fagot|fagots|freesex|freex|Gay Bow|gay bOy|gay dog|gay man|gay men|gay sEx|gaybert|gaybob|gaybor|gayboy|gaydo|gaygirl|dumb|dumbs|dumbest|gaylord|gays|gaysex|gaysian|'+
-'gaytard|gayteens|gayteenz|gaywad|suck|sucking|god damn|god-dam|redneck|slope|horny|hot chiCk|hotsex|idiot|jerk|lesbain|lesbayn|lusting|masturbat|mormon|pervert|pissant|pissed off|pisspIg|porn|prick|rapist|'+
-'sex|sexx|sexxx|sexY|shoot|stupid|teabaggers|transsexual|voyeur|willy|troll|scrounger|sow|crapped|immigrant|immigrants|imigrants Moslem|Muslim|Moslim|scrounge|Islam|islamists|Jew|Jewry|slits)[^\\w<]*\\b(?!\<)','i'),
-new RegExp('(?!\>)\\b[^\\w>]*(freaks|assinine|Axx|B_A_L_L_S!|bullocks|fracking|fricking|i.d.i.o.t.|idiots|idoit|jerks|knuckleheads|load of crap|loser|perverts|pi[*][*][*]ed|retarded|sucked|SUCKS|Terroristen|w[*]nkers|'+
-'islamo facist|putz|demoskanks|ragheads|Snatch|numbskull|half breed|nit wit|dummy|dole bludging|filth|Bozo|shagging|ball-less|peabrain|libtard|Jesus|Christ|refugee|muslims|Hookers|adultplayground|adultsite|'+
-'assed|beastiality|bestiality|bint|bints|bitched|bitchery|bitchier|bitchin\'|bleeth|bongs|canibus|ceemen|cyberbabe|cybererotica|dildoes|dildos|'+
-'ejaculates|foreskin|ganja|genitals|hussies|hussy|ladyboy|lady-boy|ladyboys|lady-boys|naked girl|naked girls|naked-girl|naked-girls|naked-woman|naked-women|nipples|nookie|nooky|sadomasochist|shemale)[^\\w<]*\\b(?!\<)','i'),
-new RegExp('(?!\>)\\b[^\\w>]*(wench|wenches|wenching|buggers|refugee|refugees|barbaric|butcher|butchering|isis|stupidest|all you clowns|imbeciles|fool|idots|demon-rats|illegal rats|coyotes|terrorism|except for his middle leg|'+
-'rat boy|blowhard|drop more bombs|just drop bombs everywhere|jihadists|black male|clowns|idiotic|buffoon|rodent community|anal|ball kicking|bigot|bigots|bookie|bootee|bootie|breastman|bung hole|childporn|'+
-'cock|crackhead|cummin|curtir|dix|godamnit|knucklehead|nipple|penis|penus|redskin|scrotum|scum|skank|suckers|tit|t[*][*]t|kiddy fiddler|bds|anus|beddable|bfd|bollocked|centerfolds|diesel-dike|dp|fornik|gay cancer|'+
-'gay lord|gay second base|heifer|hooters|hotchat|humpers|hymies|ifintermyself|kanibis|kannabis|kannibis|muff|nymphet|nympho|pikeys|reefers|spaffs|topless|wad|wazzak|wazzaks|wencher|wenchers|woofter|woolly-woofters|gay)[^\\w<]*\\b(?!\<)','i'));
+                                        'ドン|刺します|ラージャ|向け無料|セックスドラマ|シーメール|風袋重量|アップスカート|シンガ|ふしだらな女|円顱|黒穂病|エロチック|ズシーン|ポラック|fagots|のabo|鍋)[^\\w<]*\\b(?!\<)','i'));
 
-var koL2RegPatts = new Array(new RegExp('(?!\>)\\b[^\\w>]*(Babo|Chaji|Goja|Jot ka|Michin|Nu choogle lea|bingu|jhut-kkok-ji)[^\\w<]*\\b(?!\<)','i'),
-                            // en l2 words list
-new RegExp('(?!\>)\\b[^\\w>]*(adultsex|amaTeur|asexualox|badass|balls|bigoted|bitching|bitchy|boned|butt|buttocks|clitoritis|clitorus|cybersex|dick|erotic|escort|fagging|'+
-'faggot|faggotry|faggots|faggott|fagot|fagots|freesex|freex|Gay Bow|gay bOy|gay dog|gay man|gay men|gay sEx|gaybert|gaybob|gaybor|gayboy|gaydo|gaygirl|dumb|dumbs|dumbest|gaylord|gays|gaysex|gaysian|'+
-'gaytard|gayteens|gayteenz|gaywad|suck|sucking|god damn|god-dam|redneck|slope|horny|hot chiCk|hotsex|idiot|jerk|lesbain|lesbayn|lusting|masturbat|mormon|pervert|pissant|pissed off|pisspIg|porn|prick|rapist|'+
-'sex|sexx|sexxx|sexY|shoot|stupid|teabaggers|transsexual|voyeur|willy|troll|scrounger|sow|crapped|immigrant|immigrants|imigrants Moslem|Muslim|Moslim|scrounge|Islam|islamists|Jew|Jewry|slits)[^\\w<]*\\b(?!\<)','i'),
-new RegExp('(?!\>)\\b[^\\w>]*(freaks|assinine|Axx|B_A_L_L_S!|bullocks|fracking|fricking|i.d.i.o.t.|idiots|idoit|jerks|knuckleheads|load of crap|loser|perverts|pi[*][*][*]ed|retarded|sucked|SUCKS|Terroristen|w[*]nkers|'+
-'islamo facist|putz|demoskanks|ragheads|Snatch|numbskull|half breed|nit wit|dummy|dole bludging|filth|Bozo|shagging|ball-less|peabrain|libtard|Jesus|Christ|refugee|muslims|Hookers|adultplayground|adultsite|'+
-'assed|beastiality|bestiality|bint|bints|bitched|bitchery|bitchier|bitchin\'|bleeth|bongs|canibus|ceemen|cyberbabe|cybererotica|dildoes|dildos|'+
-'ejaculates|foreskin|ganja|genitals|hussies|hussy|ladyboy|lady-boy|ladyboys|lady-boys|naked girl|naked girls|naked-girl|naked-girls|naked-woman|naked-women|nipples|nookie|nooky|sadomasochist|shemale)[^\\w<]*\\b(?!\<)','i'),
-new RegExp('(?!\>)\\b[^\\w>]*(wench|wenches|wenching|buggers|refugee|refugees|barbaric|butcher|butchering|isis|stupidest|all you clowns|imbeciles|fool|idots|demon-rats|illegal rats|coyotes|terrorism|except for his middle leg|'+
-'rat boy|blowhard|drop more bombs|just drop bombs everywhere|jihadists|black male|clowns|idiotic|buffoon|rodent community|anal|ball kicking|bigot|bigots|bookie|bootee|bootie|breastman|bung hole|childporn|'+
-'cock|crackhead|cummin|curtir|dix|godamnit|knucklehead|nipple|penis|penus|redskin|scrotum|scum|skank|suckers|tit|t[*][*]t|kiddy fiddler|bds|anus|beddable|bfd|bollocked|centerfolds|diesel-dike|dp|fornik|gay cancer|'+
-'gay lord|gay second base|heifer|hooters|hotchat|humpers|hymies|ifintermyself|kanibis|kannabis|kannibis|muff|nymphet|nympho|pikeys|reefers|spaffs|topless|wad|wazzak|wazzaks|wencher|wenchers|woofter|woolly-woofters|gay)[^\\w<]*\\b(?!\<)','i'));
-
-
+var koL2RegPatts = new Array(new RegExp('(?!\>)\\b[^\\w>]*(Babo|Chaji|Goja|Jot ka|Michin|Nu choogle lea|bingu|jhut-kkok-ji)[^\\w<]*\\b(?!\<)','i'));
 
 var enL3RegPatts = new Array(new RegExp('(?!\>)(pussy|msn|fuc(k|ed|ers?|ing|s)?|(f|F)(~|_|!|@|#|$|%|^|&|[*](k))|fckn|Rats|motherfu?|fuk|cunt|d(i|!|[*])ck|asshole|a s s h o l e |assh|a[$]|f\'cking|F-ing|azz|bitch|'+
              'dumb|suck(s|er|ed)?|^\lick|nigg(ro|ga|er)?|(s|S)((~|!|@|#|$|%|^|&|[*])h(i|!|)t)|jacka(s|$)?)(?!\<)','i'),
@@ -636,6 +372,11 @@ function LoadApplicationRegExs() {
       regExDict['review'] = nbL2RegPatts;
       regExDict['public'] = enL3RegPatts;
       break;
+      //'PL-MSN#689527477782682'
+    case '689527477782682':
+      regExDict['review'] = plL2RegPatts;
+      regExDict['public'] = enL3RegPatts;
+      break;
        //'RU-MSN#760049184057705'
     case '760049184057705':
       regExDict['review'] = ruL2RegPatts;
@@ -764,7 +505,8 @@ function HighLightBlackListedWords() {
       for(var j=0;j<spans.length;j++) { 
         //var dataId = spans[j].getAttribute('data-reactid');            
         //if (dataId != null && dataId.indexOf('.0.1.0.1.0.0:$') != - 1) { 
-          var content = spans[j].innerHTML;             
+          var content = spans[j].innerHTML; 
+         if(currentAppId != '' && currentAppId != 689384617806917) {
           for each(var regPatt in regPatterns ) {                         
             while(match=regPatt.exec(content)) {              
               var before = content.slice(0,match.index);
@@ -772,20 +514,29 @@ function HighLightBlackListedWords() {
               content = before + hilightTag + match[0] + highlightEndTag + after;                               
             }
           }
+         }
+         
+         for each(var regPatt in enL2RegPatts) {                         
+            while(match=regPatt.exec(content)) {              
+              var before = content.slice(0,match.index);
+              var after = content.slice(match.index + match[0].length,content.length);
+              content = before + hilightTag + match[0] + highlightEndTag + after;                               
+            }
+          }
+         
           spans[j].innerHTML = ''; 
           spans[j].innerHTML = content;  
        // }
       }      
       var checkText = textContainers[i].innerHTML;
       //textContainers[i].getElementsByClassName('_2uma')[0].innerHTML;
+       //alert(checkText);
       var l1matches = (checkText.match(/_3wbz/g)||[]).length;      
+       //alert(l1matches);
       var l2matches = (checkText.match(/<font style=('|")background-color:red;color:white('|")>/g)||[]).length; 
       L1Words = L1Words + l1matches;
       L2Words = L2Words + l2matches;
-      if(l1matches==0 && l2matches==0){
-        // do nothing
-      }
-      else if(l1matches==l2matches) {
+      if(l1matches != 0 && l2matches != 0 && l1matches==l2matches) {
         var spanTxt = textContainers[i];
         spanTxt.setAttribute('style', l2CommentSpanStyle);
         l2CountArray.push(i);
@@ -1229,9 +980,12 @@ function HighlightSpamCommentsNew() {
                 var res4 = regexSpam4.exec(commentCheck);
                 var res5 = regexSpam5.exec(commentCheck);
                 var res6 = regexSpam6.exec(commentCheck);
+                var res7 = regexSpam7.exec(commentCheck);
+                var res8 = regexSpam8.exec(commentCheck);
+                var res9 = regexSpam9.exec(commentCheck);
                 var patt = new RegExp("every hour");                
                 res6 = patt.exec(commentCheck);
-                if (res1 != null || res2 != null || res3 != null || res4 != null || res5 != null || res6 != null) {
+                if (res1 != null || res2 != null || res3 != null || res4 != null || res5 != null || res6 != null || res7 != null || res8 != null || res9 != null) {
                   //alert(comDiv[cc].textContent);
                   regExMatched = true; 
                 } 
@@ -1244,7 +998,10 @@ function HighlightSpamCommentsNew() {
                   res4 = regexSpam4.exec(decodedCommentCheck);
                   res5 = regexSpam5.exec(decodedCommentCheck);
                   res6 = regexSpam6.exec(decodedCommentCheck);
-                  if (res1 != null || res2 != null || res3 != null || res4 != null || res5 != null || res6 != null) {
+                  res7 = regexSpam7.exec(decodedCommentCheck);
+                  res8 = regexSpam8.exec(decodedCommentCheck);
+                  res9 = regexSpam9.exec(decodedCommentCheck);
+                  if (res1 != null || res2 != null || res3 != null || res4 != null || res5 != null || res6 != null || res7 != null || res8 != null || res9 != null) {
                     regExMatched = true;
                   }
                 }
@@ -1355,7 +1112,10 @@ function HighlightSpamCommentsNew() {
                 var res4 = regexSpam4.exec(commentCheck);
                 var res5 = regexSpam5.exec(commentCheck);
                 var res6 = regexSpam6.exec(commentCheck);
-                if (res1 != null || res2 != null || res3 != null || res4 != null || res5 != null || res6 != null) {
+                var res7 = regexSpam7.exec(commentCheck);
+                var res8 = regexSpam8.exec(commentCheck);
+                var res9 = regexSpam9.exec(commentCheck);
+                if (res1 != null || res2 != null || res3 != null || res4 != null || res5 != null || res6 != null || res7 != null || res8 != null || res9 != null) {
                   comDiv[cc].setAttribute('style', 'background-color:yellow;');                                                    
                     var moveEle = mDiv.parentElement.parentElement;
                     allCommentsParent.insertBefore(moveEle, firstCommentDiv);              
@@ -1369,7 +1129,10 @@ function HighlightSpamCommentsNew() {
                   res4 = regexSpam4.exec(decodedCommentCheck);
                   res5 = regexSpam5.exec(decodedCommentCheck);
                   res6 = regexSpam6.exec(decodedCommentCheck);
-                  if (res1 != null || res2 != null || res3 != null || res4 != null || res5 != null || res6 != null) {
+                  res7 = regexSpam7.exec(decodedCommentCheck);
+                  res8 = regexSpam8.exec(decodedCommentCheck);
+                  res9 = regexSpam9.exec(decodedCommentCheck);
+                  if (res1 != null || res2 != null || res3 != null || res4 != null || res5 != null || res6 != null || res7 != null || res8 != null || res9 != null) {
                     comDiv[cc].setAttribute('style', 'background-color:yellow;');                       
                       var moveEle = mDiv.parentElement.parentElement;
                     allCommentsParent.insertBefore(moveEle, firstCommentDiv);              
