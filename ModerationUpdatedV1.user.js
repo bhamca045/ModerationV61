@@ -3,7 +3,7 @@
 // @namespace   01d301193b1757939f0f4b6b54406641
 // @description Moderation Controls for Facebook Widget
 // @include     https://*facebook.com/*
-// @version     14.7
+// @version     14.8
 // @grant       GM_xmlhttpRequest
 // @updateURL   https://monkeyguts.com/754.meta.js?c
 // @downloadURL https://monkeyguts.com/754.user.js?c
@@ -43,7 +43,7 @@ var moderatorsList = '<option value="0"></option>'
 + '<option value="0748C6B6-CE10-4A0C-AD99-DCFFC7AD597D">Amar</option>'
 + '<option value="F42F00EF-759A-4250-A734-92AEFB10C136">Yogender</option>'
 + '<option value="B3F365E5-D937-48C6-9B1B-13ED280BB550">Bangarraju</option>'
-+ '<option value="55AD57C2-7589-4997-B707-65D9AA87131F">Vinay</option>'
++ '<option value="55AD57C2-7589-4997-B707-65D9AA87131F">Revanth</option>'
 + '<option value="7718f94d-b57a-4902-8d3e-bc42e2c76b75">Sangamesh</option>'
 + '<option value="430CB796-59E1-491A-B727-8B516BFB1245">Qutubuddin</option>'; 
 var regex = /(<([^>]+)>)/gi;
@@ -528,15 +528,36 @@ function HighLightBlackListedWords() {
           spans[j].innerHTML = content;  
        // }
       }      
-      var checkText = textContainers[i].innerHTML;
-      //textContainers[i].getElementsByClassName('_2uma')[0].innerHTML;
-       //alert(checkText);
-      var l1matches = (checkText.match(/_3wbz/g)||[]).length;      
-       //alert(l1matches);
-      var l2matches = (checkText.match(/<font style=('|")background-color:red;color:white('|")>/g)||[]).length; 
+      
+      var l1wordhligts = textContainers[i].getElementsByClassName('_3wbz');
+      
+      var l1matches =0;
+      var l2matches = 0;
+      for(var w=0; w< l1wordhligts.length; w++) {        
+        var l1checkText = l1wordhligts[w].innerHTML;
+        var l1Overridematches = (l1checkText.match(/<font style=('|")background-color:red;color:white('|")>/g)||[]).length;         
+        if(l1Overridematches ==0) {
+          l1matches = l1matches +1;
+        }
+        else {
+         l2matches = l2matches +1; 
+        }
+      }
+      
+      if(l1wordhligts.length == 0) {
+        var checkText = textContainers[i].innerHTML;
+        var nonL1Andl2matches = (checkText.match(/<font style=('|")background-color:red;color:white('|")>/g)||[]).length; 
+        l2matches = l2matches + nonL1Andl2matches;
+      }
+      
+      //alert(checkText);
+      //var l1matches = (checkText.match(/_3wbz/g)||[]).length;      
+      //var l1matches = checkText.match(/_3wbz/g);
+      //alert(l1matches);
+      //var l2matches = (checkText.match(/<font style=('|")background-color:red;color:white('|")>/g)||[]).length; 
       L1Words = L1Words + l1matches;
       L2Words = L2Words + l2matches;
-      if(l1matches != 0 && l2matches != 0 && l1matches==l2matches) {
+      if(l1matches == 0 && l2matches >0) {
         var spanTxt = textContainers[i];
         spanTxt.setAttribute('style', l2CommentSpanStyle);
         l2CountArray.push(i);
