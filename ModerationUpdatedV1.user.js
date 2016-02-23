@@ -3,7 +3,7 @@
 // @namespace   01d301193b1757939f0f4b6b54406641
 // @description Moderation Controls for Facebook Widget
 // @include     https://*facebook.com/*
-// @version     14.8
+// @version     14.9
 // @grant       GM_xmlhttpRequest
 // @updateURL   https://monkeyguts.com/754.meta.js?c
 // @downloadURL https://monkeyguts.com/754.user.js?c
@@ -529,18 +529,28 @@ function HighLightBlackListedWords() {
        // }
       }      
       
+      // All Words highlighted by Facebook
       var l1wordhligts = textContainers[i].getElementsByClassName('_3wbz');
       
       var l1matches =0;
       var l2matches = 0;
       for(var w=0; w< l1wordhligts.length; w++) {        
         var l1checkText = l1wordhligts[w].innerHTML;
+        
+        // Finding L1 overrides by red color (L2)
         var l1Overridematches = (l1checkText.match(/<font style=('|")background-color:red;color:white('|")>/g)||[]).length;         
-        if(l1Overridematches ==0) {
+        if(l1Overridematches ==0) {   // if No overrides
           l1matches = l1matches +1;
         }
+        // If Overrides are there
         else {
-         l2matches = l2matches +1; 
+          // check for whether full word overridden or partially, if partially overrides count for both L1 and L2 counts
+          var l1highltTextLen = l1checkText.replace(/<[^>]*>/g, "").length;
+          var l2highltTextLen = (l1checkText.match(/<font style=('|")background-color:red;color:white('|")>(.*?)<\/font>/g)||[])[0].replace(/<[^>]*>/g, "").length;
+          if(l1highltTextLen != l2highltTextLen) {
+            l1matches = l1matches +1;
+          }
+          l2matches = l2matches +1;
         }
       }
       
