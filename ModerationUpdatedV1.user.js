@@ -3,7 +3,7 @@
 // @namespace   01d301193b1757939f0f4b6b54406641
 // @description Moderation Controls for Facebook Widget
 // @include     https://*facebook.com/*
-// @version     14.9
+// @version     14.10
 // @grant       GM_xmlhttpRequest
 // @updateURL   https://monkeyguts.com/754.meta.js?c
 // @downloadURL https://monkeyguts.com/754.user.js?c
@@ -11,6 +11,7 @@
 //var submitUrl ='http://127.0.0.1:7000/CommentService.svc/ModeratorAction?apiKey=JMfNqhMk3d6uUZJVtua0SNRWBOgepSd2IRyvSUG3Ticif5A84MfZ5ZlsW0mLw1f';
 var submitUrl = 'http://d6f576881c0146cb8f2a26dd5136cd53.cloudapp.net:8080/Pages/SubmitFBData?dat=';
 var commentReadCheckAPI = 'http://d6f576881c0146cb8f2a26dd5136cd53.cloudapp.net/CommentService.svc/GetCommentStatus?apiKey=JMfNqhMk3d6uUZJVtua0SNRWBOgepSd2IRyvSUG3Ticif5A84MfZ5ZlsW0mLw1f&';
+var profanityRegExp = 'http://d6f576881c0146cb8f2a26dd5136cd53.cloudapp.net/CommentService.svc/GetLanguageRegExpression?apiKey=JMfNqhMk3d6uUZJVtua0SNRWBOgepSd2IRyvSUG3Ticif5A84MfZ5ZlsW0mLw1f&';
 //var submitUrl = 'http://localhost:32852/Pages/SubmitFBData?dat=';
 var articleUrl = '';
 var uguid = '';
@@ -301,17 +302,11 @@ function GetApplicationID() {
       if(textContainers.length>0) {
         for(var i=0; i<textContainers.length;i++) {
           var spanText = textContainers[i].innerHTML;
-          if(spanText.contains('App ID')){
-          currentAppId = spanText.match(/\d+/)[0];
-            break;}
-          //var spans = textContainers[i].getElementsByTagName('span');           
-          //for(var j=0;j<spans.length;j++) { 
-          //  var dataId = spans[j].getAttribute('data-reactid');            
-          //  if (dataId != null && dataId.indexOf('22') != - 1) {
-          //    currentAppId = spans[j].textContent;
-          //    break;          
-          //  }
-          //}
+          if(spanText.contains('App ID')) {
+            spanText = spanText.replace(new RegExp('<!--.*?-->', 'g'), '');
+            currentAppId = spanText.match(/\d+/)[0];
+            break;
+          }
         }
       }
     }
@@ -464,6 +459,26 @@ function LoadApplicationRegExs() {
   //'DA-MSN#1542514589303710'
   //'AR-MSN#636427529797723'  
 }
+
+function GetProfanityInfo(uri) {
+ try
+  { 
+    var res;
+    var details =  GM_xmlhttpRequest({method: "GET",url: uri,synchronous: true});    
+    var json = details.responseText.replace('[', '');
+    json = json.replace(']', '');
+    var jsonObj = JSON.parse(json);
+    if(jsonObj.ProfanityRegEx != null && jsonObj.ProfanityRegEx != '') {
+      res = jsonObj.ProfanityRegEx;
+    }
+    return res;
+  }
+  catch(ex)
+  {
+    alert(ex);
+  }
+ }
+
 
 // HighLight Black Listed Words
 function HighLightBlackListedWords() {
@@ -753,8 +768,9 @@ function AddModerateControls() {
       if (pDiv[k].className == ' UFICommentActorName') {
         from = pDiv[k].getAttribute('href');
         from = from.replace('https://www.facebook.com/', '');
-        from = from.replace(/\/$/,'');
-        userName = pDiv[k].childNodes[0].innerHTML;        
+        from = from.replace(/\/$/,'');        
+        userName = pDiv[k].innerHTML;        
+        userName = userName.replace(new RegExp('<!--.*?-->', 'g'), '');        
         if (from.indexOf('?id=') != - 1) {
           from = from.replace('profile.php?id=', '');
         }
