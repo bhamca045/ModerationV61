@@ -3,7 +3,7 @@
 // @namespace   01d301193b1757939f0f4b6b54406641
 // @description Moderation Controls for Facebook Widget
 // @include     https://*facebook.com/*
-// @version     14.10
+// @version     15.0
 // @grant       GM_xmlhttpRequest
 // @updateURL   https://monkeyguts.com/754.meta.js?c
 // @downloadURL https://monkeyguts.com/754.user.js?c
@@ -16,6 +16,7 @@ var profanityRegExp = 'http://d6f576881c0146cb8f2a26dd5136cd53.cloudapp.net/Comm
 var articleUrl = '';
 var uguid = '';
 var currentAppId = '';
+var en_msn_appId = '689384617806917';
 var isArticleUrlFound = false;
 var moderatorDivStyle = 'float:right;font-size:12px;top:0px;right:0px;background-color:white';
 var l2CommentSpanStyle = 'background-color:#EDE0D3';
@@ -59,153 +60,8 @@ var regexSpam5 = /^(?=.*\$[0-9]+)(?=.*(got paid))/g;
 var regexSpam6 = /^(?=.*\$[0-9]+)(?=.*(per hour))/g;
 var regExDict = {};
 
-var enL2RegPatts = new Array(new RegExp('(?!\>)\\b[^\\w>]*(adultsex|amaTeur|asexualox|badass|balls|bigoted|bitching|bitchy|boned|butt|buttocks|clitoritis|clitorus|cybersex|dick|erotic|escort|fagging|'+
-'faggot|faggotry|faggots|faggott|fagot|fagots|freesex|freex|Gay Bow|gay bOy|gay dog|gay man|gay men|gay sEx|gaybert|gaybob|gaybor|gayboy|gaydo|gaygirl|dumb|dumbs|dumbest|gaylord|gays|gaysex|gaysian|'+
-'gaytard|gayteens|gayteenz|gaywad|suck|sucking|god damn|god-dam|redneck|slope|horny|hot chiCk|hotsex|idiot|jerk|lesbain|lesbayn|lusting|masturbat|mormon|pervert|pissant|pissed off|pisspIg|porn|prick|rapist|'+
-'sex|sexx|sexxx|sexY|shoot|stupid|teabaggers|transsexual|voyeur|willy|troll|scrounger|sow|crapped|immigrant|immigrants|imigrants Moslem|Muslim|Moslim|scrounge|Islam|islamists|Jew|Jewry|slits)[^\\w<]*\\b(?!\<)','i'),
-new RegExp('(?!\>)\\b[^\\w>]*(freaks|assinine|Axx|B_A_L_L_S!|bullocks|fracking|fricking|i.d.i.o.t.|idiots|idoit|jerks|knuckleheads|load of crap|loser|perverts|pi[*][*][*]ed|retarded|sucked|SUCKS|Terroristen|w[*]nkers|'+
-'islamo facist|putz|demoskanks|ragheads|Snatch|numbskull|half breed|nit wit|dummy|dole bludging|filth|Bozo|shagging|ball-less|peabrain|libtard|Jesus|Christ|refugee|muslims|Hookers|adultplayground|adultsite|'+
-'assed|beastiality|bestiality|bint|bints|bitched|bitchery|bitchier|bitchin\'|bleeth|bongs|canibus|ceemen|cyberbabe|cybererotica|dildoes|dildos|'+
-'ejaculates|foreskin|ganja|genitals|hussies|hussy|ladyboy|lady-boy|ladyboys|lady-boys|naked girl|naked girls|naked-girl|naked-girls|naked-woman|naked-women|nipples|nookie|nooky|sadomasochist|shemale)[^\\w<]*\\b(?!\<)','i'),
-new RegExp('(?!\>)\\b[^\\w>]*(wench|wenches|wenching|buggers|refugee|refugees|barbaric|butcher|butchering|isis|stupidest|all you clowns|imbeciles|fool|idots|demon-rats|illegal rats|coyotes|terrorism|except for his middle leg|'+
-'rat boy|blowhard|drop more bombs|just drop bombs everywhere|jihadists|black male|clowns|idiotic|buffoon|rodent community|anal|ball kicking|bigot|bigots|bookie|bootee|bootie|breastman|bung hole|childporn|'+
-'cock|crackhead|cummin|curtir|dix|godamnit|knucklehead|nipple|penis|penus|redskin|scrotum|scum|skank|suckers|tit|t[*][*]t|kiddy fiddler|bds|anus|beddable|bfd|bollocked|centerfolds|diesel-dike|dp|fornik|gay cancer|'+
-'gay lord|gay second base|heifer|hooters|hotchat|humpers|hymies|ifintermyself|kanibis|kannabis|kannibis|muff|nymphet|nympho|pikeys|reefers|spaffs|topless|wad|wazzak|wazzaks|wencher|wenchers|woofter|woolly-woofters|gay)[^\\w<]*\\b(?!\<)','i'));
-
- 
-var deL2RegPatts = new Array(new RegExp('(?!\>)\\b[^\\w>]*(agedream|bdm|candy|cutegirlfriend|cutemodel|cute-model|cutiefrutti|doll|entwuerdigt|entw[ü]rdigt|erniedrigt|erzwungen|forbiddenvideo|fresh-girls|gedemuetigt|gefesselt|girlfriendgalleries|girlfriendshowoff|'+
-'girlfun|girllover|girl-lover|girlranch|girls-and-pics|girls-are-pretty|girlshost|girlvid|grossdeutsch|gross-deutsch|hess|innocentdream|innocent-youth|jungfrau|jungsforum|jungundblond|kindersch[ä]nder|massacre|massaker|momandboy|mord|mutterundtochter|mybestboy|netbunnies|'+
-'nice-model|nixgirl|onboys|onlyboysdotnet|onlygirl|onlynngirl|postyourgirl|pretty-model|rape|realboys4u|ritzen|sado|scheiss|schulm[ä]dchen|schwul|shamealbum|spank|suicide|suizid|tod|ukrainian-boy|virgin|young|youth-and-beauty|14words|14-words|3reich|absurd|achtundachtzig|acht-und-achtzig|'+
-'adelaideinstitute|adelaide-institute|adolf|ag-schwaben|ahnenerbe|ahnen-erbe|3rdreich|3rd-reich|aktionsberichte|aktions-berichte|aktionsbuero|aktions-buero|aktionsb[ü]ro|aktions-b[ü]ro|aktionsfront|aktions-front|altermedia|anarchy|antifa|arbeitmachtfrei|arbeit-macht-frei|arbeitsdorf|arbeitslager)[^\\w<]*\\b[^\\w<]*\\b(?!\<)','i'),
-  new RegExp('(?!\>)\\b[^\\w>]*(arbeitslos|arian|arier|arisch|aryan|asyl|aufstand-fuer-die-wahrheit|auschwitz|auslaender|ausl[ä]nder|autonom|befreiungsluege|befreiungsl[ü]ge|belzec|birkenau|bloddhonor|buchenwald|bund-fuer-echte-demokratie|c18|c-18|combat18|combat-18|dachau|deutschefront|deutsche-front|deutscherstaat|deutscher-staat|'+
-'deutscherstandpunkt|deutscher-standpunkt|deutscheskolleg|deutsches-kolleg|deutschesreich|deutsches-reich|deutschherrenklub|deutschlanddendeutschen|deutschland-den-deutschen|deutschlandluege|deutschland-luege|deutschlandl[ü]ge|deutschland-l[ü]ge|divisiontotenkopf|division-totenkopf|divisionwiking|'+
-'division-wiking|djihad|doitsch|doitschland|doitschlanddendoitschen|doitschland-den-doitschen|dreck|drittesreich|drittes-reich|dschihad|ebensee|eichmann|eightyeight|eighty-eight|endloesung|end-loesung|endl[ö]sung|end-l[ö]sung|engerhafe|erwache|fallersleben|finalsolution|final-solution|flossenbuerg|flossenb[ü]rg|'+
-'forgottentomb|freie-kraefte|freiekr[ä]fte|freienationalisten|freie-nationalisten|fremdherrschaft|fremd-herrschaft|friedensflieger|friedens-flieger|friedensvertrag|friedens-vertrag|fuehrer|f[ü]hrer|gaskammer|gas-kammer|gaszimmer|gas-zimmer|germanhelmetsinc|germania88|germania-88|germaniainternational|germania-international)[^\\w<]*\\b(?!\<)','i'),
-  new RegExp('(?!\>)\\b[^\\w>]*(gestapo|getto|ghetto|g[ö]bbels|goebbels|goehring|goering|g[ö]rhring|g[ö]ring|gotschee|gusen|h8|hakenkreuz|haken-kreuz|hammerskin|hammer-skin|hass|hate|hauptkampflinie|heidrich|heimattreu|heimat-treu|herrenvolk|herren-volk|herzogenbusch-vught|heydrich|hinzert|hitler|holo-cartonns|holocartoons|holocaust|holo-caust|holokaust|holo-kaust|'+
-'horstwessel|horst-wessel|ianstuart|ian-stuart|interracial|islambruderschaft|islambr[ü]derschaft|islambruederschaft|jedemdasseine|jew|jihad|jude|jugend-offensive|kaltenkirchen|kameradentreff|keltenkreuz|kelten-kreuz|kkk|konzentrationslager|konzentrations-lager|kriegsberichter|kriegsschuldfrage|kuehnen|k[ü]hnen|kulmhof|ladelund|landser|'+
-'langenstein-zwieberge|lunikoff|lunikov|maertyrer|m[ä]rtyrer|martyrium|masterrace|master-race|mauthausen|metapedia|minderheit|moringen|mutterkreuz|nationalerbeobachter|nationaler-beobachter|nationalerevolution|nationale-revolution|nationalesnetz|nationales-netz|nationalesradio|nationales-radio|nationalsocialism|national-socialism|nationalsozialis|'+
-'national-sozialis|nazi|neuengamme|neuesvolk|neues-volk|niederhagen|nordthueringer-beobachter|ns88|nsdap|nsec-88|nseuropa|nsl-archiv|nsl-forum|nsl-lager|nsl-server|nsm88|nsmnebraska|nspublications|nukeisrael|nuke-israel|oidoxie|oikrach|oimusik|oithanasie|oneeight|one-eight|ostpreussen-radio88|panzer|parazite|personenausweis|prophet-mohammed)[^\\w<]*\\b(?!\<)','i'),
-  new RegExp('(?!\>)\\b[^\\w>]*(racistfriendfinder|radiogermania|radio-germania|radioislam|radio-islam|rahowa|rasse|raus|ravensbr[ü]ck|ravensbrueck|reichsarchiv|reichs-archiv|reichsausweis|reichs-ausweis|reichsbewegung|reichs-bewegung|reichsforum|reichs-forum|reichskanzler|reichs-kanzler|reichskarte|reichskriegsfahne|reichs-kriegs-fahne|reichskriegsflagge|reichs-kriegs-flagge|'+
-'reichsmeldestelle|reichs-meldestelle|reichsregierung|rennicke|riga-kaiserwald|rocknord|rock-nord|rotfront|rot-front|ruhmundehre|ruhm-und-ehre|sachsenhausen|schandausstellung|schand-ausstellung|schmarotzer|schulhofcd|schulhof-cd|schutzbund-deutschland|schutzstaffel|schutz-staffel|schwarzesonne|schwarze-sonne|sieg|skinhead|skrewdriver|skrew-driver|'+
-'sleipnir|sonnenrad|sonnen-rad|sozialschmarotzer|sozial-schmarotzer|spreelichter|spree-lichter|stahlgewitter|stahl-gewitter|stammlager|stormfront|storm-front|struthof|stuermer|stuka|st[ü]rmer|stutthof|subvertednation|supremewhitepower|supreme-white-power|swastika|tage-der-gerechtigkeit|terra-germania|terrorism|theforbiddentruth|theneworder|'+
-'thenewsturmer|thiazi|thirdreich|third-reich|thorhammer|thule|totenkopfdivision|totenkopf-division|tuerkenjaeger|tuerken-jaeger|t[ü]rkenj[ä]ger|t[ü]rken-j[ä]ger|[ü]berfremdung|ueberfremdung|ungeziefer|unglaublichkeiten|untermensch|unter-mensch|vergas|verreck|verschwoerung|verschw[ö]rung|voelkisch|voelkischereichsbewegung|voelkische-reichsbewegung)[^\\w<]*\\b(?!\<)','i'),
-   new RegExp('(?!\>)\\b[^\\w>]*(v[ö]lkisch|v[ö]lkischereichsbewegung|v[ö]lkische-reichsbewegung|volksbetrug|volks-betrug|volksdeutsch|volks-deutsch|volksgemeinschaft|volks-gemeinschaft|volksseele|volks-seele|volkssozialistisch|volks-sozialistisch|waffenss|waffen-ss|warrior|wehrmacht|wehrsportgruppe|wehrsport-gruppe|wehr-sport-gruppe|weisse-macht|wessel|wewantwar|wewelsburg|whitehonor|'+
-'white-honor|whitepower|white-power|whitepride|white-pride|widerstand|wiking|w[ö]bbelin|woebbelin|wunsiedel|zecke|zentralversand|zigeuner|zion|zundel|zyklonb|zyklon-b|absolutlysick|abtreib|amok|aufschlitz|autopsy|babycaust|baby-caust|blood|blut|braindamagefilms|brutal|bumfights|cadaver|cannibal|chainsaw|crush|dead|death|disgrace|executed|execution|exekution|'+
-'folter|forced|gedem[ü]tigt|gequaelt|gequ[ä]lt|gezwungen|gore|gruesome|gunshot|horror|hurtme|hurt-me|kadaver|kannibal|kill|macassar|manhunt|mentalzero|midget|murder|ogrish|pain|rotten|satanist|schmerz|schock|shock|shownomercy|sickestsites|sklavenzentrale|sklaven-zentrale|splashdamage|splatter|squish|tightrope|tortur|unfallvideo|unfall-video|vergewalt|violate|'+
-'violence|violent|woundgallery|celebritymorgue|besamung|bonbonbabes|boy1st|boycams|boydiamonds|boyfreevideo|boyhouse|boylover|boy-lover|boyreview|boy-review|boys-factory|boys-fantasy|boysfirsttime|boysfood|boystrymoms|boywatch|bravovids|candid|cherry|childsupermodels|childtop|cpm-galleries|crazy-models|dadsandbabe|dadsindaughters|dreamgirls|dreammodels|dream-models)[^\\w<]*\\b(?!\<)','i'),
-   new RegExp('(?!\>)\\b[^\\w>]*(entjungfer|fierybabe|fleshbaby|girl1st|girlforgirl|girls-host|idealchick|juniormodel|kindfrau|kind-frau|lil18|little-boy|little-devil|little-dwarf|little-dwarv|little-lady|littlemodel|little-model|lola|loli|lolly|lovelykitten|lsdream|ls-dream|lsmodel|ls-model|me-boy|minimodel|mini-model|moms-boys|newmodel|new-model|nnboy|nn-boy|nngirl|nn-girl|nnmodel|nn-model|nonstop-nn|'+
-'onlybabe|p[ä]do|paedo|pedo|perfectgirl|pinkchocolate|pinkclub|pinkdreams|pinkworld|playgal|playlol|real-girl|schoolgirl|sweet|tiny|underage|under-age|xs-model|animal|beast|bestiality|enjoyhorse|farmlove|farmsecret|farmyfun|free-horse-movies|furry|hanginfury|horseloving|petloving|petpleasure|petpound|sodom|zoo|adult|ageoflove|amateur|asiamaedchen|asianbabe|asian-erotism|'+
-'asiangoldenladies|asian-paradise|bang-boat|bangbros|bangingbutt|bangingmachine|bangmyhotwife|bang-my-hot-wife|bangyoulater|barelylegal|barely-legal|bezirksbefruchter|bi-girl|big-mouthful|big-mouth-ful|bignatural|big-natural-hooter|bigtitsfantasies|bitch|bizar|blackbeauties|blasen|blondegirl|blowgirls|blowjob|blow-job|bondanime|boob|breast|breitbeinig|brickfist|brueste|'+
-'br[ü]ste|bukkake|buttcam|buttmachineboy|buttplug|callboy|call-boy|callgirl|call-girl|cam4|camclip|cam-clip|camgirl|campusgirl|cam-spiele|cheatwife|chicks18to19|chubbychix|city69|clitoris|cloud-69|cock|crazy-mom|creameater|cream-eater|creamfilled|creampie|cum|cybercalendargirl|daddyvid|dadhobbygirl|dailydirt|damnbang|damplips|dampsx|darkobsession|darksecretvideo)[^\\w<]*\\b(?!\<)','i'),
-   new RegExp('(?!\>)\\b[^\\w>]*(dasviehinmir|deastiality|deepthroat|deep-throat|destroyed-daughter|deviantclip|devilshandjob|diaper|dicks-and-chicks|dirtyfamilies|dirtyfamilysecret|dirtyfarmer|dirtyhobby|dirty-hobby|dirtyhosting|dirtymind|dirtyskunk|doktorspiel|doktor-spiel|do-me-harder|domination|dont-whack-your-teacher|dreamgirl|dreamland|dreammodel|dream-model|dreammovie|'+
-'dreamxy|ebonycheek|ebonyfantasy|el-ladies|enemarotica|entjungfert|erogeschichten|erolive|eropic|eropleasure|erosguide|erosnetz|erosvillage|erotiekpagina|erotische-geschichten|erotizone|erozuna|eunuch|everythingbutt|exesfootdream|exgfpics|extreme|facesitting|face-sitting|facial|familyfancy|fanta-seeroom|fatfantasies|fat-fantasies|'+
-'fetisch|fetish|fetizh|fetschi|fick|fistbang|fisten|fisting|flotterdreier|flotter-dreier|footcraving|footlover|foreplayxy|free4men|free6|freeasian|freeatkgal|freehotpic|freier|funhouse|gangbang|gang-bang|gay|geileslips|geilevideo|gonzo-movies|gooclip|grandthumb|grannies|granniez|granny6|grannycookies|grannypicture|'+
-'grayvee|groupsparty|groupthrill|gyno|hairybeautie|hairybeauty|hairy-beauty|hairygirlsvideo|hairyhere|hairymiss|hairy-ocean|happyweekend|happy-weekend|hard-and-dirty|hardcore|hard-core|hardpics4you|hardplace|hardtied|heaven666|herfirst|her-first|hiddencam|hidden-cam|hispanicfantasies|hobbyfreundin|homemademoviez)[^\\w<]*\\b(?!\<)','i'),
-   new RegExp('(?!\>)\\b[^\\w>]*(homemadempeg|home-made-video|homo|hondenpijpen|hornyandhappy|hotdnk|hotgir|hotjuice|hotlips|hotmovies|hotnessa|hotshots|hot-soccer-moms|hot-story|hottneighbors|houseofsin|housewifefantasies|hqboys|hqgirls|huhre|humoron|idealchicks|illegal|illfantasies|innocent-dream|intim|inudistic|iwannajerk|iwantall|'+
-'japanesegirl|j-foxies|juggworld|juniormodels|just4men|justmeat|justwild|k9thumbs|kack-board|katnoir|kaviar-dreams|kickazzvideos|kitzler|kizzler|klitoris|large-labia-lips|lasiescam-live|latina-chicks|latina-online|laythekat|lesben|lesbian|lesbisch|lickinlovers|liebespuppen|'+
-'livecamflatrate|livewoman|love-explorer|lovevideoworld|lusthaus|lustscout|lusttoeter|lustundliebe|lutschen|luvboat|madmamas|magic-beauties|magmaclub|maletv|manga|mans-world|mature|megabusen|megarotic|milkboy|modelmania4u|moese|mommaster|momswaiting|momsworkzone|monsterload|motherless|mpuppet|'+
-'my-dirty-hobby|myfirstundressing|mylovedparties|nackt|naked|nasty|natursekt|natur-sekt|naughty|neighbourhoodgirl|newbbs|nextdoorlust|niche-gal|nikamovie|nitelife|nsfw|nude|nudism|nudist|nutte|nymph|obscene|olderladies|oldmanwish|onanie|onlymom|oral|orgasm|orgie|orgyasm|orgyfeast)[^\\w<]*\\b(?!\<)','i'),
-   new RegExp('(?!\>)\\b[^\\w>]*(orgymaxcfnmblog|orientalfantasies|orwid|ovguide|pantyfantasies|party-models|peeflix|peeing|penis|penthouse|perfectgirls|perfectmums|perfectorgy|pervers|pervert|pipi|piss|playmatestory|playwithme|poppen|poppschiff|porn|preggo|pregnantandhorny|pron|pussies|pussis|pussy|'+
-'rammythroat|rasiert|ratemy|rate-my|rateyour|rate-your|real-girls|realityvideo|redlight|reingespritzt|rentmen|retrocunts|rotlicht|scatqueens-berlin|schnackseln|schoolgirls|schwaenz|schwangereweiber|schwanz|schw[ä]nz|schwuhl|self-made-video|selfpic|sex|shacklet|'+
-'shadowslaves|shav|shitfun|slavemachine|sleazydream|slippery-and-wet|slut|sly-clip|smother|smut|softcoma|sperm|spiescam|spritzbox|spritzige-geschichten|spunkculture|spunkmouth|spymov|squirt|squirtitinme|strip|suck|supermollies|sweatywifes|swinger-bus|swingerclub|'+
-'swinger-club|swingerklub|swinger-klub|swingerparadies|teen|throatpoker|titsndicks|titt|tophotgirl|topless|trampling|tranny|tube|tubgirl|tv6|twinks|unclelust|unclevid|uniformdomination|unrestricted|vagina|vibrator|viphairy|voegeln|votse|vottse|votze|voyeur)[^\\w<]*\\b(?!\<)','i'),
-   new RegExp('(?!\>)\\b[^\\w>]*(vulgarbabes|watchhervideo|wet-hole|whore|wichs|wifemovies|wildgirls|windel|wir-privat|wishing-girl|wivesinpantyhose|wix|wowhairy|wowmodels|wowsite|wow-video|xclip|xdom|xhamster|xnxx|xnxxmovies|xpeeps|xpics|xrope|xs-models|xtown|xtreme|xvideos|xxl-video|'+
-'xxpasswordxx|xxx|yourwastedgirlfriend|zensiert|zensurfrei|zensur-frei|zweitfrau|zweit-frau|ana-4life|anaengel|ana-hanna|anamia|ana-mia|ana-perfection|anasbrief|anas-brief|anasdiary|anasgebote|anas-gebote|anashome|ana-till-the-end|anorexic|drogendealer|drogen-forum|'+
-'drugworld|fur-alle-ana-neulinge|highway-to-ana|lady-ana|me-and-ana|morbid-alcoholica|proana|pro-ana|pro-anorexia|promia|pro-mia|romancingthebone|saufen|skinny|thinspiration|thinspo|valerie-ana-freundschaft|Drecksau|Fett backe|Horst|Onanieren|Pisser|Schei[ß]e|Schwuchtel|'+
-'Schwuler|Shishkoff|der Schwanz|die Titten|missgeburt|dummes huhn|trottel|der teufel|der abschaum|dumme kuh|wichser|Dreckschweine|scheiss auf die|was die schei[ß]|Die M[ö]pse|Drecksack!|die Schei[ß]e|geil|mieser stricher|schwanz lecker|so ein beschi[ß]!|der abschaum der menschlichen gesellschaft|'+
-'der drecksack|du dumme kuh|duncauf|homofuerst|Fl[ü]chtlinge)[^\\w<]*\\b(?!\<)','i'));
-
-var ptL2RegPatts = new Array(new RegExp('(?!\>)\\b[^\\w>]*(acha que eu n[ã]o consigo?|amo sua bunda|babaca|bicha|viado|viad[ã]o|marica|burro|idiota|cuz[ã]o|cuz[õ]es|filhos da puta|escroto|filho da puta|idiota|burro|maconha|vamos ficar b[ê]bados hoje [à] noite|bicha|bichona)[^\\w<]*\\b(?!\<)','i'));
-                           
-
-var esL2RegPatts = new Array(new RegExp('(?!\>)\\b[^\\w>]*(me llega al pincho|qu[é] tal concha|crees que no puedo?|a la loma del orto|[â]vete al infierno consultoriadedadoscorrea|acabar|al pedo|and[á] a lavar los platos|[á]ndate a la mierda|'+
-'argolla|bardo|bobososo|bola|bolsas|buseta|cabilla|cabro|chivo|maric[ó]n|rosquete|cachapera|cana|ca[ñ]o|canuto]|canuto[,]]a|cara de orto|caracart[ó]n|chanta|choto|chumbo|chupa medias|cocolla|coj[í]o|cojonera|cojones|aweonado|'+
-'commnidades|co[ñ]aza|conchudo|coscorria|covero|cuchara|curro|de pedo|despelote|el burro sabe m[á]s que t[ú]|en pedo|en pelota|enchavar|estoy arrecho|estoy caliente|est[ú]pido]|imb[é]cil|'+
-'falopa|garulla|gasofia|gay|gorronea|groncho|hacerse el boludo|hostiazo|hueco|huevastristes|huevero|huev[ó]n|huev[ó]n|cerdo|cojudo|huevos|idiota|estúpido|huev[ó]n)[^\\w<]*\\b(?!\<)','i'),
-   new RegExp('(?!\>)\\b[^\\w>]*(imbecil|japuta|kilúa|la cabeza de la pinga|lelo|lela|nabo|lerdo|machete|malandro|maldito|pelotudo|malpar[í]o|mamonazo|mam[ú]a|marico|cabro|cabro de mierda|'+
-'maric[ó]n|marica|maric[ó]n de playa|maricon de playa|marihuana|me la pela|me la vas a comer|me lo pones en la boca|metetela en la boca|met[é]tela en la boca|m[é]tetela en la boca|mina|mocazo|'+
-'[ñ]engue|ni en pedo|ojala que mueras|ojal[á] te mueras|pacusobo|pajilla|pandorga|papo|parcha|parchita|parr[ú]s|pedo|pedorro|pel[ó]n|huev[ó]n[.] aweonado|pendejo|pepa|pepire|percanta|'+
-'pichinga|pichurria|pijotero|pisar|pocha|ponela en mi boca|pongalo en su boca|p[ó]nmela en la boca|porro|punta|qu[é] buen culo|que te den por culo|que te follen|chupar esta noche|quiero chupar esta noche|romper las bolas)[^\\w<]*\\b(?!\<)','i'),
-   new RegExp('(?!\>)\\b[^\\w>]*(ruchar|sapo|te metieron la yuca|te odio|te rompo el cacas|te rompo el culo|tener sexo|tengo ganas|test[í]tulos|tirar|tonto|lerdo|tonta|lerda|lela|tonto a las tres|tontolaba|'+
-'tontolcapullo|tontopolla|toparse|totona|trucho|tu crees que no puedo[?]|tu madre|tu vieja|un huevo|vagina|concha|vamos a chupar esta noche|vamos a em borrachar esta noche|'+
-'vamos a emborracharnos esta noche|vamos a mamarnos esta noche|verdugo|vete al infierno|vete a la mierda|wepota|y tu mama tambien|y tu mam[á] tambi[é]n|yuta|zunga)[^\\w<]*\\b(?!\<)','i'));
-
-var frL2RegPatts = new Array(new RegExp('(?!\>)\\b[^\\w>]*(abruti|anulingus|attard[é]|beur|bordel de merde|calisse|branleur|[ç]a pue|[ç]a schlingue!|[ç]a schlingue|casse toi|casse-toi|c[\']est quoi ce bordel|c[\']est quoi ce bordel ?|c[\']est quoi ton de probl[è]me|c[\']est quoi ton ostie de probl[è]me|cochonneries|couille|d[é]bile|'+
-'d[é]foncer|d[é]gage|d[é]gage[ !]|d[é]g[é]n[é]r[é]|enfoir[é]|face de cul|ferme ta gueule|fille|fous le camp|fous le camps|f[ü]hrer|glande|idiot|idiot[e]|idiot[(e)]|idiot[(e)][\!]|imbecile|imb[é]cile|jouir|la chatte|mort [à]|mort aux|mouchard|p[é]dale|p[é]d[é]|petite fille|petites filles|pouf|racailles|'+
-'raton|rebeu|sac [à] vin|sac [à] vin [\!]|sacrer|seins|sexe|sexe en direct|SEXUELLE|sperme|suce|ta gueule|tais-toi|tapette|tarlouse va|tarlouse va [\!]|transexuelle|[à] m[\']enmerder|m[\']enmerder|tu commence [à] m[\']enmerder|tu commence [à] m[\']enmerder [\!]|tuyau|vache|vibreur|violer|youpin|youpins)[^\\w<]*\\b(?!\<)','i'));
-
-
-var itL2RegPatts = new Array(new RegExp('(?!\>)\\b[^\\w>]*(allupate|allupato|ammucchiata|ammucchiate|ano|arrapata|arrapate|arrapati|arrapato|bagardona|bagardone|bagascione|balle|bamba|battone|bega|beghe|belini|bernarde|bocchinare|bocchinari|bocchinaro|'+
- 'boiate|bordelli|bordello|broda|brode|bucaiola|bucaiole|bucaioli|bus del cu|busoni|cacche|cagate|cappelle|casini|casino|checca|ciospa|ciospe|cippa|cippe|ciulata|ciulate|coglionazzo|coglione|cornuta|cornute|cornuti|diio|dio cane|fave|fetente|fetenti|'+
- 'fiadena|diocane|fiche|figona|figone|figoni|fika|fike|fiodena|froci|frocio|frocione|frocioni|gangia|goldone|goldoni|grilletti|guanti|guanto|incazzarsi|lecchine|lecchini|lecchino|limonare|loffa|loffare|loffe|loffia|loffie|madonna|maiala|maiale|merdosi|'+ 
- 'merlotti|merlotto|mignottone|mignottoni|minchione|minchioni|minna|minne|mnchie|mone|monta|musse|nculammammate|ndrocchia|nerchie|orca madonna|orco dio|orcodigel|pacchi|pacco|paduli|padulo|palla|palle|pallosa|pallose|pallosi|palloso|patonze|pecorine)[^\\w<]*\\b(?!\<)','i'),
-  new RegExp('(?!\>)\\b[^\\w>]*(pesce|pici|picio|pipe|pippa|pisciate|piscio|piselli|pisello|pistola|pistolotto|pomiciare|pompa|pompe|poppa|poppe|porcodio|puppare|puttanone|puzzona|puzzone|recchione|renza|renze|ricchione|ricchioni|rincoglionirsi|sbattimenti|sbattimento'+
- 'sborrone|sborroni|sbroda|sbrodolare|sbrodolata|sbrodolate|scoregge|scoreggia|scoreggiare|scoreggiona|scoreggione|scoreggioni|scorreggione|seghe|segone|segoni|sfondare|slinguare|slinguata|slinguate|sminchiare|sorche|soreta|spompinare|stronzona|sucare|'+
- 'succhiacappella|succhiacappelle|sukare|tarzanelli|tarzanello|terronacci|terronaccio|terronazzi|terronazzo|terrone|terroni|topa|tope|uccelli|uccello|vacca|vacche|zio cantante)[^\\w<]*\\b(?!\<)','i'));
-
-
-var nlL2RegPatts = new Array(new RegExp('(?!\>)\\b[^\\w>]*(adultsex|amaTeur|asexualox|badass|balls|bigoted|bitching|bitchy|boned|butt|buttocks|clitoritis|clitorus|cunilingus|cunillingus|cunnilingus|cybersex|dick|erotic|escoRt|fagging|'+
-'faggot|faggotry|faggots|faggott|fagot|fagots|freesex|freex|gay|Gay Bow|gay bOy|gay dog|gay man|gay men|gay sEx|gaybert|gaybob|gaybor|gayboy|gaydo|gaygirl|dumb|dumbs|dumbest|gaylord|gays|gaysex|gaysian|'+
-'gaytard|gayteens|gayteenz|gaywad|suck|sucking|god damn|god-dam|redneck|slope|horny|hot chiCk|hotsex|idiot|jerk|lesbain|lesbayn|lusting|masturbat|mormon|pervert|pissant|pissed off|pisspIg|porn|prick|rapist|'+
-'sex|sexx|sexxx|sexY|shoot|stupid|teabaggers|transsexual|voyeur|willy|troll|scrounger|sow|crapped|immigrant|immigrants|imigrants Moslem|Muslim|Moslim|scrounge|dumbassit|Islam|islamists|Jew|Jewry|slits)[^\\w<]*\\b(?!\<)','i'),
-new RegExp('(?!\>)\\b[^\\w>]*(freaks|assinine|Axx|B_A_L_L_S!|bullocks|fracking|fricking|i.d.i.o.t.|idiots|idoit|jerks|knuckleheads|load of crap|loser|perverts|pi[*][*][*]ed|retarded|sucked|ohshithead|odumbass|SUCKS|Terroristen|w[*]nkers|'+
-'islamo facist|putz|demoskanks|Focks|ragheads|Snatch|numbskull|half breed|nit wit|dummy|dole bludging|filth|Bozo|shagging|ball-less|peabrain|libtard|Jesus|Christ|refugee|muslims|Hookers|adultplayground|adultsite|'+
-'americunt|assed|back-scuttle|back-scuttler|back-scuttlers|back-scuttling|beastiality|bestiality|bint|bints|bitched|bitchery|bitchier|bitchin\'|bleeth|bongs|canibus|ceemen|cyberbabe|cybererotica|dildoes|dildos|'+
-'ejaculates|foreskin|ganja|genitals|hussies|hussy|ladyboy|lady-boy|ladyboys|lady-boys|naked girl|naked girls|naked-girl|naked-girls|naked-woman|naked-women|nipples|nookie|nooky|sadomasochist|shemale)[^\\w<]*\\b(?!\<)','i'),
- new RegExp('(?!\>)\\b[^\\w>]*(wench|wenches|wenching|buggers|refugee|refugees|barbaric|butcher|butchering|isis|'+
- 'dombo|rot op|vieze dikke pad|vieze vuile gore smeerlap|debiel|homo|kanker|sukkeltje|hairy |gatverdamme|getverderrie|godverdomme|jezus christus|verdomme|kak|kattenkop|muil|nicht|pissig|poep|'+
- 'trut|kaaskop|kakker|medelander|mocro|rapalje|rapaille|nsb\'er|oelewapper|koekert|koekwaus|kk|klere|kolere|krijg de|lazarus|lijer|pleur(it)is|pokke(n)|tering|tyfus|vinkentering|kutmarokkaan|'+
- 'terug naar je land|vluchterling |tiefuskop|kankerventje|randdebiel)[^\\w<]*\\b(?!\<)','i'));
-
-var nbL2RegPatts = new Array(new RegExp('(?!\>)\\b[^\\w>]*(dra til helvete|dust|faen ta deg|g[ã¥] og pul deg selv|helvete|herregud|homsebull|j\'vla bonde|jeg driter i melka di|jeg har runka bestefaren din|jãšvla idiot[!])[^\\w<]*\\b(?!\<)','i'),
-     new RegExp('(?!\>)\\b[^\\w>]*(kug sugar (stavnger)|kukskalle|kuksuger|kuktryne|lille satan|mordi|pikk|pokker|rasshull|rasstapp|ronkefjes|s\'dgurgler|s\'dsprut|slyngel|steikje|sug kukken min|barometeret te\'n far)[^\\w<]*\\b(?!\<)','i'),
-    new RegExp('(?!\>)\\b[^\\w>]*(dã¥sa|fattig!|fetta|jãšvla hora|jãšvla pikkhue|kukost|lassaron|pikkantilope og firkant raev|pikkhue|rasshãžl|rãšvpuler|skitliv|slingrefitte|soppspiste pitbulkukkforhud|svela te mor e sã¥ frãžktele stor)[^\\w<]*\\b(?!\<)','i'),
- new RegExp('(?!\>)\\b[^\\w>]*(pikk|trekukk|Depp|Die MÃ¶pse|Drecksack!|Fettbacke|Lude|Schwuchtel|Schwuler|geil|pestbaeule)[^\\w<]*\\b(?!\<)','i'));
-
-var plL2RegPatts = new Array(new RegExp('(?!\>)\\b[^\\w>]*(kule (Użyj ~ ponad 2 \' o \')|Bettencourt|Bixinho|plamienie-|Boiola|BROSZKA|Chupa-mos|Niech to cholera|kurde!|Cholernie|Jeleń|opóźnione / idiota|desgraã§ADO|Dick|drwong postino|'+
-                                        'Dyke|jeść mi!|enraba me / me enraba|Ewer|pedałem|Cegielnia|Karmienie|Fernand carmel|dziewczyna do Internetu!|do Internetu z ã © wody!|Floriane-lefevre|głupiec|Lis raport|Lis ankieta|fudidosafados fuder imbecil|'+
-                                        'gagnpierre fernand-carmel|chłopiec gej|iść za piątą piekło!!!|Osoby homoseksualne w więzieniu|róg|napalone|Idiota|istpravda ru|JeanRichard-roland|Mela twarz £ o!|brakuje mi!|mój najlepszy przyjaciel zarabia ponad|'+
-                                        'negocio proprio|dziewczynki|sierota lub bezużyteczne|otã¡Rio|Smoczek mnie głupie|świnia!|Pila|kufel|PIRIGUETE|Piru małe|Prosimy nie podawać tylko|Poker face pqfudendo|wkręcić coś daleko w górę biegu?|shorx click4surveys|'+
-                                        'Zamknij się!|chory idiota|głupie|Sodomizowania|kij|Syrakuzy|dwadzieścia cztery [24]|VA do piekła|Vagabond|będzie bzdura!|Możesz ã © a £ Marica go!|Możesz ã © a £ sikanie to!|Ciebie ciota|Twoja mama)[^\\w<]*\\b(?!\<)','i'));
-
-var ruL2RegPatts = new Array(new RegExp('(?!\>)\\b[^\\w>]*(hooyÃ³vo|Drochit\'|Durak|Gandon|HooyeÃ©lo|Hooyovi / zayebÃ¡telski|Hui|Huiplet|Loh (лох)|MalafyÃ¡|Na hooyÃ¡?|Ostyn\'|Oyah Dah Papakina|Yoscho Papakina|'+
-                                        'P\'yan v stel-ku|Past\' zakroi|PeetoÃ³kh|Peezdit\'|Perdet\'|PoloochÃ­t PizdyoolÃ©y|PÃ©ezdit|Sosat\'|Tee Karova|Trajat\'sya|Tvar\'|Yeban\'ko maloletnee|eban\'ko|goluboi|'+
-                                        'pedik|заткнись|ey|padla (моргала выколю)|ugrainform)[^\\w<]*\\b(?!\<)','i'));
-
-var svL2RegPatts = new Array(new RegExp('(?!\>)\\b[^\\w>]*(Balle|Blatte|BÃ¥nge|Din mamma|Dra Ã¥t helvete|Fjolla|Hjon|Inte ens din mamma gillar dig.|Kuk|KÃ¶tthuvud|Pajas|Pucko|Sarre|Satan|Sosse|Vad fan|VÃ¥ldtÃ€ktsman|dra Ã¥t helvete!|'+
-                                        'fan|fÃ¶rbÃ¶veln|kÃ€rring|rÃ¶ding|zigenare| tattare|jã€vla|djã€vla|jã€kla|zigenare|tattare)[^\\w<]*\\b(?!\<)','i'));
-
-var thL2RegPatts = new Array(new RegExp('(?!\>)\\b[^\\w>]*(กะเทย|เพศ|ดูด|ทางทวารหนัก|หัวนม|หัวนม)[^\\w<]*\\b(?!\<)','i'));
-
-var trL2RegPatts = new Array(new RegExp('(?!\>)\\b[^\\w>]*([Ş]apka|Al babayı|Ass tulip|Budala|Deyus - Deyyus|Ezik|Gerizekalý|Pezevenk|Travesti|Turk Bozi Tgha|Yarak|anam avradÃœm olsun ki|ass hole|daÃŸak geÃ§me lan|'+
-                                        'it oğlu it|kalantor|keriz|ossurturum bÃ¶yle|sik kili|som agizli ibne|yedinmi yarraÃ°Ãœ ÃŸimdi|Ýbne)[^\\w<]*\\b(?!\<)','i'));
-
-var viL2RegPatts = new Array(new RegExp('(?!\>)\\b[^\\w>]*(Du mot minh|cảm thấy ham đụ|cặc|chÃ³ chết|con bÃ mÃ y|con bán hoa|con cac|cu|cÃ¢m mồm|goo|con me may|du ma may|giã vịt)[^\\w<]*\\b(?!\<)','i'));
-
-var zhL2RegPatts = new Array(new RegExp('(?!\>)\\b[^\\w>]*(Bi Zui|Ni shi shen jiing bing|Qu Ni De!|chiang jian|ji ba|ji bai|ju tou mo lou|now tsan|tou ni ma|yu dam ful|ÃÃÃÂ±ÃÃ liu mao zi|交媾|做愛|发骚|台狗|处女膜|毛片|淫叫|'+
-                                        '淫娃|淫水|淫蕩|溝女|狗操|處女膜|姦|屙民|幹|幹炮)[^\\w<]*\\b(?!\<)','i'));
-
-var arL2RegPatts = new Array(new RegExp('(?!\>)\\b[^\\w>]*(الموت عليكم!|الشيطان عليكم!|كرات|حزمة الحطب|مثلي الجنس|غبي|ديك|يتم حرق منزلك.|مصاصة اللحوم|أقرن|شاذ جنسيا|قبيح|أقسم الدم|القواد|قضيب|يا والدي|أنت شخص مستوى منخفض|كنت قصيرة|يا إلهي|لمثلي الجنس من صحم|أقسم موتاكم)[^\\w<]*\\b(?!\<)','i'));
-
-var daL2RegPatts = new Array(new RegExp('(?!\>)\\b[^\\w>]*(bãšskubber|din mor|din mor!|dumme k\'lling|fj\'s|for helvede|grimme k\'lling|hold k\'ft|klaphat|ko!|kãžter|ludertãšve|osteged|pik|pikansjos|pikspiller|rãžvguitar|'+
-                                        'slik omkring mit pikhovede|sut rãžv|svans|tudefj\'s|tãžs|bãžsserãžv|klamme luderso|klamme so|rãžvbanan|ãlfisse)[^\\w<]*\\b(?!\<)','i'));
-
-var elL2RegPatts = new Array(new RegExp('(?!\>)\\b[^\\w>]*(Πηγαίνετε στην κόλαση|Όρχις|Ομοφυλόφιλος|Άσχημη γυναίκα (κυριολεκτικά μια σαύρα)|Αηδιαστικό πράγμα / άτομο|ηλίθια (κεφάλι είναι ένα άδειο κέλυφος)|πηγαίνετε στις αγελάδες!|φύλο|ψωλή|σκληρός|παλιές μπάλες)[^\\w<]*\\b(?!\<)','i'));
-
-var fiL2RegPatts = new Array(new RegExp('(?!\>)\\b[^\\w>]*(Hinttari|Homo|Idiootti|KyrpÃ€|Mee hervantaan|Painu Helvettin!|Perkele|Saatana|helvetti|muna|rotta|ãpã€rã€|ãpã€rã€lapsi)[^\\w<]*\\b(?!\<)','i'));
-
-var heL2RegPatts = new Array(new RegExp('(?!\>)\\b[^\\w>]*(כדורים|האמא שלך מת|אימך!|נערה סקסית|עבור למכור קרח!|מסטול|הספיקו לי!|עזוב אותי בשקט|אלוהים שייקח אותך כבר!|תעשה לי טוב|Die|תישרף בגיהינום|זין|עופות Garbadge|'+
-                                        'שלך|תוצאה או חוסר מזל רע|הוֹמוֹסֶקסוּאָל|ללכת ולחפש חברים|אשפה)[^\\w<]*\\b(?!\<)','i'));
-
-var idL2RegPatts = new Array(new RegExp('(?!\>)\\b[^\\w>]*(Anjing!|Bencong|Binor (Bini Orang)|Blo\'on|Jayus lo!|Mak lu!|Monyet !|Monyong|Peler|Sampah|Sempak|Sempak/kolor|Terkutuklah engkau semua!|anak yatim|bajingan tengik|brengsek|geblek|'+
-                                        'goblok|kalempong|kampungan|kontol/titit|maho|orang (pria/wanita) miskin|palaji|pepsi|tengkorak hidup|tukang bohong|bodoh|tolol|goblok|orang udik |orang kampung)[^\\w<]*\\b(?!\<)','i'));
-
-var jaL2RegPatts = new Array(new RegExp('(?!\>)\\b[^\\w>]*(乳首|精子|愛を作るために、|あいつ/ばか|白痴|超醜い女の子|ディック|ペニス|ジャークや白痴|あなたが行くオフ|金玉|卵巣|コック|おしっこするには|ああがらくた！ （または：くそーああ！）|角質|あなたの「ツール」が小さいです！|'+
-                                        'うんち|死にあなたを打ちます|アウトにするには|臭い老人|敗者|にヒットするには、少女[または少年]をピックアップ|男性同性愛者|あなたのアップ|バカじゃありませんの？|胸|バット|男女|死にます|小便をします|バカメース|ホモ|セックス|吸います|アナル|'+
-                                        '威勢のいい|baltringueは|格好いい|ボタンヘッド|チェーピン|コクー|詐欺|甲介|クーリー|クラック常用者|サイバーセックス|総統|腺|小型テント|掩撃|ばか|ラディノ|レズビアン|愚か者|マカク|マリカ|採掘できます|モアー|ムール貝|ゴック|腸詰|虚弱な|堤防|'+
-                                        'ドン|刺します|ラージャ|向け無料|セックスドラマ|シーメール|風袋重量|アップスカート|シンガ|ふしだらな女|円顱|黒穂病|エロチック|ズシーン|ポラック|fagots|のabo|鍋)[^\\w<]*\\b(?!\<)','i'));
-
-var koL2RegPatts = new Array(new RegExp('(?!\>)\\b[^\\w>]*(Babo|Chaji|Goja|Jot ka|Michin|Nu choogle lea|bingu|jhut-kkok-ji)[^\\w<]*\\b(?!\<)','i'));
+var enL2RegPatts = new Array();
+var localL2RegPatts = new Array();
 
 var enL3RegPatts = new Array(new RegExp('(?!\>)(pussy|msn|fuc(k|ed|ers?|ing|s)?|(f|F)(~|_|!|@|#|$|%|^|&|[*](k))|fckn|Rats|motherfu?|fuk|cunt|d(i|!|[*])ck|asshole|a s s h o l e |assh|a[$]|f\'cking|F-ing|azz|bitch|'+
              'dumb|suck(s|er|ed)?|^\lick|nigg(ro|ga|er)?|(s|S)((~|!|@|#|$|%|^|&|[*])h(i|!|)t)|jacka(s|$)?)(?!\<)','i'),
@@ -229,20 +85,11 @@ new RegExp('(?!\>)(moosefucker|morons?|m(o|u)?th(afuck(a?s?z?|ed|ers?|ing?s?)|af
 'shiz|skanky?(bitch|fuck|whore|y)|skullfuck|skumbag|slut\s*(bucket|bag|dumper|kiss|s|t|ing|ty|wear|whore)|sonofabitch|stfu|stupidfuck(er)?|suckdick|suckmy(ass|dick|tit)|thundercunt|tightarse|tightass|'+
 'tit(wank|fuck(er|ing?)?|job|licker|lover|s|ties|ty|tyfuck|tyfucker|tywank)|tiefucker|tonguefuck|twat(face|head|lips|s|ty|waffle)|twobitwhore|unclefucker|uptheass|wank(er|ing|job|ware)|whisk(eydick|kydick)|white trash scumbag|wtf|you dumb ass|\w\W+)(?!\<)','i')); 
 
-var deL3RegPatts = new Array(new RegExp('(?!\>)(pussy|msn|fuc(k|ed|ers?|ing|s)?|(f|F)(~|_|!|@|#|$|%|^|&|[*](k))|fckn|Rats|motherfu?|fuk|cunt|d(i|!|[*])ck|asshole|a s s h o l e |assh|a[$]|f\'cking|F-ing|azz|bitch|'+
-             'dumb|suck(s|er|ed)?|^\lick|nigg(ro|ga|er)?|(s|S)((~|!|@|#|$|%|^|&|[*])h(i|!|)t)|jacka(s|$)?)(?!\<)','i'));    
- 
   
 setTimeout(function () {
   var divFb = document.getElementById('facebook');
   if (divFb != null)
   {
-    //var divFbPostContainer = document.getElementsByTagName('div');
-    //for (var i = 0; i < divFbPostContainer.length; i++) {
-    //if (divFbPostContainer[i].className == 'fbFeedbackPostsContainer') {
-    //divFbPostContainer[i].setAttribute('style', 'overflow:scroll;max-height:100%;height:100%;width:100%; margin:0px auto;');
-    //}
-    //}
     GetApplicationID();
     LoadApplicationRegExs();
     
@@ -324,140 +171,43 @@ function GetApplicationID() {
 }  
 
 // Load Application's RegExPatterns
-function LoadApplicationRegExs() {
-
-  switch(currentAppId) {
-    //'EN-MSN#689384617806917'
-    case '689384617806917':
-      regExDict['review'] = enL2RegPatts;
-      regExDict['public'] = enL3RegPatts;
-      break;
-    //'FR-MSN#340534406099501'    
-    case '340534406099501':
-      regExDict['review'] = frL2RegPatts;
-      regExDict['public'] = enL3RegPatts;
-      break;
-      // 'PT-MSN#1449534195317908'
-      case '1449534195317908':
-        regExDict['review'] = ptL2RegPatts;
-        regExDict['public'] = enL3RegPatts;
-        break;
-        // 'ES-MSN#577804522329995'
-      case '577804522329995':
-        regExDict['review'] = esL2RegPatts;
-        regExDict['public'] = enL3RegPatts;
-        break;
-        // 'IT-MSN#1455766471352205'
-      case '1455766471352205':
-        regExDict['review'] = itL2RegPatts;
-        regExDict['public'] = enL3RegPatts;
-        break;
-    //'DE-MSN#544580382313562'
-    case '544580382313562':
-      regExDict['review'] = deL2RegPatts;
-      regExDict['public'] = deL3RegPatts;
-      break;
-     //'NL-MSN#486847318126219'
-    case '486847318126219':
-      regExDict['review'] = nlL2RegPatts;
-      regExDict['public'] = enL3RegPatts;
-      break;
-      //'NB-MSN#1452940268301780'
-    case '1452940268301780':
-      regExDict['review'] = nbL2RegPatts;
-      regExDict['public'] = enL3RegPatts;
-      break;
-      //'PL-MSN#689527477782682'
-    case '689527477782682':
-      regExDict['review'] = plL2RegPatts;
-      regExDict['public'] = enL3RegPatts;
-      break;
-       //'RU-MSN#760049184057705'
-    case '760049184057705':
-      regExDict['review'] = ruL2RegPatts;
-      regExDict['public'] = enL3RegPatts;
-      break;
-      //'SV-MSN#253239748208334'
-    case '253239748208334':
-      regExDict['review'] = svL2RegPatts;
-      regExDict['public'] = enL3RegPatts;
-      break;
-       //'TH-MSN#320330421467948'
-    case '320330421467948':
-      regExDict['review'] = thL2RegPatts;
-      regExDict['public'] = enL3RegPatts;
-      break;
-      //'TR-MSN#667415743327744'
-    case '667415743327744':
-      regExDict['review'] = trL2RegPatts;
-      regExDict['public'] = enL3RegPatts;
-      break;
-      //'VI-MSN#1516422451902910'
-    case '1516422451902910':
-      regExDict['review'] = viL2RegPatts;
-      regExDict['public'] = enL3RegPatts;
-      break;
-      //'ZH-MSN#268405136692327'
-    case '268405136692327':
-      regExDict['review'] = zhL2RegPatts;
-      regExDict['public'] = enL3RegPatts;
-      break;
-      //'AR-MSN#636427529797723'
-    case '636427529797723':
-      regExDict['review'] = arL2RegPatts;
-      regExDict['public'] = enL3RegPatts;
-      break;
-      //'DA-MSN#1542514589303718'
-    case '1542514589303718':
-      regExDict['review'] = daL2RegPatts;
-      regExDict['public'] = enL3RegPatts;
-      break;
-      //'EL-MSN#796325693750916'
-    case '796325693750916':
-      regExDict['review'] = elL2RegPatts;
-      regExDict['public'] = enL3RegPatts;
-      break;
-      //'FI-MSN#963921453634367'
-    case '963921453634367':
-      regExDict['review'] = fiL2RegPatts;
-      regExDict['public'] = enL3RegPatts;
-      break;
-      //'HE-MSN#319883131525928'
-    case '319883131525928':
-      regExDict['review'] = heL2RegPatts;
-      regExDict['public'] = enL3RegPatts;
-      break;
-      //'ID-MSN#242727845936737'
-    case '242727845936737':
-      regExDict['review'] = idL2RegPatts;
-      regExDict['public'] = enL3RegPatts;
-      break;
-      //'JA-MSN#304492469722269'
-    case '304492469722269':
-      regExDict['review'] = jaL2RegPatts;
-      regExDict['public'] = enL3RegPatts;
-      break;
-      //'KO-MSN#1445736572366493'
-    case '1445736572366493':
-      regExDict['review'] = koL2RegPatts;
-      regExDict['public'] = enL3RegPatts;
-      break;
-    default:
-      regExDict['review'] = enL2RegPatts;
-      regExDict['public'] = enL3RegPatts;
+function LoadApplicationRegExs() { 
+  try {
+    enL2RegPatts = new Array();
+    localL2RegPatts = new Array();
+  // Gets EN L2 Profanity Words list
+  var regExpReq = profanityRegExp+'appId=' + en_msn_appId;
+  var regPatts = GetProfanityInfo(regExpReq);
+      
+  var regPattArr = regPatts.split('$');
+      
+  for(var k=0; k< regPattArr.length; k++) {
+    var regEx = new RegExp('(?!\>)\\b[^\\w>]*(' + regPattArr[k] + ')[^\\w<]*\\b(?!\<)', 'i');
+    enL2RegPatts.push(regEx);
   }
+  regExDict['public'] = enL3RegPatts;
   
-  //'TR-MSN#667415743327744'
-  //'JA-MSN#304492469722269'
-  //'ID-MSN#242727845936737'
-  //'HE-MSN#319883131525928'
-  //'KO-MSN#1445736572366490'
-  //'VI-MSN#1516422451902910'
-  //'ZH-MSN#268405136692327'
-  //'FI-MSN#963921453634367'
-  //'EL-MSN#796325693750916'
-  //'DA-MSN#1542514589303710'
-  //'AR-MSN#636427529797723'  
+  if(currentAppId != en_msn_appId) {
+    var localRegExpReq = profanityRegExp+'appId=' + currentAppId;
+    var localRegPatts = GetProfanityInfo(localRegExpReq);
+    
+    if(localRegPatts != null && localRegPatts != '') {
+      var localRegPattArr = localRegPatts.split('$');
+      for(var len =0; len < localRegPattArr.length; len++) {
+        var localRegEx = new RegExp('(?!\>)\\b[^\\w>]*(' + localRegPattArr[len] + ')[^\\w<]*\\b(?!\<)', 'i');
+        //alert(localRegEx);
+        localL2RegPatts.push(localRegEx);
+      }
+      regExDict['review'] = localL2RegPatts;
+    }
+  }
+  else {
+    regExDict['review'] = enL2RegPatts;
+  } 
+  }
+  catch(ex) {
+    alert(ex);
+  }
 }
 
 function GetProfanityInfo(uri) {
@@ -497,6 +247,7 @@ function HighLightBlackListedWords() {
       LoadApplicationRegExs();
     }    
     var textContainers = document.getElementsByClassName('_2uma');
+    
         //   tablerows[0].childNodes[0].childNodes; 
     var hilightTag = '';
     var regPatterns;
@@ -516,17 +267,19 @@ function HighLightBlackListedWords() {
     for(var i=0; i<textContainers.length;i++) {   
       totalComentCount = totalComentCount + 1;
       var spans = textContainers[i].getElementsByTagName('span'); 
-      //textContainers[i].getElementsByClassName('_2uma')[0].getElementsByTagName('span'); 
+      
       for(var j=0;j<spans.length;j++) { 
-        //var dataId = spans[j].getAttribute('data-reactid');            
-        //if (dataId != null && dataId.indexOf('.0.1.0.1.0.0:$') != - 1) { 
-          var content = spans[j].innerHTML; 
-         if(currentAppId != '' && currentAppId != 689384617806917) {
-          for each(var regPatt in regPatterns ) {                         
-            while(match=regPatt.exec(content)) {              
+        var content = spans[j].innerHTML; 
+        //alert(j + ': '+content);
+        if(currentAppId != '' && currentAppId != en_msn_appId) {
+          for each(var regPatt in regPatterns ) {    
+            //alert(regPatt);
+            while(match=regPatt.exec(content)) {    
+              //alert(match[0]);
               var before = content.slice(0,match.index);
               var after = content.slice(match.index + match[0].length,content.length);
               content = before + hilightTag + match[0] + highlightEndTag + after;                               
+              //alert(content);
             }
           }
          }
@@ -535,7 +288,7 @@ function HighLightBlackListedWords() {
             while(match=regPatt.exec(content)) {              
               var before = content.slice(0,match.index);
               var after = content.slice(match.index + match[0].length,content.length);
-              content = before + hilightTag + match[0] + highlightEndTag + after;                               
+              content = before + hilightTag + match[0] + highlightEndTag + after;
             }
           }
          
@@ -576,10 +329,7 @@ function HighLightBlackListedWords() {
       }
       
       //alert(checkText);
-      //var l1matches = (checkText.match(/_3wbz/g)||[]).length;      
-      //var l1matches = checkText.match(/_3wbz/g);
-      //alert(l1matches);
-      //var l2matches = (checkText.match(/<font style=('|")background-color:red;color:white('|")>/g)||[]).length; 
+      
       L1Words = L1Words + l1matches;
       L2Words = L2Words + l2matches;
       if(l1matches == 0 && l2matches >0) {
@@ -589,7 +339,7 @@ function HighLightBlackListedWords() {
       }
       else if(l1matches>0 && l2matches==0) 
         l1CountArray.push(i);      
-      else
+      else if(l1matches>0 && l2matches>0)
         l1l2CountArray.push(i);      
     } 
     var lblText = '<br><font style=\'color:#9399A5;font-size: 12px;line-height: 16px;\'>Total comments: '+ totalComentCount + '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;L1 Words: '+L1Words+ '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;L2 Words: '+L2Words+'<br>L1 Comments: '+ l1CountArray.length +'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;L2 Comments: '+ l2CountArray.length +'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;L1&L2 Comments: '+ l1l2CountArray.length +'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Other Comments: '+ (totalComentCount-(l1CountArray.length+l2CountArray.length+l1l2CountArray.length)) +'</font>';
@@ -709,7 +459,7 @@ function SetSortByChangeAction() {
   {  
     var mainDataId;    
       var divs = document.getElementsByTagName('div');
-      for (var i = 0; i < divs.length; i++) {
+      for (var i = 0; i < divs.length; i++) {        
         var divClass = divs[i].getAttribute('class');
         if (divClass != null && divClass.indexOf('uiPopover _6a _6b') != - 1) {
           mainDataId = divs[i];
@@ -734,138 +484,138 @@ function SetSortByChangeAction() {
 
 // adding moderators controls
 function AddModerateControls() {
-  try
-  { 
+  try { 
     var pageUrlFlag = false;    
-    if(window.location.href.substring(0,31)==='https://developers.facebook.com' && (/\/deleted\/|\/approved\//).test(window.location.href) )
+    if(window.location.href.substring(0,31)==='https://developers.facebook.com' && (/\/deleted\/|\/approved\//).test(window.location.href))
       pageUrlFlag = true;
-    var divs = document.getElementsByTagName('div');
-    for (var i = 0; i < divs.length; i++) {
-      var divClass = divs[i].getAttribute('class');
-      if (divClass != null && divClass.indexOf('UFIImageBlockContent') != - 1) {
-        var articleHref = null;
-        var articleHrefId = null;
-        if(pageUrlFlag){
-        articleHref = divs[i].childNodes[0].childNodes[0].childNodes[2].getElementsByTagName('a')[0].getAttribute("href");        
-          articleHrefId =  articleHref.match(/[^/]+$/)[0];}
-        var dateDiv = '';
-    dateDiv = divs[i].getElementsByTagName('abbr') [0];    
-    var datev = '';
-        if(dateDiv != null && dateDiv != '') {
-          datev = dateDiv.getAttribute('data-utime');
-          datev += '000';
-        }
-        else {
-          datev ="UNDEFINE";
-        }          
+    var divs = document.getElementsByTagName('div');    
+    for (var i = 0; i < divs.length; i++) { 
+        var divClass = divs[i].getAttribute('class');
+        if (divClass != null && divClass.indexOf('UFIImageBlockContent') != - 1) {
+          var articleHref = null;
+          var articleHrefId = null;
+          if(pageUrlFlag) {
+            articleHref = divs[i].childNodes[0].childNodes[0].childNodes[2].getElementsByTagName('a')[0].getAttribute("href");        
+            articleHrefId =  articleHref.match(/[^/]+$/)[0];
+          }
+          var dateDiv = '';
+          dateDiv = divs[i].getElementsByTagName('abbr') [0];    
+          var datev = '';
+          if(dateDiv != null && dateDiv != '') {
+            datev = dateDiv.getAttribute('data-utime');
+            datev += '000';
+          }
+          else {
+            datev ="UNDEFINE";
+          }          
           
         //profileName
-    var pDiv = divs[i].getElementsByTagName('a');
-    var from = '';
-    var userName = '';
+          var pDiv = divs[i].getElementsByTagName('a');
+          var from = '';
+          var userName = '';
         
-         for (var k = 0; k < pDiv.length; k++) {      
-      if (pDiv[k].className == ' UFICommentActorName') {
-        from = pDiv[k].getAttribute('href');
-        from = from.replace('https://www.facebook.com/', '');
-        from = from.replace(/\/$/,'');        
-        userName = pDiv[k].innerHTML;        
-        userName = userName.replace(new RegExp('<!--.*?-->', 'g'), '');        
-        if (from.indexOf('?id=') != - 1) {
-          from = from.replace('profile.php?id=', '');
-        }
-        break;
-      }
-    }
-        
-        //alert("i" + i + "   datev: " + datev + "    from :" + from + "             userName" + userName);
-        
-        
-        var pId =  datev+"|"+from+"|"+userName;  //divs[i].getAttribute('data-reactid');
-        //alert(pId);
-        var divFbId = 'divFb_' + pId;
-        var divCheck = document.getElementById(divFbId);
-        if (divCheck == null)
-        {  
-          var divModerate = document.createElement('div');
-          divModerate.id = divFbId;          
-          if(pageUrlFlag){            
-          var commentReadReq = commentReadCheckAPI+'articleUrl=' + articleHref + '&commentId=' + pId + '|' + articleHrefId ;
-          var statusResponse = GetCommentStatusInfo(commentReadReq);          
-          var flagSpan = document.createElement('span');          
-          var newFlagLabel = document.createElement('label');
-          if(statusResponse ==-1){            
-            if(window.location.href.contains("/deleted/")){
-                                             // do nothing
-                                             }
-            else{
-          newFlagLabel.innerHTML = '<font style=\'color:#9399A5;font-size: 12px;line-height: 16px;\' >Read:</font>&nbsp;';
-          var chkElement = document.createElement('input');
-          chkElement.type = 'checkbox';            
-          chkElement.id = 'chk_'+pId;          
-          chkElement.onchange = function ()
-          {   
-            sendFbData(this.id);               
+          for (var k = 0; k < pDiv.length; k++) {      
+            if (pDiv[k].className == ' UFICommentActorName') {
+              from = pDiv[k].getAttribute('href');
+              from = from.replace('https://www.facebook.com/', '');
+              from = from.replace(/\/$/,'');        
+              userName = pDiv[k].innerHTML;        
+              userName = userName.replace(new RegExp('<!--.*?-->', 'g'), '');        
+              if (from.indexOf('?id=') != - 1) {
+                from = from.replace('profile.php?id=', '');
+              }
+              break;
+            }
           }
-          flagSpan.appendChild(newFlagLabel);
-          flagSpan.appendChild(chkElement);
-            }}
-          else{
-          newFlagLabel.innerHTML = '<font style=\'color:#9399A5;font-size: 12px;line-height: 16px;\'>'+ statusResponse +'</font>'; 
-          flagSpan.appendChild(newFlagLabel);
-          }       
-          divModerate.appendChild(flagSpan);          
-          }          
-          var actionLabel = document.createElement('label');
-          actionLabel.innerHTML = actionTitle;
-          var offenceLabel = document.createElement('label');
-          offenceLabel.innerHTML = offenceTitle;
-          //var moderatorLabel = document.createElement('label');
-          //moderatorLabel.innerHTML = moderatorTitle;
-          var selAction = document.createElement('select');
-          selAction.innerHTML = actionsList;
-          var selOffence = document.createElement('select');
-          selOffence.innerHTML = offenceList;
-          //var selModerator = document.createElement('select');
-          //selModerator.innerHTML = moderatorsList;
-          var input = document.createElement('input');
-          input.type = 'button';
-          input.value = 'Submit';
-          input.zIndex = 10000;
-          input.onclick = function ()
-          {
-            sendFbData(this.id);
-          }
-          selAction.id = 'selAction_' + pId;
-          selOffence.id = 'selOffence_' + pId
-          //selModerator.id = 'selModerator_' + pId
-          input.id = 'btnSum_' + pId;
-          divModerate.appendChild(actionLabel);
-          divModerate.appendChild(selAction);
-          divModerate.appendChild(offenceLabel);
-          divModerate.appendChild(selOffence);
-          //divModerate.appendChild(moderatorLabel);
-          //divModerate.appendChild(selModerator);
-          divModerate.appendChild(input);
-          divModerate.setAttribute('style', moderatorDivStyle);
-          divs[i].childNodes[0].appendChild(divModerate);          
-          divs[i].onclick = function ()
-          {
-            if (!isArticleUrlFound) {
-              var articleLinks = this.getElementsByTagName('a');              
-              for (var i = 0; i < articleLinks.length; i++) {                
-                var dataId = articleLinks[i].parentElement.getAttribute('class');                
-                if (dataId != null && dataId.indexOf('_3lfy') != - 1) {
-                  var tmpArtUrl = articleLinks[i].getAttribute('href')                  
-                  document.getElementById('txtArticleUrl').value = tmpArtUrl.replace(/%3A/g, ':').replace(/%2F/g, '/').replace(/%3F/g, '?').replace(/%25/g, '%');                  
-                  break;
+        
+          var pId =  datev+"|"+from+"|"+userName; 
+          //alert(pId);
+          var divFbId = 'divFb_' + pId;
+          var divCheck = document.getElementById(divFbId);
+          if (divCheck == null) {
+            var divModerate = document.createElement('div');
+            divModerate.id = divFbId;          
+            if(pageUrlFlag) {
+              var commentReadReq = commentReadCheckAPI+'articleUrl=' + articleHref + '&commentId=' + pId + '|' + articleHrefId ;
+              var statusResponse = GetCommentStatusInfo(commentReadReq);          
+              var flagSpan = document.createElement('span');          
+              var newFlagLabel = document.createElement('label');
+              if(statusResponse ==-1) {
+                if(window.location.href.contains("/deleted/")){
+                  // do nothing
+                }
+                else {
+                  newFlagLabel.innerHTML = '<font style=\'color:#9399A5;font-size: 12px;line-height: 16px;\' >Read:</font>&nbsp;';
+                  var chkElement = document.createElement('input');
+                  chkElement.type = 'checkbox';            
+                  chkElement.id = 'chk_'+pId;          
+                  chkElement.onchange = function ()
+                  { 
+                    sendFbData(this.id);               
+                  }
+                  flagSpan.appendChild(newFlagLabel);
+                  flagSpan.appendChild(chkElement);
+                }
+              }
+              else {
+                newFlagLabel.innerHTML = '<font style=\'color:#9399A5;font-size: 12px;line-height: 16px;\'>'+ statusResponse +'</font>'; 
+                flagSpan.appendChild(newFlagLabel);
+              }
+              divModerate.appendChild(flagSpan);          
+            }
+            
+            var actionLabel = document.createElement('label');
+            actionLabel.innerHTML = actionTitle;
+            var offenceLabel = document.createElement('label');
+            offenceLabel.innerHTML = offenceTitle;
+            //var moderatorLabel = document.createElement('label');
+            //moderatorLabel.innerHTML = moderatorTitle;
+            var selAction = document.createElement('select');
+            selAction.innerHTML = actionsList;
+            var selOffence = document.createElement('select');
+            selOffence.innerHTML = offenceList;
+            //var selModerator = document.createElement('select');
+            //selModerator.innerHTML = moderatorsList;
+            var input = document.createElement('input');
+            input.type = 'button';
+            input.value = 'Submit';
+            input.zIndex = 10000;
+            input.onclick = function () {
+              sendFbData(this.id);
+            } 
+            selAction.id = 'selAction_' + pId;
+            selOffence.id = 'selOffence_' + pId;
+            //selModerator.id = 'selModerator_' + pId
+            
+            input.id = 'btnSum_' + pId;
+            divModerate.appendChild(actionLabel);
+            divModerate.appendChild(selAction);
+            divModerate.appendChild(offenceLabel);
+            divModerate.appendChild(selOffence);
+            //divModerate.appendChild(moderatorLabel);
+            //divModerate.appendChild(selModerator);
+            divModerate.appendChild(input);
+            divModerate.setAttribute('style', moderatorDivStyle);
+            divs[i].childNodes[0].appendChild(divModerate);          
+            divs[i].onclick = function ()
+            { 
+              if (!isArticleUrlFound) {
+                var articleLinks = this.getElementsByTagName('a');              
+                for (var i = 0; i < articleLinks.length; i++) {                
+                  var dataId = articleLinks[i].parentElement.getAttribute('class');                
+                  if (dataId != null && dataId.indexOf('_3lfy') != - 1) {
+                    var tmpArtUrl = articleLinks[i].getAttribute('href')                  
+                    document.getElementById('txtArticleUrl').value = tmpArtUrl.replace(/%3A/g, ':').replace(/%2F/g, '/').replace(/%3F/g, '?').replace(/%25/g, '%');                  
+                    break;
+                  }
                 }
               }
             }
           }
         }
-      }
-    }    
+    //  }    
+    }
+    
     SetPagerDivClickAction();    
     SetViewChangeAction();    
     SetMoreCommentClickAction();
@@ -874,10 +624,9 @@ function AddModerateControls() {
     HighLightBlackListedWords();    
     
     var divCheck = document.getElementById('divFb_UNDEFINE||');
-    if(divCheck != null)
-      {
+    if(divCheck != null) {
         divCheck.parentNode.removeChild(divCheck);
-      }
+    }
   } 
   catch (ex)
   {
@@ -937,16 +686,6 @@ function HighlightSpamCommentsNew() {
         allCommentsParent = tblBodys[0].getElementsByTagName('tbody')[0];      
       }    
     
-    //for (var i = 0; i < tblBodys.length; i++) {
-    //  var tbodyId = tblBodys[i].getAttribute('class');
-    //  if (tbodyId != null && tbodyId.indexOf('.0.1.0.1.0') != -1)
-    //  {
-   //     if (allCommentsParent == null) {
-    //      allCommentsParent = tblBodys[i];        
-    //    }
-    //  }
-   // }
-    
     if(allCommentsParent != null) {            
     var firstCommentTblRow;
     var tblRows = allCommentsParent.getElementsByTagName('tr');
@@ -954,11 +693,6 @@ function HighlightSpamCommentsNew() {
         firstCommentTblRow = tblRows[0];        
       }
     for (var i = 0; i < tblRows.length; i++) {
-    //  var trId = tblRows[i].getAttribute('data-reactid');
-     // if (trId != null && trId.indexOf('.0.1.0.1.0.0:$') != - 1) {
-       // if (firstCommentTblRow == null) {
-       //   firstCommentTblRow = tblRows[i];
-       // }
      
       var imageBlockContent = tblRows[i].getElementsByClassName('UFIImageBlockContent _42ef');
       for(l=0;l<imageBlockContent.length;l++){
@@ -984,7 +718,8 @@ function HighlightSpamCommentsNew() {
         from = pDiv[k].getAttribute('href');
         from = from.replace('https://www.facebook.com/', '');
         from = from.replace(/\/$/,'');
-        userName = pDiv[k].childNodes[0].innerHTML;        
+        userName = pDiv[k].innerHTML;        
+        userName = userName.replace(new RegExp('<!--.*?-->', 'g'), '');         
         if (from.indexOf('?id=') != - 1) {
           from = from.replace('profile.php?id=', '');
         }
@@ -992,17 +727,9 @@ function HighlightSpamCommentsNew() {
       }
     } 
         
-        var pId =  datev+"|"+from+"|"+userName;  //divs[i].getAttribute('data-reactid');
+        var pId =  datev+"|"+from+"|"+userName;
         //alert(pId);
         var divFbId = 'divFb_' + pId;
-        
-       // var divFbId = '';
-       // if(trId.indexOf('.1.0.0.1.0.0:$') != -1) {
-       //   divFbId = 'divFb_' + trId + '.0.1.0.0.$right.0';  
-      //  }
-      //  else {          
-      //    divFbId = 'divFb_' + trId + '.1.0.0.0.$right.0';  
-      //  }          
         
         var divCheck = document.getElementById(divFbId);
         if (divCheck != null)
@@ -1082,15 +809,6 @@ function HighlightSpamCommentsNew() {
     else
       { 
         var divTags = document.getElementsByTagName('div');        
-  //  for (var i = 0; i < divTags.length; i++) {
-   //   var mainDivId = divTags[i].getAttribute('data-reactid');
-   //   if (mainDivId != null && mainDivId.indexOf('.0.0.2') != -1) {
-   //      if (allCommentsParent == null) { 
-   //        allCommentsParent = divTags[i];  
-    //     }
-   //   }
-   // }
-        
         var firstCommentDiv;        
         
     for (var i = 0; i < divTags.length; i++) {      
@@ -1103,7 +821,6 @@ function HighlightSpamCommentsNew() {
        }
       
       if (divClass != null && divClass.indexOf('UFIImageBlockContent') != - 1) {
-        //var pId = divTags[i].getAttribute('data-reactid');
         
         var dateDiv = '';
     dateDiv = divTags[i].getElementsByTagName('abbr') [0];    
@@ -1126,7 +843,8 @@ function HighlightSpamCommentsNew() {
         from = pDiv[k].getAttribute('href');
         from = from.replace('https://www.facebook.com/', '');
         from = from.replace(/\/$/,'');
-        userName = pDiv[k].childNodes[0].innerHTML;        
+        userName = pDiv[k].innerHTML;        
+        userName = userName.replace(new RegExp('<!--.*?-->', 'g'), '');         
         if (from.indexOf('?id=') != - 1) {
           from = from.replace('profile.php?id=', '');
         }
@@ -1134,7 +852,7 @@ function HighlightSpamCommentsNew() {
       }
     } 
         
-        var pId =  datev+"|"+from+"|"+userName;  //divs[i].getAttribute('data-reactid');
+        var pId =  datev+"|"+from+"|"+userName;
         //alert(pId);
         var divFbId = 'divFb_' + pId;
         
@@ -1217,7 +935,6 @@ function ClickPagerButtons() {
         buttonPager[i].onclick = function ()
        {
          setTimeout(function () {
-           //alert('beforeinnterpagerclick');
            ClickPagerButtons();    
           }, 5000);
         }
@@ -1241,15 +958,9 @@ function HideSpamCommentsNew() {
       //moderator.focus();
       return;
     }
-    //alert('fromhidespam');
-    
-    //ClickPagerButtons();
     
     var tblRows = document.getElementsByClassName('_1ql3')[0].childNodes[0].childNodes;
     for (var i = 0; i < tblRows.length; i++) {
-      //var trId = tblRows[i].getAttribute('data-reactid');      
-      //if (trId != null && trId.indexOf('.0.1.0.1.0.0:$') != - 1) {
-    
        var imageBlockContent = tblRows[i].getElementsByClassName('UFIImageBlockContent _42ef');
       for(l=0;l<imageBlockContent.length;l++){
        var dateDiv = '';
@@ -1273,7 +984,8 @@ function HideSpamCommentsNew() {
         from = pDiv[k].getAttribute('href');
         from = from.replace('https://www.facebook.com/', '');
         from = from.replace(/\/$/,'');
-        userName = pDiv[k].childNodes[0].innerHTML;        
+        userName = pDiv[k].innerHTML;        
+        userName = userName.replace(new RegExp('<!--.*?-->', 'g'), '');         
         if (from.indexOf('?id=') != - 1) {
           from = from.replace('profile.php?id=', '');
         }
@@ -1281,7 +993,7 @@ function HideSpamCommentsNew() {
       }
     } 
         
-        var pId =  datev+"|"+from+"|"+userName;  //divs[i].getAttribute('data-reactid');
+        var pId =  datev+"|"+from+"|"+userName;  
         //alert(pId);
         var divFbId = 'divFb_' + pId;      
         
@@ -1336,12 +1048,7 @@ function HideSpamCommentsNew() {
           {
           }
         }
-      
-      // is for if
-      //}
-      
-      
-    }
+      }
     }
   }
   catch (ex)
@@ -1384,32 +1091,13 @@ function sendFbData(objid) {
     
     var res = tmpArtUrl.split("/");
     var articleID = res[res.length -1];
-    //alert(articleID);
-    
+    //alert(articleID);    
     //alert(tmpArtUrl);
     
     var commentID = cId + "|"+  articleID;
-    //if(cId.indexOf('.1.0.0.1.0.0:$') != -1){      
-      //var tmp = cId.split('$');
-    ///commentID = tmp[tmp.length -2];      
-   // }
-    //else {
-    //var tmp = cId.split('$');      
-   // commentID = tmp[1].replace('.1.0.0.0.','');      
-   // }
-   // commentID = commentID.replace('.0.1.0.0.','');
-   // commentID = commentID.replace('.','');
-    //alert(commentID);
-    //if (cId.indexOf('reply'))
-    //commentID = tmp[2];    
-    //main comment div
-    //var mainDiv = document.getElementById(cId);
-    //comment text
-    //var conDiv = mainDiv.getElementsByTagName('div');
     
     var comment = '';
     var likes = 0;
-    
     
       //comment text      
       var comDiv = mDiv.getElementsByTagName('span');      
@@ -1432,8 +1120,6 @@ function sendFbData(objid) {
       }      
         
     //comment udate
-
-    
     
     var artUrl = document.getElementById('txtArticleUrl');
     articleUrl = artUrl.value;
@@ -1460,7 +1146,8 @@ function sendFbData(objid) {
         from = pDiv[i].getAttribute('href');
         from = from.replace('https://www.facebook.com/', '');
         from = from.replace(/\/$/,'');
-        userName = pDiv[i].childNodes[0].innerHTML;        
+        userName = pDiv[i].innerHTML;        
+        userName = userName.replace(new RegExp('<!--.*?-->', 'g'), '');         
         if (from.indexOf('?id=') != - 1) {
           from = from.replace('profile.php?id=', '');
         }
@@ -1537,24 +1224,6 @@ function sendFbData(objid) {
           }
           
           //alert(viewType);
-          
-          //var spans = ulList[k].getElementsByTagName('a');
-          //for(var i = 0; i< spans.length; i++) {
-          //  var spanClass = spans[i].className;
-          //  if(spanClass != null && spanClass.indexOf('accessible_elem') != -1) {              
-           //   var spanId = spans[i].getAttribute('data-reactid');              
-          //    if(spanId.indexOf('$0.$pending') != -1) {
-           //       viewType = 3;
-           //     }
-          //    else if(spanId.indexOf('$0.$approved') != -1) {
-          //        viewType = 2;
-          //      }
-          //    else if(spanId.indexOf('$0.$deleted') != -1) {
-          //        viewType = 4;
-          //      }
-         //     break;
-         //   }            
-         // }          
         }
       }
     }
@@ -1598,7 +1267,6 @@ function sendFbData(objid) {
     
     window.open(submitUrl + moderationMessage, '_blank');    
     
-    
     //var xmlhttp = new XMLHttpRequest();
     //xmlhttp.open('PUT', submitUrl);
     //xmlhttp.setRequestHeader('Content-type', 'application/json; charset=UTF-8');
@@ -1610,16 +1278,16 @@ function sendFbData(objid) {
     alert(ex);
   }
 }
-//get query string value
 
+//get query string value
 function getParameterByName(name) {
   name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
   var regex = new RegExp('[\\?&]' + name + '=([^&#]*)'),
   results = regex.exec(location.search);
   return results == null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
 }
-//delay or sleep by duration
 
+//delay or sleep by duration
 function Delay(sleepDuration) {
   var now = new Date().getTime();
   while (new Date().getTime() < now + sleepDuration) { /* do nothing */
