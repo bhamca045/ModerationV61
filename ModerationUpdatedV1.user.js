@@ -1222,8 +1222,8 @@ function sendFbData(objid) {
     
     var textInput = document.getElementById(txtId)
     var textInputVal = textInput.value.toString().trim();
-    if(textInputVal != '') {      
-      var category =  document.getElementById(catgId)
+    var category =  document.getElementById(catgId);
+    if(textInputVal != '') { 
       if(category.value == 0) {
         window.alert('Please Select input Text Category');
         return;
