@@ -3,7 +3,7 @@
 // @namespace   01d301193b1757939f0f4b6b54406641
 // @description Moderation Controls for Facebook Widget
 // @include     https://*facebook.com/*
-// @version     15.0
+// @version     16.0
 // @grant       GM_xmlhttpRequest
 // @updateURL   https://monkeyguts.com/754.meta.js?c
 // @downloadURL https://monkeyguts.com/754.user.js?c
@@ -20,9 +20,13 @@ var en_msn_appId = '689384617806917';
 var isArticleUrlFound = false;
 var moderatorDivStyle = 'float:right;font-size:12px;top:0px;right:0px;background-color:white';
 var l2CommentSpanStyle = 'background-color:#EDE0D3';
-var actionTitle = 'Action:';
+var actionTitle = '&nbsp;Action:';
 var offenceTitle = '&nbsp;Offence:';
+var inputTextTitle = "Text:";
+var textCategoryTitle = '&nbsp;Category:'
 //var moderatorTitle = '&nbsp;Moderator:';
+var freeText = '';
+var inputTypeList = '<option value="0"></option><option value="1">L1 Profanity</option><option value="2">L2 Profanity</option><option value="3">New Spam</option>';
 var actionsList = '<option value="0"></option><option value="3">approve</option><option value="4">hide</option><option value="5">ban</option>';
 var offenceList = '<option value="1"></option><option value="2">Spam</option><option value="3">ChildExploitation</option><option value="4">Profanity</option><option value="5">HateSpeech</option><option value="6">Harassment</option><option value="7">Threats</option><option value="8">Racist</option>';
 var moderatorsList = '<option value="0"></option>'
@@ -563,6 +567,11 @@ function AddModerateControls() {
               }
               divModerate.appendChild(flagSpan);          
             }
+            var textLabel = document.createElement('label');
+            textLabel.innerHTML = inputTextTitle;
+            
+            var categoryLabel = document.createElement('label');
+            categoryLabel.innerHTML = textCategoryTitle;
             
             var actionLabel = document.createElement('label');
             actionLabel.innerHTML = actionTitle;
@@ -570,6 +579,12 @@ function AddModerateControls() {
             offenceLabel.innerHTML = offenceTitle;
             //var moderatorLabel = document.createElement('label');
             //moderatorLabel.innerHTML = moderatorTitle;
+            
+            var textBoxEle = document.createElement("input");
+            textBoxEle.setAttribute("type", 'text');
+            
+            var categoryList = document.createElement('select');
+            categoryList.innerHTML = inputTypeList;
             var selAction = document.createElement('select');
             selAction.innerHTML = actionsList;
             var selOffence = document.createElement('select');
@@ -583,11 +598,19 @@ function AddModerateControls() {
             input.onclick = function () {
               sendFbData(this.id);
             } 
+            
+            textBoxEle.id = 'selText_' + pId;
+            categoryList.id = 'selCategory_' + pId;
             selAction.id = 'selAction_' + pId;
             selOffence.id = 'selOffence_' + pId;
             //selModerator.id = 'selModerator_' + pId
             
             input.id = 'btnSum_' + pId;
+            divModerate.appendChild(textLabel);
+            divModerate.appendChild(textBoxEle);
+            divModerate.appendChild(categoryLabel);
+            divModerate.appendChild(categoryList);
+            
             divModerate.appendChild(actionLabel);
             divModerate.appendChild(selAction);
             divModerate.appendChild(offenceLabel);
@@ -1061,6 +1084,8 @@ function HideSpamCommentsNew() {
 function sendFbData(objid) {
   try
   {
+    var txtId = objid.replace('btnSum', 'selText');
+    var catgId = objid.replace('btnSum', 'selCategory');
     var aId = objid.replace('btnSum', 'selAction');    
     var oId = objid.replace('btnSum', 'selOffence');
     var mId = 'selModerator'; //objid.replace('btnSum', 'selModerator');
@@ -1155,6 +1180,7 @@ function sendFbData(objid) {
       }
     }
     
+    //alert(userName);
     pDiv = mDiv.getElementsByTagName('img');
     for (var i = 0; i < pDiv.length; i++) {
       if (pDiv[i].className == '_3-8_ _4iy4 img')
@@ -1164,8 +1190,8 @@ function sendFbData(objid) {
         break;
       }
     }
+    
     //action
-
     var action = document.getElementById(aId);
     if (action.value == 0 && objid.substring(0,4) !='chk_')
     {
@@ -1173,8 +1199,8 @@ function sendFbData(objid) {
       //action.focus();
       return;
     }
+    
     //moderator name
-
     var moderator = document.getElementById(mId);
     if (moderator.value == 0)
     {
@@ -1184,14 +1210,24 @@ function sendFbData(objid) {
       //moderator.focus();
       return;
     }
+    
     //offence type
-
     var offence = document.getElementById(oId);
     if (action.value > 3 && offence.value == 1)
     {
       window.alert('please select offence');
       //offence.focus();
       return;
+    }
+    
+    var textInput = document.getElementById(txtId)
+    var textInputVal = textInput.value.toString().trim();
+    if(textInputVal != '') {      
+      var category =  document.getElementById(catgId)
+      if(category.value == 0) {
+        window.alert('Please Select input Text Category');
+        return;
+      }
     }
     
     // viewType Information
@@ -1247,7 +1283,7 @@ function sendFbData(objid) {
       return;
     }
     
-    var moderationMessage = '{ "CommentId":"' + commentID + '","IsReset":false,"CommentMessage":"' + comment + '","CommentedUserID":"' + from + '","CommentedUserName":"' + userName + '","CommentDateTime":"' + datev + '","ModeratorGUID":"' + moderator.value + '","ModeratorAction":' + actionValue + ',"OffenceType":' + offenceValue + ',"ViewType":' + viewType + ',"LikesCount":' + likes + ',"ArticleTopic":"' + artiTopic + '","ArticleUrl":"' + articleUrl + '"}';
+    var moderationMessage = '{ "CommentId":"' + commentID + '","IsReset":false,"CommentMessage":"' + comment + '","CommentedUserID":"' + from + '","InputText":"' + textInputVal + '","TextCategory":"' + category.value +'","CommentedUserName":"' + userName + '","CommentDateTime":"' + datev + '","ModeratorGUID":"' + moderator.value + '","ModeratorAction":' + actionValue + ',"OffenceType":' + offenceValue + ',"ViewType":' + viewType + ',"LikesCount":' + likes + ',"ArticleTopic":"' + artiTopic + '","ArticleUrl":"' + articleUrl + '"}';
     // section to let comment check box selected
     if(objid.substring(0,7) ==='btnSum_'){
     var element = mDiv;       
