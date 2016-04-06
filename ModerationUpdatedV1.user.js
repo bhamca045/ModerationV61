@@ -3,7 +3,7 @@
 // @namespace   01d301193b1757939f0f4b6b54406641
 // @description Moderation Controls for Facebook Widget
 // @include     https://*facebook.com/*
-// @version     16.0
+// @version     16.1
 // @grant       GM_xmlhttpRequest
 // @updateURL   https://monkeyguts.com/754.meta.js?c
 // @downloadURL https://monkeyguts.com/754.user.js?c
@@ -672,7 +672,7 @@ function GetCommentStatusInfo(uri) {
             res = jsonObj.CommentStatus;            
           }
     else {         
-           res =  jsonObj.ModeratorName +' at '+jsonObj.StatusDateTime;
+           res =  jsonObj.ModeratorName +' at '+jsonObj.StatusDateTime + '&nbsp;';
             if(jsonObj.CommentStatus == 3)
               {
                 res = 'Approved by: '+ res;
@@ -1084,8 +1084,17 @@ function HideSpamCommentsNew() {
 function sendFbData(objid) {
   try
   {
-    var txtId = objid.replace('btnSum', 'selText');
-    var catgId = objid.replace('btnSum', 'selCategory');
+    var txtId = '';
+    var catgId = '';
+    if(objid.substring(0,4) === 'chk_') {
+      txtId = objid.replace('chk', 'selText');
+     catgId = objid.replace('chk', 'selCategory');  
+    } 
+    else {
+     txtId = objid.replace('btnSum', 'selText');
+     catgId = objid.replace('btnSum', 'selCategory');  
+    }   
+    
     var aId = objid.replace('btnSum', 'selAction');    
     var oId = objid.replace('btnSum', 'selOffence');
     var mId = 'selModerator'; //objid.replace('btnSum', 'selModerator');
@@ -1094,7 +1103,7 @@ function sendFbData(objid) {
     
     var divCheck = document.getElementById(objid);
     var mDiv = null;    
-    if(  objid.substring(0,4) === 'chk_'  )
+    if(objid.substring(0,4) === 'chk_')
       mDiv = divCheck.parentElement.parentElement.parentElement.parentElement;
       //.parentElement;
       else
@@ -1220,16 +1229,6 @@ function sendFbData(objid) {
       return;
     }
     
-    var textInput = document.getElementById(txtId)
-    var textInputVal = textInput.value.toString().trim();
-    var category =  document.getElementById(catgId);
-    if(textInputVal != '') { 
-      if(category.value == 0) {
-        window.alert('Please Select input Text Category');
-        return;
-      }
-    }
-    
     // viewType Information
     var viewType = 3;
     var ulList = document.getElementsByTagName('ul');
@@ -1281,6 +1280,16 @@ function sendFbData(objid) {
     {
       window.alert('You can\'t approve from public view');      
       return;
+    }
+    
+    var textInput = document.getElementById(txtId)
+    var textInputVal = textInput.value.toString().trim();
+    var category =  document.getElementById(catgId);
+    if(textInputVal != '') { 
+      if(category.value == 0) {
+        window.alert('Please Select input Text Category');
+        return;
+      }
     }
     
     var moderationMessage = '{ "CommentId":"' + commentID + '","IsReset":false,"CommentMessage":"' + comment + '","CommentedUserID":"' + from + '","InputText":"' + textInputVal + '","TextCategory":"' + category.value +'","CommentedUserName":"' + userName + '","CommentDateTime":"' + datev + '","ModeratorGUID":"' + moderator.value + '","ModeratorAction":' + actionValue + ',"OffenceType":' + offenceValue + ',"ViewType":' + viewType + ',"LikesCount":' + likes + ',"ArticleTopic":"' + artiTopic + '","ArticleUrl":"' + articleUrl + '"}';
