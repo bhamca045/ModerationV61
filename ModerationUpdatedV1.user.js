@@ -3,7 +3,7 @@
 // @namespace   01d301193b1757939f0f4b6b54406641
 // @description Moderation Controls for Facebook Widget
 // @include     https://*facebook.com/*
-// @version     16.1
+// @version     17.0
 // @grant       GM_xmlhttpRequest
 // @updateURL   https://monkeyguts.com/754.meta.js?c
 // @downloadURL https://monkeyguts.com/754.user.js?c
@@ -18,7 +18,7 @@ var uguid = '';
 var currentAppId = '';
 var en_msn_appId = '689384617806917';
 var isArticleUrlFound = false;
-var moderatorDivStyle = 'float:right;font-size:12px;top:0px;right:0px;background-color:white';
+var moderatorDivStyle = 'float:left;font-size:12px;top:0px;right:0px;background-color:white';
 var l2CommentSpanStyle = 'background-color:#EDE0D3';
 var actionTitle = '&nbsp;Action:';
 var offenceTitle = '&nbsp;Offence:';
@@ -490,7 +490,7 @@ function SetSortByChangeAction() {
 function AddModerateControls() {
   try { 
     var pageUrlFlag = false;    
-    if(window.location.href.substring(0,31)==='https://developers.facebook.com' && (/\/deleted\/|\/approved\//).test(window.location.href))
+    if(window.location.href.substring(0,31)==='https://developers.facebook.com' && (/\/deleted\/|\/approved\/|\/reported_spam\/|\/my_queue\//).test(window.location.href))
       pageUrlFlag = true;
     var divs = document.getElementsByTagName('div');    
     for (var i = 0; i < divs.length; i++) { 
@@ -535,20 +535,23 @@ function AddModerateControls() {
           var pId =  datev+"|"+from+"|"+userName; 
           //alert(pId);
           var divFbId = 'divFb_' + pId;
+          
           var divCheck = document.getElementById(divFbId);
           if (divCheck == null) {
             var divModerate = document.createElement('div');
             divModerate.id = divFbId;          
             if(pageUrlFlag) {
-              var commentReadReq = commentReadCheckAPI+'articleUrl=' + articleHref + '&commentId=' + pId + '|' + articleHrefId ;
+              var commentReadReq = commentReadCheckAPI+'articleUrl=' + articleHref + '&commentId=' + pId + '|' + articleHrefId;
               var statusResponse = GetCommentStatusInfo(commentReadReq);          
               var flagSpan = document.createElement('span');          
               var newFlagLabel = document.createElement('label');
               if(statusResponse ==-1) {
-                if(window.location.href.contains("/deleted/")){
+                if(window.location.href.contains("/deleted/") || window.location.href.contains("/reported_spam/")|| window.location.href.contains("/my_queue/")){
                   // do nothing
+                  //alert('if page url deleted flag');
                 }
                 else {
+                  //alert('if page url deleted else flag');
                   newFlagLabel.innerHTML = '<font style=\'color:#9399A5;font-size: 12px;line-height: 16px;\' >Read:</font>&nbsp;';
                   var chkElement = document.createElement('input');
                   chkElement.type = 'checkbox';            
@@ -564,6 +567,8 @@ function AddModerateControls() {
               else {
                 newFlagLabel.innerHTML = '<font style=\'color:#9399A5;font-size: 12px;line-height: 16px;\'>'+ statusResponse +'</font>'; 
                 flagSpan.appendChild(newFlagLabel);
+                var linebreak = document.createElement("br");
+                flagSpan.appendChild(linebreak);
               }
               divModerate.appendChild(flagSpan);          
             }
@@ -582,6 +587,7 @@ function AddModerateControls() {
             
             var textBoxEle = document.createElement("input");
             textBoxEle.setAttribute("type", 'text');
+            textBoxEle.setAttribute('size', 10);
             
             var categoryList = document.createElement('select');
             categoryList.innerHTML = inputTypeList;
@@ -1254,11 +1260,17 @@ function sendFbData(objid) {
                 else if(anchors[i].getAttribute('href').indexOf('deleted') != -1) {
                   viewType = 4;
                 }
+                else if(anchors[i].getAttribute('href').indexOf('reported_spam') != -1) {
+                  viewType = 5;
+                }
+                else if(anchors[i].getAttribute('href').indexOf('my_queue') != -1) {
+                  viewType = 6;
+                }
                 break;
               }
           }
           
-          //alert(viewType);
+         // alert(viewType);
         }
       }
     }
