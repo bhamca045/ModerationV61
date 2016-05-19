@@ -3,7 +3,7 @@
 // @namespace   01d301193b1757939f0f4b6b54406641
 // @description Moderation Controls for Facebook Widget
 // @include     https://*facebook.com/*
-// @version     17.1
+// @version     17.2
 // @grant       GM_xmlhttpRequest
 // @updateURL   https://monkeyguts.com/754.meta.js?c
 // @downloadURL https://monkeyguts.com/754.user.js?c
@@ -193,7 +193,7 @@ function LoadApplicationRegExs() {
     enL2RegPatts.push(regEx);
   }
     
-    var addRegEx = new RegExp('(?!\>)([@]|[*]|[_]|bitch|assh|azz|nigg|shit|a[$][$]|bastar|negr|moron|douch|fuc|dumba|freak|pedophile|frick)(?!\<)','i');
+    var addRegEx = new RegExp('(?!\>)([@]|[*]|[_]|nigg|douch|freak|frick)(?!\<)','i');
     enL2RegPatts.push(addRegEx);
     
 //    enL2RegPatts = new Array(new RegExp('(?!\>)\\b[^\\w>]*(adultsex|amaTeur|asexualox|badass|balls|bigoted|bitching|bitchy|boned|butt|buttocks|clitoritis|clitorus|cybersex|dick|erotic|escort|fagging|'+
