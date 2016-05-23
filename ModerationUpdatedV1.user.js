@@ -3,7 +3,7 @@
 // @namespace   01d301193b1757939f0f4b6b54406641
 // @description Moderation Controls for Facebook Widget
 // @include     https://*facebook.com/*
-// @version     17.3
+// @version     17.4
 // @grant       GM_xmlhttpRequest
 // @updateURL   https://monkeyguts.com/754.meta.js?c
 // @downloadURL https://monkeyguts.com/754.user.js?c
@@ -186,7 +186,7 @@ function LoadApplicationRegExs() {
       
   var regPattArr = regPatts.split('$');
     
-  for(var k=0; k< regPattArr.length; k++) {
+  for(var k=0; k< regPattArr.length -1; k++) {
     var regEx = new RegExp('(?!\>)\\b[^\\w>]*(' + regPattArr[k] + ')[^\\w<]*\\b(?!\<)', 'i');
     enL2RegPatts.push(regEx);
   }
@@ -208,10 +208,11 @@ function LoadApplicationRegExs() {
 //'gay lord|gay second base|heifer|hooters|hotchat|humpers|hymies|ifintermyself|kanibis|kannabis|kannibis|muff|nymphet|nympho|pikeys|reefers|spaffs|topless|wad|wazzak|wazzaks|wencher|wenchers|woofter|woolly-woofters|gay)[^\\w<]*\\b(?!\<)','i'),
 //                           new RegExp('(?!\>)([@]|[*]|[$])(?!\<)','i'));
     
-    
+  
   regExDict['public'] = enL3RegPatts;
   
-  if(currentAppId != en_msn_appId) {
+  if(currentAppId != en_msn_appId && currentAppId != "829406873836572" && currentAppId != "1966743960216840" && currentAppId != "1056389514424151" && currentAppId != "125117174535490" ) {
+    
     var localRegExpReq = profanityRegExp+'appId=' + currentAppId;
     var localRegPatts = GetProfanityInfo(localRegExpReq);
     
