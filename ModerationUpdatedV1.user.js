@@ -3,7 +3,7 @@
 // @namespace   01d301193b1757939f0f4b6b54406641
 // @description Moderation Controls for Facebook Widget
 // @include     https://*facebook.com/*
-// @version     17.4
+// @version     18.0
 // @grant       GM_xmlhttpRequest
 // @updateURL   https://monkeyguts.com/754.meta.js?c
 // @downloadURL https://monkeyguts.com/754.user.js?c
@@ -212,7 +212,6 @@ function LoadApplicationRegExs() {
   regExDict['public'] = enL3RegPatts;
   
   if(currentAppId != en_msn_appId && currentAppId != "829406873836572" && currentAppId != "1966743960216840" && currentAppId != "1056389514424151" && currentAppId != "125117174535490" ) {
-    
     var localRegExpReq = profanityRegExp+'appId=' + currentAppId;
     var localRegPatts = GetProfanityInfo(localRegExpReq);
     
@@ -288,15 +287,21 @@ function HighLightBlackListedWords() {
     var highlightEndTag = "</font>";  
     var l1CountArray = new Array();
     var l2CountArray = new Array();
-    var l1l2CountArray = new Array();      
+    var l1l2CountArray = new Array();     
+    
     for(var i=0; i<textContainers.length;i++) {   
       totalComentCount = totalComentCount + 1;
       var spans = textContainers[i].getElementsByTagName('span'); 
       
       for(var j=0;j<spans.length;j++) { 
         var content = spans[j].innerHTML; 
+        var contSpanCheck = content.slice(0, 16, content.length);
+        if(contSpanCheck == '<span is="null">') { 
+          continue;
+        }
+        
         //alert(j + ': '+content);
-        if(currentAppId != '' && currentAppId != en_msn_appId) {
+        if(currentAppId != en_msn_appId) {
           for each(var regPatt in regPatterns ) {    
             //alert(regPatt);
             while(match=regPatt.exec(content)) {    
@@ -308,19 +313,19 @@ function HighLightBlackListedWords() {
             }
           }
          }
-         
-         for each(var regPatt in enL2RegPatts) {                         
-            while(match=regPatt.exec(content)) {              
+        
+         for each(var regPatt in enL2RegPatts) {
+            while(match=regPatt.exec(content)) {               
               var before = content.slice(0,match.index);
-              var after = content.slice(match.index + match[0].length,content.length);
-              content = before + hilightTag + match[0] + highlightEndTag + after;
+              var after = content.slice(match.index + match[0].length,content.length); 
+              content = before + hilightTag + match[0] + highlightEndTag + after;              
             }
           }
          
           spans[j].innerHTML = ''; 
           spans[j].innerHTML = content;  
        // }
-      }      
+      }
       
       // All Words highlighted by Facebook
       var l1wordhligts = textContainers[i].getElementsByClassName('_3wbz');
@@ -337,6 +342,7 @@ function HighLightBlackListedWords() {
         }
         // If Overrides are there
         else {
+          //alert(l1checkText);
           // check for whether full word overridden or partially, if partially overrides count for both L1 and L2 counts
           var l1highltTextLen = l1checkText.replace(/<[^>]*>/g, "").length;
           var l2highltTextLen = (l1checkText.match(/<font style=('|")background-color:red;color:white('|")>(.*?)<\/font>/g)||[])[0].replace(/<[^>]*>/g, "").length;
@@ -366,7 +372,8 @@ function HighLightBlackListedWords() {
         l1CountArray.push(i);      
       else if(l1matches>0 && l2matches>0)
         l1l2CountArray.push(i);      
-    } 
+    }
+    
     var lblText = '<br><font style=\'color:#9399A5;font-size: 12px;line-height: 16px;\'>Total comments: '+ totalComentCount + '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;L1 Words: '+L1Words+ '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;L2 Words: '+L2Words+'<br>L1 Comments: '+ l1CountArray.length +'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;L2 Comments: '+ l2CountArray.length +'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;L1&L2 Comments: '+ l1l2CountArray.length +'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Other Comments: '+ (totalComentCount-(l1CountArray.length+l2CountArray.length+l1l2CountArray.length)) +'</font>';
     var lblcheck = document.getElementById('lblCounts');  
     if(pageUrl.contains('/tools/comments/url/')){
@@ -667,11 +674,11 @@ function AddModerateControls() {
     }
     
     SetPagerDivClickAction();    
-    SetViewChangeAction();    
+    SetViewChangeAction();
     SetMoreCommentClickAction();
     SetSortByChangeAction();
     HighlightSpamCommentsNew();
-    HighLightBlackListedWords();    
+    HighLightBlackListedWords();
     
     var divCheck = document.getElementById('divFb_UNDEFINE||');
     if(divCheck != null) {
