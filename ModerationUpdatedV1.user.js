@@ -3,7 +3,7 @@
 // @namespace   01d301193b1757939f0f4b6b54406641
 // @description Moderation Controls for Facebook Widget
 // @include     https://*facebook.com/*
-// @version     18.1
+// @version     18.2
 // @grant       GM_xmlhttpRequest
 // @updateURL   https://monkeyguts.com/754.meta.js?c
 // @downloadURL https://monkeyguts.com/754.user.js?c
@@ -194,6 +194,7 @@ function LoadApplicationRegExs() {
     var addRegEx = new RegExp('(?!\>)(wiki|[*]|[@]|[_]|[%]|[$]|nigg|douch|freak|frick|.info|[#]|/=|\^|\--)(?!\<)','i');
     enL2RegPatts.push(addRegEx);
     
+    
 //    enL2RegPatts = new Array(new RegExp('(?!\>)\\b[^\\w>]*(adultsex|amaTeur|asexualox|badass|balls|bigoted|bitching|bitchy|boned|butt|buttocks|clitoritis|clitorus|cybersex|dick|erotic|escort|fagging|'+
 //'faggot|faggotry|faggots|faggott|fagot|fagots|freesex|freex|Gay Bow|gay bOy|gay dog|gay man|gay men|gay sEx|gaybert|gaybob|gaybor|gayboy|gaydo|gaygirl|dumb|dumbs|dumbest|gaylord|gays|gaysex|gaysian|'+
 //'gaytard|gayteens|gayteenz|gaywad|suck|sucking|god damn|god-dam|redneck|slope|horny|hot chiCk|hotsex|idiot|jerk|lesbain|lesbayn|lusting|masturbat|mormon|pervert|pissant|pissed off|pisspIg|porn|prick|rapist|'+
@@ -304,21 +305,24 @@ function HighLightBlackListedWords() {
         if(currentAppId != en_msn_appId) {
           for each(var regPatt in regPatterns ) {    
             //alert(regPatt);
-            while(match=regPatt.exec(content)) {    
-              //alert(match[0]);
+            while(match=regPatt.exec(content)) {
+              
+                  //var fnd = match[0].length;
+                  //alert(fnd);
+                  
               var before = content.slice(0,match.index);
               var after = content.slice(match.index + match[0].length,content.length);
-              content = before + hilightTag + match[0] + highlightEndTag + after;                               
-              //alert(content);
+              content = before + hilightTag + match[0] + highlightEndTag + after;
+            //}
             }
-          }
          }
+    }
         
          for each(var regPatt in enL2RegPatts) {
-            while(match=regPatt.exec(content)) {               
+            while(match=regPatt.exec(content)) {
               var before = content.slice(0,match.index);
               var after = content.slice(match.index + match[0].length,content.length); 
-              content = before + hilightTag + match[0] + highlightEndTag + after;              
+              content = before + hilightTag + match[0] + highlightEndTag + after;
             }
           }
          
@@ -355,7 +359,9 @@ function HighLightBlackListedWords() {
       
       if(l1wordhligts.length == 0) {
         var checkText = textContainers[i].innerHTML;
+        //alert(checkText);
         var nonL1Andl2matches = (checkText.match(/<font style=('|")background-color:red;color:white('|")>/g)||[]).length; 
+        //alert(nonL1Andl2matches);
         l2matches = l2matches + nonL1Andl2matches;
       }
       
@@ -677,8 +683,8 @@ function AddModerateControls() {
     SetViewChangeAction();
     SetMoreCommentClickAction();
     SetSortByChangeAction();
-    HighlightSpamCommentsNew();
     HighLightBlackListedWords();
+    HighlightSpamCommentsNew();
     
     var divCheck = document.getElementById('divFb_UNDEFINE||');
     if(divCheck != null) {
@@ -1162,7 +1168,14 @@ function sendFbData(objid) {
     //alert(articleID);    
     //alert(tmpArtUrl);
     
+    var market = res[3];
     var commentID = cId + "|"+  articleID;
+    
+    var comentLength = 2000;
+    
+    if(market === "ja-jp" || market === "ru-ru") {
+      comentLength = 300;
+    }
     
     var comment = '';
     var likes = 0;
@@ -1180,8 +1193,8 @@ function sendFbData(objid) {
           comment = encodeURIComponent(comment);
           comment = comment.replace(/%0A/g, ' ');
           comment = comment.replace(/%20/g, ' ');
-          if (comment.length > 2000) {
-            comment = comment.substr(0, 2000) + '...';
+          if (comment.length > comentLength) {
+            comment = comment.substr(0, comentLength) + '...';
           }
           break;
         }
