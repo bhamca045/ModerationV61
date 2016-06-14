@@ -191,7 +191,7 @@ function LoadApplicationRegExs() {
     enL2RegPatts.push(regEx);
   }
     
-    var addRegEx = new RegExp('(?!\>)(wiki|[*]|[@]|[_]|[%]|[$]|nigg|douch|freak|frick|.info|[#]|/=|\^|\--)(?!\<)','i');
+    var addRegEx = new RegExp('(?!\>)(wiki|[*]|[@]|[_]|nigg|douch|freak|frick|.info|\^)(?!\<)','i');
     enL2RegPatts.push(addRegEx);
     
     
@@ -1168,12 +1168,12 @@ function sendFbData(objid) {
     //alert(articleID);    
     //alert(tmpArtUrl);
     
-    var market = res[3];
+    var market = res[3].split("-")[0];
     var commentID = cId + "|"+  articleID;
     
     var comentLength = 2000;
     
-    if(market === "ja-jp" || market === "ru-ru") {
+    if(market === "ja" || market === "ru" || market === "ar" || market === "ko" || market === "vi" || market === "zh") {
       comentLength = 300;
     }
     
