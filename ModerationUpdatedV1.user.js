@@ -3,7 +3,7 @@
 // @namespace   01d301193b1757939f0f4b6b54406641
 // @description Moderation Controls for Facebook Widget
 // @include     https://*facebook.com/*
-// @version     18.2
+// @version     18.3
 // @grant       GM_xmlhttpRequest
 // @updateURL   https://monkeyguts.com/754.meta.js?c
 // @downloadURL https://monkeyguts.com/754.user.js?c
@@ -191,9 +191,14 @@ function LoadApplicationRegExs() {
     enL2RegPatts.push(regEx);
   }
     
-    var addRegEx = new RegExp('(?!\>)(wiki|[*]|[@]|[_]|nigg|douch|freak|frick|.info|\^)(?!\<)','i');
+    var temp = regPattArr[regPattArr.length -1];
+    var newStr = temp.replace('^','\\^');
+    newStr = newStr.replace('*','[*]');
+    newStr = newStr.replace('@','[@]');
+    newStr = newStr.replace('_','[_]');
+   
+    var addRegEx = new RegExp('(?!\>)(' + newStr + ')(?!\<)','i');
     enL2RegPatts.push(addRegEx);
-    
     
 //    enL2RegPatts = new Array(new RegExp('(?!\>)\\b[^\\w>]*(adultsex|amaTeur|asexualox|badass|balls|bigoted|bitching|bitchy|boned|butt|buttocks|clitoritis|clitorus|cybersex|dick|erotic|escort|fagging|'+
 //'faggot|faggotry|faggots|faggott|fagot|fagots|freesex|freex|Gay Bow|gay bOy|gay dog|gay man|gay men|gay sEx|gaybert|gaybob|gaybor|gayboy|gaydo|gaygirl|dumb|dumbs|dumbest|gaylord|gays|gaysex|gaysian|'+
@@ -296,8 +301,8 @@ function HighLightBlackListedWords() {
       
       for(var j=0;j<spans.length;j++) { 
         var content = spans[j].innerHTML; 
-        var contSpanCheck = content.slice(0, 16, content.length);
-        if(contSpanCheck == '<span is="null">') { 
+        var contSpanCheck = content.slice(0, 6, content.length);
+        if(contSpanCheck == '<span>') { 
           continue;
         }
         
