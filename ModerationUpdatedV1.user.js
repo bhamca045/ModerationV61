@@ -3,7 +3,7 @@
 // @namespace   01d301193b1757939f0f4b6b54406641
 // @description Moderation Controls for Facebook Widget
 // @include     https://*facebook.com/*
-// @version     18.3
+// @version     18.4
 // @grant       GM_xmlhttpRequest
 // @updateURL   https://monkeyguts.com/754.meta.js?c
 // @downloadURL https://monkeyguts.com/754.user.js?c
@@ -240,6 +240,7 @@ function LoadApplicationRegExs() {
   }
 }
 
+// Gets the Profanity Words Info
 function GetProfanityInfo(uri) {
  try
   { 
@@ -343,7 +344,7 @@ function HighLightBlackListedWords() {
       var l2matches = 0;
       for(var w=0; w< l1wordhligts.length; w++) {        
         var l1checkText = l1wordhligts[w].innerHTML;
-        
+        //alert(l1checkText);
         // Finding L1 overrides by red color (L2)
         var l1Overridematches = (l1checkText.match(/<font style=('|")background-color:red;color:white('|")>/g)||[]).length;         
         if(l1Overridematches ==0) {   // if No overrides
@@ -572,6 +573,7 @@ function AddModerateControls() {
           }
         
           var pId =  datev+"|"+from+"|"+userName; 
+          //pId = pId.replace(' ', '');
           //alert(pId);
           var divFbId = 'divFb_' + pId;
           
@@ -581,7 +583,9 @@ function AddModerateControls() {
             divModerate.id = divFbId;          
             if(pageUrlFlag) {
               var commentReadReq = commentReadCheckAPI+'articleUrl=' + articleHref + '&commentId=' + pId + '|' + articleHrefId;
-              var statusResponse = GetCommentStatusInfo(commentReadReq);          
+              //alert(commentReadReq);
+              var statusResponse = GetCommentStatusInfo(commentReadReq);   
+              //alert(statusResponse);
               var flagSpan = document.createElement('span');          
               var newFlagLabel = document.createElement('label');
               if(statusResponse ==-1) {
@@ -704,9 +708,10 @@ function AddModerateControls() {
 
 // Read comment status from API
 function GetCommentStatusInfo(uri) {
+  var res = '-1';  
   try
   {    
-    var res = null;    
+      
     var details =  GM_xmlhttpRequest({method: "GET",url: uri,synchronous: true});    
     var json = details.responseText.replace('[', '');
     json = json.replace(']', '');
@@ -735,12 +740,12 @@ function GetCommentStatusInfo(uri) {
                 res = 'Read by: '+ res;
               }
     }
-    return res;
   }
   catch(ex)
   {
-    alert(ex);
+    //alert(ex);
   }
+  return res;
 }
 
 
