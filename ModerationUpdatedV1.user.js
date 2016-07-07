@@ -3,7 +3,7 @@
 // @namespace   01d301193b1757939f0f4b6b54406641
 // @description Moderation Controls for Facebook Widget
 // @include     https://*facebook.com/*
-// @version     18.4
+// @version     18.5
 // @grant       GM_xmlhttpRequest
 // @updateURL   https://monkeyguts.com/754.meta.js?c
 // @downloadURL https://monkeyguts.com/754.user.js?c
@@ -47,7 +47,7 @@ var moderatorsList = '<option value="0"></option>'
 + '<option value="007980b8-c5cd-4c09-81f2-0a645164254e">Manohar</option>'
 + '<option value="0748C6B6-CE10-4A0C-AD99-DCFFC7AD597D">Amar</option>'
 + '<option value="B3F365E5-D937-48C6-9B1B-13ED280BB550">Bangarraju</option>'
-+ '<option value="55AD57C2-7589-4997-B707-65D9AA87131F">Revanth</option>'
++ '<option value="55AD57C2-7589-4997-B707-65D9AA87131F">Akhilesh</option>'
 + '<option value="7718f94d-b57a-4902-8d3e-bc42e2c76b75">Sangamesh</option>'
 + '<option value="430CB796-59E1-491A-B727-8B516BFB1245">Qutubuddin</option>'; 
 var regex = /(<([^>]+)>)/gi;
