@@ -3,7 +3,7 @@
 // @namespace   01d301193b1757939f0f4b6b54406641
 // @description Moderation Controls for Facebook Widget
 // @include     https://*facebook.com/*
-// @version     18.5
+// @version     18.6
 // @grant       GM_xmlhttpRequest
 // @updateURL   https://monkeyguts.com/754.meta.js?c
 // @downloadURL https://monkeyguts.com/754.user.js?c
@@ -149,12 +149,12 @@ function GetApplicationID() {
   try
   { 
     var pageUrl = window.location.href;
-    if(!pageUrl.contains('tools/comments/url')) {
+    if(!pageUrl.indexOf('tools/comments/url')) {
       var textContainers = document.getElementsByClassName('_50f8 _50f3'); 
       if(textContainers.length>0) {
         for(var i=0; i<textContainers.length;i++) {
           var spanText = textContainers[i].innerHTML;
-          if(spanText.contains('App ID')) {
+          if(spanText.indexOf('App ID') > -1) {
             spanText = spanText.replace(new RegExp('<!--.*?-->', 'g'), '');
             currentAppId = spanText.match(/\d+/)[0];
             break;
@@ -283,7 +283,7 @@ function HighLightBlackListedWords() {
     var hilightTag = '';
     var regPatterns;
     var pageUrl = window.location.href;
-    if(pageUrl.contains('/approved/')) {
+    if(pageUrl.indexOf('/approved/') > -1) {
       hilightTag = "<font style='background-color:cyan'>";
       regPatterns = regExDict['public'];
     }
@@ -357,6 +357,7 @@ function HighLightBlackListedWords() {
           var l1highltTextLen = l1checkText.replace(/<[^>]*>/g, "").length;
           var l2highltTextLen = (l1checkText.match(/<font style=('|")background-color:red;color:white('|")>(.*?)<\/font>/g)||[])[0].replace(/<[^>]*>/g, "").length;
           if(l1highltTextLen != l2highltTextLen) {
+           // alert(l1checkText);
             l1matches = l1matches +1;
           }
           l2matches = l2matches +1;
@@ -388,7 +389,7 @@ function HighLightBlackListedWords() {
     
     var lblText = '<br><font style=\'color:#9399A5;font-size: 12px;line-height: 16px;\'>Total comments: '+ totalComentCount + '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;L1 Words: '+L1Words+ '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;L2 Words: '+L2Words+'<br>L1 Comments: '+ l1CountArray.length +'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;L2 Comments: '+ l2CountArray.length +'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;L1&L2 Comments: '+ l1l2CountArray.length +'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Other Comments: '+ (totalComentCount-(l1CountArray.length+l2CountArray.length+l1l2CountArray.length)) +'</font>';
     var lblcheck = document.getElementById('lblCounts');  
-    if(pageUrl.contains('/tools/comments/url/')){
+    if(pageUrl.indexOf('/tools/comments/url/') > -1){
      var countContainers =  document.getElementsByClassName('_2pic _5c0o  _50f4');
       if(countContainers.length>0) {
         for(var i=0; i<countContainers.length;i++) {
@@ -589,7 +590,7 @@ function AddModerateControls() {
               var flagSpan = document.createElement('span');          
               var newFlagLabel = document.createElement('label');
               if(statusResponse ==-1) {
-                if(window.location.href.contains("/deleted/") || window.location.href.contains("/reported_spam/")|| window.location.href.contains("/my_queue/")){
+                if(window.location.href.indexOf("/deleted/") > -1 || window.location.href.indexOf("/reported_spam/") > -1 || window.location.href.indexOf("/my_queue/") > -1){
                   // do nothing
                   //alert('if page url deleted flag');
                 }
