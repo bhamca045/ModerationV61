@@ -3,7 +3,7 @@
 // @namespace   01d301193b1757939f0f4b6b54406641
 // @description Moderation Controls for Facebook Widget
 // @include     https://*facebook.com/*
-// @version     18.6
+// @version     18.7
 // @grant       GM_xmlhttpRequest
 // @updateURL   https://monkeyguts.com/754.meta.js?c
 // @downloadURL https://monkeyguts.com/754.user.js?c
@@ -42,11 +42,11 @@ var moderatorsList = '<option value="0"></option>'
 + '<option value="12078948-E03C-46BA-8376-5E2E7C334DFD">Chaitanya</option>'
 + '<option value="D407A11C-D5CC-4B1B-9000-720BA9E54882">Raghavendra</option>'
 + '<option value="98C2E864-18AD-444F-89E5-4F8F583D58E7">Akhileshwar</option>'
-+ '<option value="A1B9E09D-BD8C-47E4-A143-F7D47BDB1128">Srinivas.Ch</option>'
++ '<option value="A1B9E09D-BD8C-47E4-A143-F7D47BDB1128">Vijay</option>'
 + '<option value="10a85dd9-0dfb-49ad-84fc-25c71131c16f">Satish</option>'
 + '<option value="007980b8-c5cd-4c09-81f2-0a645164254e">Manohar</option>'
 + '<option value="0748C6B6-CE10-4A0C-AD99-DCFFC7AD597D">Amar</option>'
-+ '<option value="B3F365E5-D937-48C6-9B1B-13ED280BB550">Bangarraju</option>'
++ '<option value="B3F365E5-D937-48C6-9B1B-13ED280BB550">Lakshman</option>'
 + '<option value="55AD57C2-7589-4997-B707-65D9AA87131F">Akhilesh</option>'
 + '<option value="7718f94d-b57a-4902-8d3e-bc42e2c76b75">Sangamesh</option>'
 + '<option value="430CB796-59E1-491A-B727-8B516BFB1245">Qutubuddin</option>'; 
@@ -63,9 +63,6 @@ var regexSpam6 = /^(?=.*\$[0-9]+)(?=.*(per hour))/g;
 var regExDict = {};
 
 var enL2RegPatts = new Array();
-
-
-
 var localL2RegPatts = new Array();
 
 var enL3RegPatts = new Array(new RegExp('(?!\>)(pussy|msn|fuc(k|ed|ers?|ing|s)?|(f|F)(~|_|!|@|#|$|%|^|&|[*](k))|fckn|Rats|motherfu?|fuk|cunt|d(i|!|[*])ck|asshole|a s s h o l e |assh|a[$]|f\'cking|F-ing|azz|bitch|'+
@@ -95,8 +92,8 @@ setTimeout(function () {
   var divFb = document.getElementById('facebook');
   if (divFb != null)
   {
-    GetApplicationID();
-    LoadApplicationRegExs();
+    GetApplicationID();                // Loads the Application ID
+    LoadApplicationRegExs();           // Loads the RegExs respective to Language/App ID
     
     divFb.setAttribute('style', 'overflow:scroll;width:95%; margin:0px auto;');
     var newFirstElement = document.createElement('label');
@@ -138,18 +135,18 @@ setTimeout(function () {
     }
   }
   AddModerateControls();   
-  if (uguid != '') {
+  if (uguid != '') {                                                               // If the Call from the Dashboard, hides the Spam Comments
     HideSpamCommentsNew();
     window.close();
   }
 }, 2000);
 
-// Gets the Current Application ID
+// Gets the Current Application's ID
 function GetApplicationID() {  
   try
   { 
     var pageUrl = window.location.href;
-    if(!pageUrl.indexOf('tools/comments/url')) {
+    if(!pageUrl.indexOf('tools/comments/url')) {                                 // If Cluster wise Loading
       var textContainers = document.getElementsByClassName('_50f8 _50f3'); 
       if(textContainers.length>0) {
         for(var i=0; i<textContainers.length;i++) {
@@ -162,12 +159,12 @@ function GetApplicationID() {
         }
       }
     }
-    else {      
+    else {                                                                     // If page wise Loading
       textContainers = document.getElementsByClassName('_5c0n'); 
       if(textContainers.length>0)
       currentAppId = textContainers[0].href.match(/\d+/)[0]; 
     }  
-    //alert(currentAppId);
+    //alert(currentAppId);                                                    // For Debug
   }
   catch(ex) 
   {
@@ -175,21 +172,22 @@ function GetApplicationID() {
   }
 }  
 
-// Load Application's RegExPatterns
+// Load Application's RegEx Patterns
 function LoadApplicationRegExs() { 
-  try {
+  try 
+  {
     enL2RegPatts = new Array();
     localL2RegPatts = new Array();
-  // Gets EN L2 Profanity Words list
-  var regExpReq = profanityRegExp+'appId=' + en_msn_appId;
-  var regPatts = GetProfanityInfo(regExpReq);
-      
-  var regPattArr = regPatts.split('$');
     
-  for(var k=0; k< regPattArr.length -1; k++) {
-    var regEx = new RegExp('(?!\>)\\b[^\\w>]*(' + regPattArr[k] + ')[^\\w<]*\\b(?!\<)', 'i');
-    enL2RegPatts.push(regEx);
-  }
+    // Gets EN L2 Profanity Words list
+    var regExpReq = profanityRegExp+'appId=' + en_msn_appId;
+    var regPatts = GetProfanityInfo(regExpReq);
+    var regPattArr = regPatts.split('$');
+    
+    for(var k=0; k< regPattArr.length -1; k++) {
+      var regEx = new RegExp('(?!\>)\\b[^\\w>]*(' + regPattArr[k] + ')[^\\w<]*\\b(?!\<)', 'i');
+      enL2RegPatts.push(regEx);
+    }
     
     var temp = regPattArr[regPattArr.length -1];
     var newStr = temp.replace('^','\\^');
@@ -214,26 +212,23 @@ function LoadApplicationRegExs() {
 //'gay lord|gay second base|heifer|hooters|hotchat|humpers|hymies|ifintermyself|kanibis|kannabis|kannibis|muff|nymphet|nympho|pikeys|reefers|spaffs|topless|wad|wazzak|wazzaks|wencher|wenchers|woofter|woolly-woofters|gay)[^\\w<]*\\b(?!\<)','i'),
 //                           new RegExp('(?!\>)([@]|[*]|[$])(?!\<)','i'));
     
-  
-  regExDict['public'] = enL3RegPatts;
-  
-  if(currentAppId != en_msn_appId && currentAppId != "829406873836572" && currentAppId != "1966743960216840" && currentAppId != "1056389514424151" && currentAppId != "125117174535490" ) {
-    var localRegExpReq = profanityRegExp+'appId=' + currentAppId;
-    var localRegPatts = GetProfanityInfo(localRegExpReq);
-    
-    if(localRegPatts != null && localRegPatts != '') {
-      var localRegPattArr = localRegPatts.split('$');
-      for(var len =0; len < localRegPattArr.length; len++) {
-        var localRegEx = new RegExp('(?!\>)\\b[^\\w>]*(' + localRegPattArr[len] + ')[^\\w<]*\\b(?!\<)', 'i');
-        //alert(localRegEx);
-        localL2RegPatts.push(localRegEx);
+    regExDict['public'] = enL3RegPatts;
+    if(currentAppId != en_msn_appId && currentAppId != "829406873836572" && currentAppId != "844282955707707" && currentAppId != "1427951567220038" && currentAppId != "1966743960216840" && currentAppId != "1056389514424151" && currentAppId != "125117174535490" ) {
+      var localRegExpReq = profanityRegExp+'appId=' + currentAppId;
+      var localRegPatts = GetProfanityInfo(localRegExpReq);
+      if(localRegPatts != null && localRegPatts != '') {
+        var localRegPattArr = localRegPatts.split('$');
+        for(var len =0; len < localRegPattArr.length; len++) {
+          var localRegEx = new RegExp('(?!\>)\\b[^\\w>]*(' + localRegPattArr[len] + ')[^\\w<]*\\b(?!\<)', 'i');
+          //alert(localRegEx);
+          localL2RegPatts.push(localRegEx);
+        }
+        regExDict['review'] = localL2RegPatts;
       }
-      regExDict['review'] = localL2RegPatts;
     }
-  }
-  else {
-    regExDict['review'] = enL2RegPatts;
-  } 
+    else {
+      regExDict['review'] = enL2RegPatts;
+    }
   }
   catch(ex) {
     alert(ex);
@@ -242,8 +237,7 @@ function LoadApplicationRegExs() {
 
 // Gets the Profanity Words Info
 function GetProfanityInfo(uri) {
- try
-  { 
+  try { 
     var res;
     var details =  GM_xmlhttpRequest({method: "GET",url: uri,synchronous: true});    
     var json = details.responseText.replace('[', '');
@@ -254,12 +248,10 @@ function GetProfanityInfo(uri) {
     }
     return res;
   }
-  catch(ex)
-  {
+  catch(ex) {
     alert(ex);
   }
  }
-
 
 // HighLight Black Listed Words
 function HighLightBlackListedWords() {
@@ -272,14 +264,15 @@ function HighLightBlackListedWords() {
     if(tablerows.length>0)
     totalComentCount = 0;
     var blackLsistedCommentCount = 0;
+    
     // Gets the Current Application ID    
     if(currentAppId == '' ) {
       GetApplicationID();
       LoadApplicationRegExs();
-    }    
-    var textContainers = document.getElementsByClassName('_2uma');
+    }
     
-        //   tablerows[0].childNodes[0].childNodes; 
+    var textContainers = document.getElementsByClassName('_2uma');
+    //   tablerows[0].childNodes[0].childNodes; 
     var hilightTag = '';
     var regPatterns;
     var pageUrl = window.location.href;
@@ -296,9 +289,9 @@ function HighLightBlackListedWords() {
     var l2CountArray = new Array();
     var l1l2CountArray = new Array();     
     
-    for(var i=0; i<textContainers.length;i++) {   
+    for(var i=0; i<textContainers.length;i++) {
       totalComentCount = totalComentCount + 1;
-      var spans = textContainers[i].getElementsByTagName('span'); 
+      var spans = textContainers[i].getElementsByTagName('span');
       
       for(var j=0;j<spans.length;j++) { 
         var content = spans[j].innerHTML; 
@@ -308,33 +301,28 @@ function HighLightBlackListedWords() {
         }
         
         //alert(j + ': '+content);
+        
         if(currentAppId != en_msn_appId) {
           for each(var regPatt in regPatterns ) {    
             //alert(regPatt);
             while(match=regPatt.exec(content)) {
-              
-                  //var fnd = match[0].length;
-                  //alert(fnd);
-                  
+              //var fnd = match[0].length;
+              //alert(fnd);
               var before = content.slice(0,match.index);
               var after = content.slice(match.index + match[0].length,content.length);
               content = before + hilightTag + match[0] + highlightEndTag + after;
-            //}
-            }
-         }
-    }
-        
-         for each(var regPatt in enL2RegPatts) {
-            while(match=regPatt.exec(content)) {
-              var before = content.slice(0,match.index);
-              var after = content.slice(match.index + match[0].length,content.length); 
-              content = before + hilightTag + match[0] + highlightEndTag + after;
             }
           }
-         
-          spans[j].innerHTML = ''; 
-          spans[j].innerHTML = content;  
-       // }
+        }
+        for each(var regPatt in enL2RegPatts) {
+          while(match=regPatt.exec(content)) {
+            var before = content.slice(0,match.index);
+            var after = content.slice(match.index + match[0].length,content.length); 
+            content = before + hilightTag + match[0] + highlightEndTag + after;
+          }
+        }
+        spans[j].innerHTML = ''; 
+        spans[j].innerHTML = content;  
       }
       
       // All Words highlighted by Facebook
@@ -405,24 +393,25 @@ function HighLightBlackListedWords() {
         } 
       }
     }
-    else{
-    var countContainers = document.getElementsByClassName('_50f8 _50f3'); 
+    else {
+      var countContainers = document.getElementsByClassName('_50f8 _50f3'); 
       if(countContainers.length>0) {        
         for(var i=0; i<countContainers.length;i++) {
           var divparent = countContainers[0].parentNode;                    
-          if(lblcheck==null){
+          if(lblcheck==null) {
             var lblcounts = document.createElement('label');
             lblcounts.id = 'lblCounts';
-          lblcounts.innerHTML = lblText;
-            divparent.appendChild(lblcounts);}
+            lblcounts.innerHTML = lblText;
+            divparent.appendChild(lblcounts);
+          }
           else
             lblcheck.innerHTML =lblText;
           break;
         }
-      }}
+      }
+    }
   }
-  catch(ex)
-  {
+  catch(ex) {
     alert(ex);
   }
 }
@@ -446,8 +435,7 @@ function SetPagerDivClickAction() {
       }
     }
   } 
-  catch (ex)
-  {
+  catch (ex) {
     alert(ex);
   }
 }
@@ -535,158 +523,156 @@ function AddModerateControls() {
       pageUrlFlag = true;
     var divs = document.getElementsByTagName('div');    
     for (var i = 0; i < divs.length; i++) { 
-        var divClass = divs[i].getAttribute('class');
-        if (divClass != null && divClass.indexOf('UFIImageBlockContent') != - 1) {
-          var articleHref = null;
-          var articleHrefId = null;
-          if(pageUrlFlag) {
-            articleHref = divs[i].childNodes[0].childNodes[0].childNodes[2].getElementsByTagName('a')[0].getAttribute("href");        
-            articleHrefId =  articleHref.match(/[^/]+$/)[0];
-          }
-          var dateDiv = '';
-          dateDiv = divs[i].getElementsByTagName('abbr') [0];    
-          var datev = '';
-          if(dateDiv != null && dateDiv != '') {
-            datev = dateDiv.getAttribute('data-utime');
-            datev += '000';
-          }
-          else {
-            datev ="UNDEFINE";
-          }          
+      var divClass = divs[i].getAttribute('class');
+      if (divClass != null && divClass.indexOf('UFIImageBlockContent') != - 1) {
+        var articleHref = null;
+        var articleHrefId = null;
+        if(pageUrlFlag) {
+          articleHref = divs[i].childNodes[0].childNodes[0].childNodes[2].getElementsByTagName('a')[0].getAttribute("href");        
+          articleHrefId =  articleHref.match(/[^/]+$/)[0];
+        }
+        
+        var dateDiv = '';
+        dateDiv = divs[i].getElementsByTagName('abbr') [0];    
+        var datev = '';
+        if(dateDiv != null && dateDiv != '') {
+          datev = dateDiv.getAttribute('data-utime');
+          datev += '000';
+        }
+        else {
+          datev ="UNDEFINE";
+        }          
           
         //profileName
-          var pDiv = divs[i].getElementsByTagName('a');
-          var from = '';
-          var userName = '';
+        var pDiv = divs[i].getElementsByTagName('a');
+        var from = '';
+        var userName = '';
         
-          for (var k = 0; k < pDiv.length; k++) {      
-            if (pDiv[k].className == ' UFICommentActorName') {
-              from = pDiv[k].getAttribute('href');
-              from = from.replace('https://www.facebook.com/', '');
-              from = from.replace(/\/$/,'');        
-              userName = pDiv[k].innerHTML;        
-              userName = userName.replace(new RegExp('<!--.*?-->', 'g'), '');        
-              if (from.indexOf('?id=') != - 1) {
-                from = from.replace('profile.php?id=', '');
-              }
-              break;
+        for (var k = 0; k < pDiv.length; k++) {      
+          if (pDiv[k].className == ' UFICommentActorName') {
+            from = pDiv[k].getAttribute('href');
+            from = from.replace('https://www.facebook.com/', '');
+            from = from.replace(/\/$/,'');        
+            userName = pDiv[k].innerHTML;        
+            userName = userName.replace(new RegExp('<!--.*?-->', 'g'), '');        
+            if (from.indexOf('?id=') != - 1) {
+              from = from.replace('profile.php?id=', '');
             }
+            break;
           }
+        }
         
-          var pId =  datev+"|"+from+"|"+userName; 
-          //pId = pId.replace(' ', '');
-          //alert(pId);
-          var divFbId = 'divFb_' + pId;
-          
-          var divCheck = document.getElementById(divFbId);
-          if (divCheck == null) {
-            var divModerate = document.createElement('div');
-            divModerate.id = divFbId;          
-            if(pageUrlFlag) {
-              var commentReadReq = commentReadCheckAPI+'articleUrl=' + articleHref + '&commentId=' + pId + '|' + articleHrefId;
-              //alert(commentReadReq);
-              var statusResponse = GetCommentStatusInfo(commentReadReq);   
-              //alert(statusResponse);
-              var flagSpan = document.createElement('span');          
-              var newFlagLabel = document.createElement('label');
-              if(statusResponse ==-1) {
-                if(window.location.href.indexOf("/deleted/") > -1 || window.location.href.indexOf("/reported_spam/") > -1 || window.location.href.indexOf("/my_queue/") > -1){
-                  // do nothing
-                  //alert('if page url deleted flag');
-                }
-                else {
-                  //alert('if page url deleted else flag');
-                  newFlagLabel.innerHTML = '<font style=\'color:#9399A5;font-size: 12px;line-height: 16px;\' >Read:</font>&nbsp;';
-                  var chkElement = document.createElement('input');
-                  chkElement.type = 'checkbox';            
-                  chkElement.id = 'chk_'+pId;          
-                  chkElement.onchange = function ()
-                  { 
-                    sendFbData(this.id);               
-                  }
-                  flagSpan.appendChild(newFlagLabel);
-                  flagSpan.appendChild(chkElement);
-                }
+        var pId =  datev+"|"+from+"|"+userName; 
+        //pId = pId.replace(' ', '');
+        //alert(pId);
+        
+        var divFbId = 'divFb_' + pId;
+        var divCheck = document.getElementById(divFbId);
+        if (divCheck == null) {
+          var divModerate = document.createElement('div');
+          divModerate.id = divFbId;          
+          if(pageUrlFlag) {
+            var commentReadReq = commentReadCheckAPI+'articleUrl=' + articleHref + '&commentId=' + pId + '|' + articleHrefId;
+            //alert(commentReadReq);
+            var statusResponse = GetCommentStatusInfo(commentReadReq);   
+            //alert(statusResponse);
+            var flagSpan = document.createElement('span');          
+            var newFlagLabel = document.createElement('label');
+            if(statusResponse ==-1) {
+              if(window.location.href.indexOf("/deleted/") > -1 || window.location.href.indexOf("/reported_spam/") > -1 || window.location.href.indexOf("/my_queue/") > -1) {
+                // do nothing
+                //alert('if page url deleted flag');
               }
               else {
-                newFlagLabel.innerHTML = '<font style=\'color:#9399A5;font-size: 12px;line-height: 16px;\'>'+ statusResponse +'</font>'; 
+                //alert('if page url deleted else flag');
+                newFlagLabel.innerHTML = '<font style=\'color:#9399A5;font-size: 12px;line-height: 16px;\' >Read:</font>&nbsp;';
+                var chkElement = document.createElement('input');
+                chkElement.type = 'checkbox';            
+                chkElement.id = 'chk_'+pId;          
+                chkElement.onchange = function () { 
+                  sendFbData(this.id);               
+                }
                 flagSpan.appendChild(newFlagLabel);
-                var linebreak = document.createElement("br");
-                flagSpan.appendChild(linebreak);
+                flagSpan.appendChild(chkElement);
               }
-              divModerate.appendChild(flagSpan);          
             }
-            var textLabel = document.createElement('label');
-            textLabel.innerHTML = inputTextTitle;
+            else {
+              newFlagLabel.innerHTML = '<font style=\'color:#9399A5;font-size: 12px;line-height: 16px;\'>'+ statusResponse +'</font>'; 
+              flagSpan.appendChild(newFlagLabel);
+              var linebreak = document.createElement("br");
+              flagSpan.appendChild(linebreak);
+            }
+            divModerate.appendChild(flagSpan);          
+          }
+          var textLabel = document.createElement('label');
+          textLabel.innerHTML = inputTextTitle;
+          
+          var categoryLabel = document.createElement('label');
+          categoryLabel.innerHTML = textCategoryTitle;
+          
+          var actionLabel = document.createElement('label');
+          actionLabel.innerHTML = actionTitle;
+          var offenceLabel = document.createElement('label');
+          offenceLabel.innerHTML = offenceTitle;
+          //var moderatorLabel = document.createElement('label');
+          //moderatorLabel.innerHTML = moderatorTitle;
             
-            var categoryLabel = document.createElement('label');
-            categoryLabel.innerHTML = textCategoryTitle;
+          var textBoxEle = document.createElement("input");
+          textBoxEle.setAttribute("type", 'text');
+          textBoxEle.setAttribute('size', 10);
             
-            var actionLabel = document.createElement('label');
-            actionLabel.innerHTML = actionTitle;
-            var offenceLabel = document.createElement('label');
-            offenceLabel.innerHTML = offenceTitle;
-            //var moderatorLabel = document.createElement('label');
-            //moderatorLabel.innerHTML = moderatorTitle;
+          var categoryList = document.createElement('select');
+          categoryList.innerHTML = inputTypeList;
+          var selAction = document.createElement('select');
+          selAction.innerHTML = actionsList;
+          var selOffence = document.createElement('select');
+          selOffence.innerHTML = offenceList;
+          //var selModerator = document.createElement('select');
+          //selModerator.innerHTML = moderatorsList;
+          var input = document.createElement('input');
+          input.type = 'button';
+          input.value = 'Submit';
+          input.zIndex = 10000;
+          input.onclick = function () { 
+            sendFbData(this.id);
+          }
+          
+          textBoxEle.id = 'selText_' + pId;
+          categoryList.id = 'selCategory_' + pId;
+          selAction.id = 'selAction_' + pId;
+          selOffence.id = 'selOffence_' + pId;
+          //selModerator.id = 'selModerator_' + pId
             
-            var textBoxEle = document.createElement("input");
-            textBoxEle.setAttribute("type", 'text');
-            textBoxEle.setAttribute('size', 10);
-            
-            var categoryList = document.createElement('select');
-            categoryList.innerHTML = inputTypeList;
-            var selAction = document.createElement('select');
-            selAction.innerHTML = actionsList;
-            var selOffence = document.createElement('select');
-            selOffence.innerHTML = offenceList;
-            //var selModerator = document.createElement('select');
-            //selModerator.innerHTML = moderatorsList;
-            var input = document.createElement('input');
-            input.type = 'button';
-            input.value = 'Submit';
-            input.zIndex = 10000;
-            input.onclick = function () {
-              sendFbData(this.id);
-            } 
-            
-            textBoxEle.id = 'selText_' + pId;
-            categoryList.id = 'selCategory_' + pId;
-            selAction.id = 'selAction_' + pId;
-            selOffence.id = 'selOffence_' + pId;
-            //selModerator.id = 'selModerator_' + pId
-            
-            input.id = 'btnSum_' + pId;
-            divModerate.appendChild(textLabel);
-            divModerate.appendChild(textBoxEle);
-            divModerate.appendChild(categoryLabel);
-            divModerate.appendChild(categoryList);
-            
-            divModerate.appendChild(actionLabel);
-            divModerate.appendChild(selAction);
-            divModerate.appendChild(offenceLabel);
-            divModerate.appendChild(selOffence);
-            //divModerate.appendChild(moderatorLabel);
-            //divModerate.appendChild(selModerator);
-            divModerate.appendChild(input);
-            divModerate.setAttribute('style', moderatorDivStyle);
-            divs[i].childNodes[0].appendChild(divModerate);          
-            divs[i].onclick = function ()
-            { 
-              if (!isArticleUrlFound) {
-                var articleLinks = this.getElementsByTagName('a');              
-                for (var i = 0; i < articleLinks.length; i++) {                
-                  var dataId = articleLinks[i].parentElement.getAttribute('class');                
-                  if (dataId != null && dataId.indexOf('_3lfy') != - 1) {
-                    var tmpArtUrl = articleLinks[i].getAttribute('href')                  
-                    document.getElementById('txtArticleUrl').value = tmpArtUrl.replace(/%3A/g, ':').replace(/%2F/g, '/').replace(/%3F/g, '?').replace(/%25/g, '%');                  
-                    break;
-                  }
+          input.id = 'btnSum_' + pId;
+          divModerate.appendChild(textLabel);
+          divModerate.appendChild(textBoxEle);
+          divModerate.appendChild(categoryLabel);
+          divModerate.appendChild(categoryList);
+          
+          divModerate.appendChild(actionLabel);
+          divModerate.appendChild(selAction);
+          divModerate.appendChild(offenceLabel);
+          divModerate.appendChild(selOffence);
+          //divModerate.appendChild(moderatorLabel);
+          //divModerate.appendChild(selModerator);
+          divModerate.appendChild(input);
+          divModerate.setAttribute('style', moderatorDivStyle);
+          divs[i].childNodes[0].appendChild(divModerate);          
+          divs[i].onclick = function () { 
+            if (!isArticleUrlFound) {
+              var articleLinks = this.getElementsByTagName('a');              
+              for (var i = 0; i < articleLinks.length; i++) {                
+                var dataId = articleLinks[i].parentElement.getAttribute('class');                
+                if (dataId != null && dataId.indexOf('_3lfy') != - 1) {
+                  var tmpArtUrl = articleLinks[i].getAttribute('href')                  
+                  document.getElementById('txtArticleUrl').value = tmpArtUrl.replace(/%3A/g, ':').replace(/%2F/g, '/').replace(/%3F/g, '?').replace(/%25/g, '%');                  
+                  break;
                 }
               }
             }
           }
         }
-    //  }    
+      }
     }
     
     SetPagerDivClickAction();    
@@ -710,36 +696,30 @@ function AddModerateControls() {
 // Read comment status from API
 function GetCommentStatusInfo(uri) {
   var res = '-1';  
-  try
-  {    
-      
+  try {
     var details =  GM_xmlhttpRequest({method: "GET",url: uri,synchronous: true});    
     var json = details.responseText.replace('[', '');
     json = json.replace(']', '');
     //alert(uri);
     //alert(json);
     var jsonObj = JSON.parse(json);            
-    if(jsonObj.CommentStatus==-1){
-            res = jsonObj.CommentStatus;            
-          }
-    else {         
-           res =  jsonObj.ModeratorName +' at '+jsonObj.StatusDateTime + '&nbsp;';
-            if(jsonObj.CommentStatus == 3)
-              {
-                res = 'Approved by: '+ res;
-              }
-            else if(jsonObj.CommentStatus == 4)
-              {
-                res = 'Hidden by: '+ res;
-              }
-            else if(jsonObj.CommentStatus == 5)
-              {
-                res = 'Banned by: '+ res;
-              }
-            else if(jsonObj.CommentStatus == 6)
-              {
-                res = 'Read by: '+ res;
-              }
+    if(jsonObj.CommentStatus==-1) {
+      res = jsonObj.CommentStatus;            
+    }
+    else {
+      res =  jsonObj.ModeratorName +' at '+jsonObj.StatusDateTime + '&nbsp;';
+      if(jsonObj.CommentStatus == 3) {
+        res = 'Approved by: '+ res;
+      }
+      else if(jsonObj.CommentStatus == 4) {
+        res = 'Hidden by: '+ res;
+      }
+      else if(jsonObj.CommentStatus == 5) {
+        res = 'Banned by: '+ res;
+      }
+      else if(jsonObj.CommentStatus == 6) {
+        res = 'Read by: '+ res;
+      }
     }
   }
   catch(ex)
@@ -752,242 +732,238 @@ function GetCommentStatusInfo(uri) {
 
 // Highliting spam comments
 function HighlightSpamCommentsNew() {
-  try
-  { 
+  try {
     var allCommentsParent;
     var tblBodys = document.getElementsByClassName('_1ql3');
     if(tblBodys.length > 0) {
-        allCommentsParent = tblBodys[0].getElementsByTagName('tbody')[0];      
-      }    
+      allCommentsParent = tblBodys[0].getElementsByTagName('tbody')[0];      
+    }
     
     if(allCommentsParent != null) {            
-    var firstCommentTblRow;
-    var tblRows = allCommentsParent.getElementsByTagName('tr');
+      var firstCommentTblRow;
+      var tblRows = allCommentsParent.getElementsByTagName('tr');
+      
       if(tblRows.length > 0) {
         firstCommentTblRow = tblRows[0];        
       }
-    for (var i = 0; i < tblRows.length; i++) {
-     
-      var imageBlockContent = tblRows[i].getElementsByClassName('UFIImageBlockContent _42ef');
-      for(l=0;l<imageBlockContent.length;l++){
       
-      var dateDiv = '';
-    dateDiv = imageBlockContent[l].getElementsByTagName('abbr') [0];    
-    var datev = '';
-        if(dateDiv != null && dateDiv != '') {
-          datev = dateDiv.getAttribute('data-utime');
-          datev += '000';
-        }
-        else {
-          datev ="UNDEFINE";
-        }          
+      for (var i = 0; i < tblRows.length; i++) {
+        var imageBlockContent = tblRows[i].getElementsByClassName('UFIImageBlockContent _42ef');
+        for(l=0;l<imageBlockContent.length;l++) {
+          var dateDiv = '';
+          dateDiv = imageBlockContent[l].getElementsByTagName('abbr') [0];    
+          var datev = '';
+          if(dateDiv != null && dateDiv != '') {
+            datev = dateDiv.getAttribute('data-utime');
+            datev += '000';
+          }
+          else {
+            datev ="UNDEFINE";
+          }
           
-        //profileName
-    var pDiv = imageBlockContent[l].getElementsByTagName('a');
-    var from = '';
-    var userName = '';
-        
-         for (var k = 0; k < pDiv.length; k++) {      
-      if (pDiv[k].className == ' UFICommentActorName') {
-        from = pDiv[k].getAttribute('href');
-        from = from.replace('https://www.facebook.com/', '');
-        from = from.replace(/\/$/,'');
-        userName = pDiv[k].innerHTML;        
-        userName = userName.replace(new RegExp('<!--.*?-->', 'g'), '');         
-        if (from.indexOf('?id=') != - 1) {
-          from = from.replace('profile.php?id=', '');
-        }
-        break;
-      }
-    } 
-        
-        var pId =  datev+"|"+from+"|"+userName;
-        //alert(pId);
-        var divFbId = 'divFb_' + pId;
-        
-        var divCheck = document.getElementById(divFbId);
-        if (divCheck != null)
-        { 
-          //comment text
-          try
-          {
-            var mDiv = divCheck.parentElement;
-            var comDiv = mDiv.getElementsByTagName('span');
-            var commentCheck = '';
-            var decodedCommentCheck = '';
-            var regExMatched = false;
-            
-            for (var cc = 0; cc < comDiv.length; cc++) {
-              var comSpanID = comDiv[cc].getAttribute('class');
-              if (comSpanID != null && ((comSpanID.indexOf('_2uma') != -1) || (comSpanID.indexOf('_5mdd') != -1))) {               
-                commentCheck = '';
-                commentCheck = comDiv[cc].textContent.replace(regex, '');                
-                var res1 = regexSpam1.exec(commentCheck);
-                var res2 = regexSpam2.exec(commentCheck);
-                var res3 = regexSpam3.exec(commentCheck);
-                var res4 = regexSpam4.exec(commentCheck);
-                var res5 = regexSpam5.exec(commentCheck);
-                var res6 = regexSpam6.exec(commentCheck);
-                var res7 = regexSpam7.exec(commentCheck);
-                var res8 = regexSpam8.exec(commentCheck);
-                var res9 = regexSpam9.exec(commentCheck);
-                var patt = new RegExp("every hour");                
-                res6 = patt.exec(commentCheck);
-                if (res1 != null || res2 != null || res3 != null || res4 != null || res5 != null || res6 != null || res7 != null || res8 != null || res9 != null) {
-                  //alert(comDiv[cc].textContent);
-                  regExMatched = true; 
-                } 
-                else
-                {
-                  decodedCommentCheck = commentCheck.replace(/&shy;/g, '-').replace(/&gt;/g, '>').replace(/amp;/g, '&').replace(/&quot;/g, '"').replace(/&#x27;/g, '');
-                  res1 = regexSpam1.exec(decodedCommentCheck);
-                  res2 = regexSpam2.exec(decodedCommentCheck);
-                  res3 = regexSpam3.exec(decodedCommentCheck);
-                  res4 = regexSpam4.exec(decodedCommentCheck);
-                  res5 = regexSpam5.exec(decodedCommentCheck);
-                  res6 = regexSpam6.exec(decodedCommentCheck);
-                  res7 = regexSpam7.exec(decodedCommentCheck);
-                  res8 = regexSpam8.exec(decodedCommentCheck);
-                  res9 = regexSpam9.exec(decodedCommentCheck);
-                  if (res1 != null || res2 != null || res3 != null || res4 != null || res5 != null || res6 != null || res7 != null || res8 != null || res9 != null) {
-                    regExMatched = true;
-                  }
-                }
-                if(regExMatched) {
-                  for(var k = 0; k < comDiv.length; k++) {
-                   if(comDiv[k].className == "_2uma" || comDiv[k].className.indexOf("_5mdd") != -1) {
-                     comDiv[k].setAttribute('style', 'background-color:yellow;');
-                     var sourceNode = mDiv.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
-                     
-                     if(sourceNode.parentNode.parentNode.className == '_2slp _2pit') {
-                       sourceNode = mDiv.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
-                     }
-                     allCommentsParent.insertBefore(sourceNode, firstCommentTblRow);
-                     break;
-                   }
-                  }
-                }
+          //profileName
+          var pDiv = imageBlockContent[l].getElementsByTagName('a');
+          var from = '';
+          var userName = '';
+          
+          for (var k = 0; k < pDiv.length; k++) {      
+            if (pDiv[k].className == ' UFICommentActorName') {
+              from = pDiv[k].getAttribute('href');
+              from = from.replace('https://www.facebook.com/', '');
+              from = from.replace(/\/$/,'');
+              userName = pDiv[k].innerHTML;        
+              userName = userName.replace(new RegExp('<!--.*?-->', 'g'), '');         
+              if (from.indexOf('?id=') != - 1) {
+                from = from.replace('profile.php?id=', '');
               }
-              if(regExMatched)
-              {  break; }
+              break;
             }
-          } 
-          catch (ex)
-          {
+          }
+          
+          var pId =  datev+"|"+from+"|"+userName;
+          //alert(pId);
+          var divFbId = 'divFb_' + pId;
+          
+          var divCheck = document.getElementById(divFbId);
+          if (divCheck != null) {
+            //comment text
+            try {
+              var mDiv = divCheck.parentElement;
+              var comDiv = mDiv.getElementsByTagName('span');
+              var commentCheck = '';
+              var decodedCommentCheck = '';
+              var regExMatched = false;
+              
+              for (var cc = 0; cc < comDiv.length; cc++) {
+                var comSpanID = comDiv[cc].getAttribute('class');
+                if (comSpanID != null && ((comSpanID.indexOf('_2uma') != -1) || (comSpanID.indexOf('_5mdd') != -1))) {               
+                  commentCheck = '';
+                  commentCheck = comDiv[cc].textContent.replace(regex, '');                
+                  var res1 = regexSpam1.exec(commentCheck);
+                  var res2 = regexSpam2.exec(commentCheck);
+                  var res3 = regexSpam3.exec(commentCheck);
+                  var res4 = regexSpam4.exec(commentCheck);
+                  var res5 = regexSpam5.exec(commentCheck);
+                  var res6 = regexSpam6.exec(commentCheck);
+                  var res7 = regexSpam7.exec(commentCheck);
+                  var res8 = regexSpam8.exec(commentCheck);
+                  var res9 = regexSpam9.exec(commentCheck);
+                  var patt = new RegExp("every hour");                
+                  res6 = patt.exec(commentCheck);
+                  
+                  if (res1 != null || res2 != null || res3 != null || res4 != null || res5 != null || res6 != null || res7 != null || res8 != null || res9 != null) {
+                    //alert(comDiv[cc].textContent);
+                    regExMatched = true; 
+                  }
+                  else {
+                    decodedCommentCheck = commentCheck.replace(/&shy;/g, '-').replace(/&gt;/g, '>').replace(/amp;/g, '&').replace(/&quot;/g, '"').replace(/&#x27;/g, '');
+                    res1 = regexSpam1.exec(decodedCommentCheck);
+                    res2 = regexSpam2.exec(decodedCommentCheck);
+                    res3 = regexSpam3.exec(decodedCommentCheck);
+                    res4 = regexSpam4.exec(decodedCommentCheck);
+                    res5 = regexSpam5.exec(decodedCommentCheck);
+                    res6 = regexSpam6.exec(decodedCommentCheck);
+                    res7 = regexSpam7.exec(decodedCommentCheck);
+                    res8 = regexSpam8.exec(decodedCommentCheck);
+                    res9 = regexSpam9.exec(decodedCommentCheck);
+                    
+                    if (res1 != null || res2 != null || res3 != null || res4 != null || res5 != null || res6 != null || res7 != null || res8 != null || res9 != null) {
+                      regExMatched = true;
+                    }
+                  }
+                  
+                  if(regExMatched) {
+                    for(var k = 0; k < comDiv.length; k++) {
+                      if(comDiv[k].className == "_2uma" || comDiv[k].className.indexOf("_5mdd") != -1) {
+                        comDiv[k].setAttribute('style', 'background-color:yellow;');
+                        var sourceNode = mDiv.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
+                        
+                        if(sourceNode.parentNode.parentNode.className == '_2slp _2pit') {
+                          sourceNode = mDiv.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
+                        }
+                        allCommentsParent.insertBefore(sourceNode, firstCommentTblRow);
+                        break;
+                      }
+                    }
+                  }
+                }
+                if(regExMatched)
+                {  break; }
+              }
+            }
+            catch (ex)
+            {
+            }
           }
         }
-    //  }
-    }
-    }
-  }
-    else
-      { 
-        var divTags = document.getElementsByTagName('div');        
-        var firstCommentDiv;        
-        
-    for (var i = 0; i < divTags.length; i++) {      
-      var divClass = divTags[i].getAttribute('class');
-       if (divClass != null && divClass.indexOf('_4k-6') != - 1) {
-        if (allCommentsParent == null) {          
-          allCommentsParent = divTags[i];          
-          firstCommentDiv = divTags[i+1];          
-        }      
-       }
-      
-      if (divClass != null && divClass.indexOf('UFIImageBlockContent') != - 1) {
-        
-        var dateDiv = '';
-    dateDiv = divTags[i].getElementsByTagName('abbr') [0];    
-    var datev = '';
-        if(dateDiv != null && dateDiv != '') {
-          datev = dateDiv.getAttribute('data-utime');
-          datev += '000';
-        }
-        else {
-          datev ="UNDEFINE";
-        }          
-          
-        //profileName
-    var pDiv = divTags[i].getElementsByTagName('a');
-    var from = '';
-    var userName = '';
-        
-         for (var k = 0; k < pDiv.length; k++) {      
-      if (pDiv[k].className == ' UFICommentActorName') {
-        from = pDiv[k].getAttribute('href');
-        from = from.replace('https://www.facebook.com/', '');
-        from = from.replace(/\/$/,'');
-        userName = pDiv[k].innerHTML;        
-        userName = userName.replace(new RegExp('<!--.*?-->', 'g'), '');         
-        if (from.indexOf('?id=') != - 1) {
-          from = from.replace('profile.php?id=', '');
-        }
-        break;
       }
-    } 
+    }
+    else {
+      var divTags = document.getElementsByTagName('div');        
+      var firstCommentDiv;        
+      
+      for (var i = 0; i < divTags.length; i++) {      
+        var divClass = divTags[i].getAttribute('class');
+        if (divClass != null && divClass.indexOf('_4k-6') != - 1) {
+          if (allCommentsParent == null) {          
+            allCommentsParent = divTags[i];          
+            firstCommentDiv = divTags[i+1];          
+          }
+        }
         
-        var pId =  datev+"|"+from+"|"+userName;
-        //alert(pId);
-        var divFbId = 'divFb_' + pId;
-        
-        var divCheck = document.getElementById(divFbId);        
-        if (divCheck != null)
-        {
-          //comment text
-          try
-          {
-            var mDiv =  divTags[i];
-            var comDiv = mDiv.getElementsByTagName('span');
-            var commentCheck = '';
-            var decodedCommentCheck = '';            
-            for (var cc = 0; cc < comDiv.length; cc++) {
-              var comSpanID = comDiv[cc].getAttribute('class');
-              if (comSpanID != null && comSpanID.indexOf('_5mdd') != -1) {               
-                commentCheck = '';                
-                commentCheck = comDiv[cc].textContent.replace(regex, '');                
-                var res1 = regexSpam1.exec(commentCheck);
-                var res2 = regexSpam2.exec(commentCheck);
-                var res3 = regexSpam3.exec(commentCheck);
-                var res4 = regexSpam4.exec(commentCheck);
-                var res5 = regexSpam5.exec(commentCheck);
-                var res6 = regexSpam6.exec(commentCheck);
-                var res7 = regexSpam7.exec(commentCheck);
-                var res8 = regexSpam8.exec(commentCheck);
-                var res9 = regexSpam9.exec(commentCheck);
-                if (res1 != null || res2 != null || res3 != null || res4 != null || res5 != null || res6 != null || res7 != null || res8 != null || res9 != null) {
-                  comDiv[cc].setAttribute('style', 'background-color:yellow;');                                                    
+        if (divClass != null && divClass.indexOf('UFIImageBlockContent') != - 1) {
+          var dateDiv = '';
+          dateDiv = divTags[i].getElementsByTagName('abbr') [0];    
+          var datev = '';
+          if(dateDiv != null && dateDiv != '') {
+            datev = dateDiv.getAttribute('data-utime');
+            datev += '000';
+          }
+          else {
+            datev ="UNDEFINE";
+          }
+          
+          //profileName
+          var pDiv = divTags[i].getElementsByTagName('a');
+          var from = '';
+          var userName = '';
+          
+          for (var k = 0; k < pDiv.length; k++) {      
+            if (pDiv[k].className == ' UFICommentActorName') {
+              from = pDiv[k].getAttribute('href');
+              from = from.replace('https://www.facebook.com/', '');
+              from = from.replace(/\/$/,'');
+              userName = pDiv[k].innerHTML;        
+              userName = userName.replace(new RegExp('<!--.*?-->', 'g'), '');         
+              if (from.indexOf('?id=') != - 1) {
+                from = from.replace('profile.php?id=', '');
+              }
+              break;
+            }
+          }
+          
+          var pId =  datev+"|"+from+"|"+userName;
+          //alert(pId);
+          var divFbId = 'divFb_' + pId;
+          
+          var divCheck = document.getElementById(divFbId);        
+          if (divCheck != null) {
+            //comment text
+            try {
+              var mDiv =  divTags[i];
+              var comDiv = mDiv.getElementsByTagName('span');
+              var commentCheck = '';
+              var decodedCommentCheck = '';            
+              for (var cc = 0; cc < comDiv.length; cc++) {
+                var comSpanID = comDiv[cc].getAttribute('class');
+                if (comSpanID != null && comSpanID.indexOf('_5mdd') != -1) {               
+                  commentCheck = '';                
+                  commentCheck = comDiv[cc].textContent.replace(regex, '');                
+                  var res1 = regexSpam1.exec(commentCheck);
+                  var res2 = regexSpam2.exec(commentCheck);
+                  var res3 = regexSpam3.exec(commentCheck);
+                  var res4 = regexSpam4.exec(commentCheck);
+                  var res5 = regexSpam5.exec(commentCheck);
+                  var res6 = regexSpam6.exec(commentCheck);
+                  var res7 = regexSpam7.exec(commentCheck);
+                  var res8 = regexSpam8.exec(commentCheck);
+                  var res9 = regexSpam9.exec(commentCheck);
+                  
+                  if (res1 != null || res2 != null || res3 != null || res4 != null || res5 != null || res6 != null || res7 != null || res8 != null || res9 != null) {
+                    comDiv[cc].setAttribute('style', 'background-color:yellow;');                                                    
                     var moveEle = mDiv.parentElement.parentElement;
                     allCommentsParent.insertBefore(moveEle, firstCommentDiv);              
-                } 
-                else
-                {
-                  decodedCommentCheck = commentCheck.replace(/&shy;/g, '-').replace(/&gt;/g, '>').replace(/amp;/g, '&').replace(/&quot;/g, '"').replace(/&#x27;/g, '');
-                  res1 = regexSpam1.exec(decodedCommentCheck);
-                  res2 = regexSpam2.exec(decodedCommentCheck);
-                  res3 = regexSpam3.exec(decodedCommentCheck);
-                  res4 = regexSpam4.exec(decodedCommentCheck);
-                  res5 = regexSpam5.exec(decodedCommentCheck);
-                  res6 = regexSpam6.exec(decodedCommentCheck);
-                  res7 = regexSpam7.exec(decodedCommentCheck);
-                  res8 = regexSpam8.exec(decodedCommentCheck);
-                  res9 = regexSpam9.exec(decodedCommentCheck);
-                  if (res1 != null || res2 != null || res3 != null || res4 != null || res5 != null || res6 != null || res7 != null || res8 != null || res9 != null) {
-                    comDiv[cc].setAttribute('style', 'background-color:yellow;');                       
+                  } 
+                  else
+                  {
+                    decodedCommentCheck = commentCheck.replace(/&shy;/g, '-').replace(/&gt;/g, '>').replace(/amp;/g, '&').replace(/&quot;/g, '"').replace(/&#x27;/g, '');
+                    res1 = regexSpam1.exec(decodedCommentCheck);
+                    res2 = regexSpam2.exec(decodedCommentCheck);
+                    res3 = regexSpam3.exec(decodedCommentCheck);
+                    res4 = regexSpam4.exec(decodedCommentCheck);
+                    res5 = regexSpam5.exec(decodedCommentCheck);
+                    res6 = regexSpam6.exec(decodedCommentCheck);
+                    res7 = regexSpam7.exec(decodedCommentCheck);
+                    res8 = regexSpam8.exec(decodedCommentCheck);
+                    res9 = regexSpam9.exec(decodedCommentCheck);
+                    
+                    if (res1 != null || res2 != null || res3 != null || res4 != null || res5 != null || res6 != null || res7 != null || res8 != null || res9 != null) {
+                      comDiv[cc].setAttribute('style', 'background-color:yellow;');                       
                       var moveEle = mDiv.parentElement.parentElement;
-                    allCommentsParent.insertBefore(moveEle, firstCommentDiv);              
+                      allCommentsParent.insertBefore(moveEle, firstCommentDiv);              
+                    }
                   }
+                  break;
                 }
-                break;
-              }
-            }            
-          } 
-          catch (ex)
-          {
+              }            
+            } 
+            catch (ex)
+            {
+            }
           }
         }
       }
-      }
-  }
+    }
   }
   catch (ex)
   {
@@ -1004,12 +980,10 @@ function ClickPagerButtons() {
       var dataId = buttonPager[i].getAttribute('data-reactid');
       if (dataId != null && (dataId.indexOf('$/=10.0') != - 1)) {
         
-        buttonPager[i].click();
-        
-        buttonPager[i].onclick = function ()
-       {
-         setTimeout(function () {
-           ClickPagerButtons();    
+        buttonPager[i].click();        
+        buttonPager[i].onclick = function () {
+          setTimeout(function () {
+            ClickPagerButtons();    
           }, 5000);
         }
       }
@@ -1035,48 +1009,45 @@ function HideSpamCommentsNew() {
     
     var tblRows = document.getElementsByClassName('_1ql3')[0].childNodes[0].childNodes;
     for (var i = 0; i < tblRows.length; i++) {
-       var imageBlockContent = tblRows[i].getElementsByClassName('UFIImageBlockContent _42ef');
-      for(l=0;l<imageBlockContent.length;l++){
-       var dateDiv = '';
-    dateDiv = imageBlockContent[l].getElementsByTagName('abbr') [0];    
-    var datev = '';
+      var imageBlockContent = tblRows[i].getElementsByClassName('UFIImageBlockContent _42ef');
+      for(l=0;l<imageBlockContent.length;l++) {
+        var dateDiv = '';
+        dateDiv = imageBlockContent[l].getElementsByTagName('abbr') [0];    
+        var datev = '';
         if(dateDiv != null && dateDiv != '') {
           datev = dateDiv.getAttribute('data-utime');
           datev += '000';
         }
         else {
           datev ="UNDEFINE";
-        }          
-          
+        }                    
         //profileName
-    var pDiv = imageBlockContent[l].getElementsByTagName('a');
-    var from = '';
-    var userName = '';
+        var pDiv = imageBlockContent[l].getElementsByTagName('a');
+        var from = '';
+        var userName = '';
         
-         for (var k = 0; k < pDiv.length; k++) {      
-      if (pDiv[k].className == ' UFICommentActorName') {
-        from = pDiv[k].getAttribute('href');
-        from = from.replace('https://www.facebook.com/', '');
-        from = from.replace(/\/$/,'');
-        userName = pDiv[k].innerHTML;        
-        userName = userName.replace(new RegExp('<!--.*?-->', 'g'), '');         
-        if (from.indexOf('?id=') != - 1) {
-          from = from.replace('profile.php?id=', '');
-        }
-        break;
-      }
-    } 
+        for (var k = 0; k < pDiv.length; k++) {      
+          if (pDiv[k].className == ' UFICommentActorName') {
+            from = pDiv[k].getAttribute('href');
+            from = from.replace('https://www.facebook.com/', '');
+            from = from.replace(/\/$/,'');
+            userName = pDiv[k].innerHTML;        
+            userName = userName.replace(new RegExp('<!--.*?-->', 'g'), '');         
+            if (from.indexOf('?id=') != - 1) {
+              from = from.replace('profile.php?id=', '');
+            }
+            break;
+          }
+        } 
         
         var pId =  datev+"|"+from+"|"+userName;  
         //alert(pId);
         var divFbId = 'divFb_' + pId;      
         
         var divCheck = document.getElementById(divFbId);
-        if (divCheck != null)
-        { 
+        if (divCheck != null) { 
           //comment text
-          try
-          {
+          try {
             var mDiv = divCheck.parentElement;
             var comDiv = mDiv.getElementsByTagName('span');
             for(var k = 0; k < comDiv.length; k++) {
@@ -1133,8 +1104,7 @@ function HideSpamCommentsNew() {
 
 // sending fb data to server
 function sendFbData(objid) {
-  try
-  {
+  try {
     var txtId = '';
     var catgId = '';
     if(objid.substring(0,4) === 'chk_') {
@@ -1156,9 +1126,9 @@ function sendFbData(objid) {
     var mDiv = null;    
     if(objid.substring(0,4) === 'chk_')
       mDiv = divCheck.parentElement.parentElement.parentElement.parentElement;
-      //.parentElement;
-      else
-        mDiv = divCheck.parentElement.parentElement.parentElement;
+    //.parentElement;
+    else
+      mDiv = divCheck.parentElement.parentElement.parentElement;
     
     var tmpArtUrl = document.getElementById('txtArticleUrl').value;
     
@@ -1166,7 +1136,7 @@ function sendFbData(objid) {
       var articleLinks = mDiv.getElementsByTagName('a');              
       for (var i = 0; i < articleLinks.length; i++) {                
         var dataId = articleLinks[i].parentElement.getAttribute('class');                
-                if (dataId != null && dataId.indexOf('_3lfy') != - 1) {
+        if (dataId != null && dataId.indexOf('_3lfy') != - 1) {
           tmpArtUrl = articleLinks[i].getAttribute('href')                  
           document.getElementById('txtArticleUrl').value = tmpArtUrl.replace(/%3A/g, ':').replace(/%2F/g, '/').replace(/%3F/g, '?').replace(/%25/g, '%');                  
           break;
@@ -1180,8 +1150,7 @@ function sendFbData(objid) {
     //alert(tmpArtUrl);
     
     var market = res[3].split("-")[0];
-    var commentID = cId + "|"+  articleID;
-    
+    var commentID = cId + "|"+  articleID;    
     var comentLength = 2000;
     
     if(market === "ja" || market === "ru" || market === "ar" || market === "ko" || market === "vi" || market === "zh") {
@@ -1191,32 +1160,30 @@ function sendFbData(objid) {
     var comment = '';
     var likes = 0;
     
-      //comment text      
-      var comDiv = mDiv.getElementsByTagName('span');      
+    //comment text      
+    var comDiv = mDiv.getElementsByTagName('span');      
             
-      for (var cc = 0; cc < comDiv.length; cc++) {        
-        var comSpanID = comDiv[cc].className;        
-        if (comSpanID != null && ((comSpanID == "_2uma") || (comSpanID.indexOf("_5mdd") != -1))) {          
-          comment = comDiv[cc].innerHTML.replace(regex, '');
-          comment = comment.replace(/&amp;/g, 'and');
-          comment = comment.replace(/&/g, 'and');
-          comment = comment.replace(/"/g, '');
-          comment = encodeURIComponent(comment);
-          comment = comment.replace(/%0A/g, ' ');
-          comment = comment.replace(/%20/g, ' ');
-          if (comment.length > comentLength) {
-            comment = comment.substr(0, comentLength) + '...';
-          }
-          break;
+    for (var cc = 0; cc < comDiv.length; cc++) {        
+      var comSpanID = comDiv[cc].className;        
+      if (comSpanID != null && ((comSpanID == "_2uma") || (comSpanID.indexOf("_5mdd") != -1))) {          
+        comment = comDiv[cc].innerHTML.replace(regex, '');
+        comment = comment.replace(/&amp;/g, 'and');
+        comment = comment.replace(/&/g, 'and');
+        comment = comment.replace(/"/g, '');
+        comment = encodeURIComponent(comment);
+        comment = comment.replace(/%0A/g, ' ');
+        comment = comment.replace(/%20/g, ' ');
+        if (comment.length > comentLength) {
+          comment = comment.substr(0, comentLength) + '...';
         }
-      }      
+        break;
+      }
+    }      
         
-    //comment udate
-    
+    //comment udate    
     var artUrl = document.getElementById('txtArticleUrl');
     articleUrl = artUrl.value;
-    if (articleUrl == '')
-    {
+    if (articleUrl == '') {
       window.alert('please enter article URL');
       //artUrl.focus();
       return;
@@ -1250,8 +1217,7 @@ function sendFbData(objid) {
     //alert(userName);
     pDiv = mDiv.getElementsByTagName('img');
     for (var i = 0; i < pDiv.length; i++) {
-      if (pDiv[i].className == '_3-8_ _4iy4 img')
-      {
+      if (pDiv[i].className == '_3-8_ _4iy4 img') {
         var spn = pDiv[i].parentElement.getElementsByTagName('span') [0];
         likes = parseInt(spn.innerHTML);
         break;
@@ -1295,34 +1261,29 @@ function sendFbData(objid) {
         var ulClass = ulList[k].getAttribute('class');
         if(ulClass != null && ulClass.indexOf('_43o4') != -1) {
           
-          var anchors =  ulList[k].getElementsByTagName('a');
-          
+          var anchors =  ulList[k].getElementsByTagName('a');          
           for(var i =0; i<anchors.length; i++ ) {
-            
-            var areaSel = anchors[i].getAttribute('aria-selected'); 
-            
-            if(areaSel != '' && areaSel == "true")
-              {
-                if(anchors[i].getAttribute('href').indexOf('pending') != -1) {
-                  viewType = 3;
-                }
-                else if(anchors[i].getAttribute('href').indexOf('approved') != -1) {
-                  viewType = 2;
-                }
-                else if(anchors[i].getAttribute('href').indexOf('deleted') != -1) {
-                  viewType = 4;
-                }
-                else if(anchors[i].getAttribute('href').indexOf('reported_spam') != -1) {
-                  viewType = 5;
-                }
-                else if(anchors[i].getAttribute('href').indexOf('my_queue') != -1) {
-                  viewType = 6;
-                }
-                break;
+            var areaSel = anchors[i].getAttribute('aria-selected');             
+            if(areaSel != '' && areaSel == "true") {
+              if(anchors[i].getAttribute('href').indexOf('pending') != -1) {
+                viewType = 3;
               }
+              else if(anchors[i].getAttribute('href').indexOf('approved') != -1) {
+                viewType = 2;
+              }
+              else if(anchors[i].getAttribute('href').indexOf('deleted') != -1) {
+                viewType = 4;
+              }
+              else if(anchors[i].getAttribute('href').indexOf('reported_spam') != -1) {
+                viewType = 5;
+              }
+              else if(anchors[i].getAttribute('href').indexOf('my_queue') != -1) {
+                viewType = 6;
+              }
+              break;
+            }
           }
-          
-         // alert(viewType);
+          // alert(viewType);
         }
       }
     }
@@ -1334,11 +1295,11 @@ function sendFbData(objid) {
     }
     var actionValue = action.value;
     var offenceValue = offence.value;
-    if(objid.substring(0,4) ==='chk_')
-      {
-        actionValue = 6;
-        offenceValue = 1;
-      }
+    if(objid.substring(0,4) ==='chk_') 
+    {
+      actionValue = 6;
+      offenceValue = 1;
+    }
     
     if (action.value == 3 && viewType == 2)
     {
@@ -1358,21 +1319,23 @@ function sendFbData(objid) {
     
     var moderationMessage = '{ "CommentId":"' + commentID + '","IsReset":false,"CommentMessage":"' + comment + '","CommentedUserID":"' + from + '","InputText":"' + textInputVal + '","TextCategory":"' + category.value +'","CommentedUserName":"' + userName + '","CommentDateTime":"' + datev + '","ModeratorGUID":"' + moderator.value + '","ModeratorAction":' + actionValue + ',"OffenceType":' + offenceValue + ',"ViewType":' + viewType + ',"LikesCount":' + likes + ',"ArticleTopic":"' + artiTopic + '","ArticleUrl":"' + articleUrl + '"}';
     // section to let comment check box selected
-    if(objid.substring(0,7) ==='btnSum_'){
-    var element = mDiv;       
-    while(element.nodeName != "TR") {            
+    if(objid.substring(0,7) ==='btnSum_') {
+      var element = mDiv;       
+      while(element.nodeName != "TR") {            
         element = element.parentNode;
+      }
+      var checkSel = element.childNodes[0].getElementsByTagName('input');    
+      if(checkSel.length == 1 &&  element.childNodes.length==3) {
+        checkSel[0].click();
+        checkSel[0].checked = true;      
+      }
     }
-    var checkSel = element.childNodes[0].getElementsByTagName('input');    
-    if(checkSel.length == 1 &&  element.childNodes.length==3) {
-      checkSel[0].click();
-      checkSel[0].checked = true;      
-    }}
     
     //var requestData = '{"apiKey"="JMfNqhMk3d6uUZJVtua0SNRWBOgepSd2IRyvSUG3Ticif5A84MfZ5ZlsW0mLw1f","moderationMessage"="' + moderationMessage + '"}';
     //alert(moderationMessage);
-    if(objid.substring(0,4) ==='chk_'   ){
-      divCheck.disabled  = true;}
+    if(objid.substring(0,4) ==='chk_') {
+      divCheck.disabled  = true;
+    }
     
     window.open(submitUrl + moderationMessage, '_blank');    
     
@@ -1399,6 +1362,8 @@ function getParameterByName(name) {
 //delay or sleep by duration
 function Delay(sleepDuration) {
   var now = new Date().getTime();
-  while (new Date().getTime() < now + sleepDuration) { /* do nothing */
+  while (new Date().getTime() < now + sleepDuration) 
+  {
+    /* do nothing */
   }
 }
