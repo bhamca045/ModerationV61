@@ -3,7 +3,7 @@
 // @namespace   01d301193b1757939f0f4b6b54406641
 // @description Moderation Controls for Facebook Widget
 // @include     https://*facebook.com/*
-// @version     18.8
+// @version     18.9
 // @grant       GM_xmlhttpRequest
 // @updateURL   https://monkeyguts.com/754.meta.js?c
 // @downloadURL https://monkeyguts.com/754.user.js?c
@@ -365,15 +365,17 @@ function HighLightBlackListedWords() {
         else {
           //alert(l1checkText);
           // check for whether full word overridden or partially, if partially overrides count for both L1 and L2 counts
-          var l1HighLightTxt = l1checkText.replace(/<[^>]*>/g, "");
-          var l2HighLightTxt = (l1checkText.match(/<font style=('|")background-color:red;color:white('|")>(.*?)<\/font>/g)||[])[0].replace(/<[^>]*>/g, "");
-          
-          var l1highltTextLen = l1HighLightTxt.trim().length;
-          var l2highltTextLen = l2HighLightTxt.trim().length;
-          //alert(l1HighLightTxt +':-'+l1highltTextLen);
-          //alert(l2HighLightTxt +':-'+l2highltTextLen);
-          if(l1highltTextLen != l2highltTextLen) {            
-            l1matches = l1matches +1;
+          var l1HighLightTxt = l1checkText.replace(/<[^>]*>/g, "");          
+          var tempL2Text = (l1checkText.match(/<font style=('|")background-color:red;color:white('|")>(.*?)<\/font>/g)||[]);
+          if(tempL2Text!= null && tempL2Text.length >0) {
+            var l2HighLightTxt = tempL2Text[0].replace(/<[^>]*>/g, "");
+            var l1highltTextLen = l1HighLightTxt.trim().length;
+            var l2highltTextLen = l2HighLightTxt.trim().length;
+            //alert(l1HighLightTxt +':-'+l1highltTextLen);
+            //alert(l2HighLightTxt +':-'+l2highltTextLen);
+            if(l1highltTextLen != l2highltTextLen) {            
+              l1matches = l1matches +1;
+            }
           }
           l2matches = l2matches +1;
         }
