@@ -259,7 +259,7 @@ function PopUpL2Comments() {
                   
                   if(l1Overridematches > 0) {
                     for(var k = 0; k < comDiv.length; k++) {
-                      if(comDiv[k].className == "_2uma" || comDiv[k].className.indexOf("_5mdd") != -1) {
+                      if(comDiv[k].className == "_2uma" || comDiv[k].className == "_2uma _1n4g" || comDiv[k].className.indexOf("_5mdd") != -1) {
                         //comDiv[k].setAttribute('style', 'background-color:yellow;');
                         var sourceNode = mDiv.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
                         
