@@ -3,7 +3,7 @@
 // @namespace   01d301193b1757939f0f4b6b54406641
 // @description Moderation Controls for Facebook Widget
 // @include     https://*facebook.com/*
-// @version     18.9
+// @version     18.10
 // @grant       GM_xmlhttpRequest
 // @updateURL   https://monkeyguts.com/754.meta.js?c
 // @downloadURL https://monkeyguts.com/754.user.js?c
@@ -47,9 +47,8 @@ var moderatorsList = '<option value="0"></option>'
 + '<option value="007980b8-c5cd-4c09-81f2-0a645164254e">Manohar</option>'
 + '<option value="0748C6B6-CE10-4A0C-AD99-DCFFC7AD597D">Amar</option>'
 + '<option value="B3F365E5-D937-48C6-9B1B-13ED280BB550">Lakshman</option>'
-+ '<option value="55AD57C2-7589-4997-B707-65D9AA87131F">Akhilesh</option>'
 + '<option value="7718f94d-b57a-4902-8d3e-bc42e2c76b75">Sangamesh</option>'
-+ '<option value="430CB796-59E1-491A-B727-8B516BFB1245">Qutubuddin</option>'; 
++ '<option value="119b4c6b-c27c-441e-9db3-2e938e272f185">Shankar</option>';
 var regex = /(<([^>]+)>)/gi;
 var regexSpam1 = /(?=.*\b(http(s)*:\/\/)(www\.))|((www*\.)([0-9a-zA-Z]*|(\/)*)*(\.(co*)))|((www*\.)([0-9a-zA-Z]*|(\/)*)*(\.org))|((w)w\2+\.|ｗ+\.)|([a-zA-Z]¬+|­+)|(\.|­)\s{0,10}\S{0,10}(c|ｃ|ℂ)(o|ｏ|ℴ)(m|ｍ)/g;
 var regexSpam2 = /(https?:\/\/([0-9a-zA-Z]*|(\/)*)*\.co*)|(https?:\/\/([0-9a-zA-Z]*|(\/)*)*\.org)/g;
@@ -104,7 +103,7 @@ setTimeout(function () {
     else {
       isArticleUrlFound = true;
     }
-    newFirstElement.innerHTML = '<table style="width:100%"><tr><td><b>Article URL: <input id="txtArticleUrl" type="text" style="width:80%" disabled="disabled" value=\'' + articleUrl + '\' /></b></td><td><input id="btnLoadModControls" type="button" value="1. Load Moderator Controls" /><input id="btnHighlightSpam" type="button" value="2. Find Spam Comments" /><input id="btnHideSpamComments" type="button" value="3. Hide All Spam Comments" /><input id="btnHighlightBlacklistwords" type="button" value="4. Hghlight All Blacklist words" /></td><td align="right" style="text-align:right">Moderator: <select id="selModerator">' + moderatorsList + '</select></td></tr></table>';
+    newFirstElement.innerHTML = '<table style="width:100%"><tr><td><b>Article URL: <input id="txtArticleUrl" type="text" style="width:80%" disabled="disabled" value=\'' + articleUrl + '\' /></b></td><td><input id="btnLoadModControls" type="button" value="1. Load Moderator Controls" /><input id="btnHighlightSpam" type="button" value="2. Find Spam Comments" /><input id="btnHideSpamComments" type="button" value="3. Hide All Spam Comments" /><input id="btnHighlightBlacklistwords" type="button" value="4. Hghlight All Blacklist words" /><input id="btnPopL2Comments" type="button" value="5. Pop up L2 Comments" /></td><td align="right" style="text-align:right">Moderator: <select id="selModerator">' + moderatorsList + '</select></td></tr></table>';
     //newFirstElement.innerHTML = '<table style="width:100%"><tr><td><b>Article URL: <input id="txtArticleUrl" type="text" style="width:80%" value=\'' + articleUrl + '\' /></b></td><td align="right" style="text-align:right">Article Topic: <input id="articleTopic" type="text" /></td></tr></table>';
     divFb.insertBefore(newFirstElement, divFb.firstChild);
     var btnLoadControls = document.getElementById('btnLoadModControls');
@@ -126,6 +125,12 @@ setTimeout(function () {
     btnHighlightBlacklistwords.onclick = function ()
     {
       HighLightBlackListedWords();      
+    }
+    
+    var btnPopupL2Comments = document.getElementById('btnPopL2Comments');
+    btnPopupL2Comments.onclick = function ()
+    {
+      PopUpL2Comments();      
     }
     
     uguid = getParameterByName('userguid');
@@ -179,6 +184,109 @@ function GetApplicationID() {
     alert(ex);
   }
 }  
+
+function PopUpL2Comments() {
+  try {
+    var allCommentsParent;
+    var tblBodys = document.getElementsByClassName('_1ql3');
+    if(tblBodys.length > 0) {
+      allCommentsParent = tblBodys[0].getElementsByTagName('tbody')[0];      
+    }
+    
+    if(allCommentsParent != null) {    
+       var firstCommentTblRow;
+      var tblRows = allCommentsParent.getElementsByTagName('tr');
+      
+      if(tblRows.length > 0) {
+        firstCommentTblRow = tblRows[0];        
+      }
+      
+      for (var i = 0; i < tblRows.length; i++) {
+        var imageBlockContent = tblRows[i].getElementsByClassName('UFIImageBlockContent _42ef');
+        for(l=0;l<imageBlockContent.length;l++) {
+          var dateDiv = '';
+          dateDiv = imageBlockContent[l].getElementsByTagName('abbr') [0];    
+          var datev = '';
+          if(dateDiv != null && dateDiv != '') {
+            datev = dateDiv.getAttribute('data-utime');
+            datev += '000';
+          }
+          else {
+            datev ="UNDEFINE";
+          }
+          
+          //profileName
+          var pDiv = imageBlockContent[l].getElementsByTagName('a');
+          var from = '';
+          var userName = '';
+          
+          for (var k = 0; k < pDiv.length; k++) {      
+            if (pDiv[k].className == ' UFICommentActorName') {
+              from = pDiv[k].getAttribute('href');
+              from = from.replace('https://www.facebook.com/', '');
+              from = from.replace(/\/$/,'');
+              userName = pDiv[k].innerHTML;        
+              userName = userName.replace(new RegExp('<!--.*?-->', 'g'), '');         
+              if (from.indexOf('?id=') != - 1) {
+                from = from.replace('profile.php?id=', '');
+              }
+              break;
+            }
+          }
+          
+          var pId =  datev+"|"+from+"|"+userName;
+          //alert(pId);
+          var divFbId = 'divFb_' + pId;
+          
+          var divCheck = document.getElementById(divFbId);
+          if (divCheck != null) {
+            //comment text
+            try {
+              var mDiv = divCheck.parentElement;
+              var comDiv = mDiv.getElementsByTagName('span');
+              var commentCheck = '';
+              //var regExMatched = false;
+              
+              for (var cc = 0; cc < comDiv.length; cc++) {
+                var comSpanID = comDiv[cc].getAttribute('class');
+                if (comSpanID != null && ((comSpanID.indexOf('_2uma') != -1) || (comSpanID.indexOf('_5mdd') != -1))) {               
+                  commentCheck = '';
+                  commentCheck = comDiv[cc].parentElement.innerHTML;     
+                  //var l1checkText = l1wordhligts[w].innerHTML;
+                  var l1Overridematches = (commentCheck.match(/style=('|")background-color:#EDE0D3('|")>/g)||[]).length;
+                  //alert(commentCheck);
+                  //alert(l1Overridematches);
+                  
+                  if(l1Overridematches > 0) {
+                    for(var k = 0; k < comDiv.length; k++) {
+                      if(comDiv[k].className == "_2uma" || comDiv[k].className.indexOf("_5mdd") != -1) {
+                        //comDiv[k].setAttribute('style', 'background-color:yellow;');
+                        var sourceNode = mDiv.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
+                        
+                        if(sourceNode.parentNode.parentNode.className == '_2slp _2pit') {
+                          sourceNode = mDiv.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
+                        }
+                        allCommentsParent.insertBefore(sourceNode, firstCommentTblRow);
+                        break;
+                      }
+                    }
+                  }
+                }
+              }
+            }
+            catch (ex)
+            {
+            }
+          }
+        }
+      }
+    }
+  }
+  catch(ex){
+    alert(ex);
+  }    
+}
+
 
 // Load Application's RegEx Patterns
 function LoadApplicationRegExs() { 
@@ -310,7 +418,7 @@ function HighLightBlackListedWords() {
           continue;
         }
         
-        //alert(j + ': '+content);
+        //alert(textContainers[i].innerHTML);
         content = content.replace(htmlRemoveRegex, "");
         //alert('currentAppId::' + currentAppId);
         if(currentAppId != en_msn_appId && currentAppId != "829406873836572" && currentAppId != "844282955707707" && currentAppId != "1427951567220038" && currentAppId != "1966743960216840" && currentAppId != "1056389514424151" && currentAppId != "125117174535490" ) {    
@@ -828,6 +936,7 @@ function HighlightSpamCommentsNew() {
                 if (comSpanID != null && ((comSpanID.indexOf('_2uma') != -1) || (comSpanID.indexOf('_5mdd') != -1))) {               
                   commentCheck = '';
                   commentCheck = comDiv[cc].textContent.replace(regex, '');                
+                  //alert(commentCheck);
                   var res1 = regexSpam1.exec(commentCheck);
                   var res2 = regexSpam2.exec(commentCheck);
                   var res3 = regexSpam3.exec(commentCheck);
