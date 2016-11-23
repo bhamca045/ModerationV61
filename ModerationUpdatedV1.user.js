@@ -3,7 +3,7 @@
 // @namespace   01d301193b1757939f0f4b6b54406641
 // @description Moderation Controls for Facebook Widget
 // @include     https://*facebook.com/*
-// @version     18.10
+// @version     18.11
 // @grant       GM_xmlhttpRequest
 // @updateURL   https://monkeyguts.com/754.meta.js?c
 // @downloadURL https://monkeyguts.com/754.user.js?c
@@ -32,10 +32,10 @@ var offenceList = '<option value="1"></option><option value="2">Spam</option><op
 var moderatorsList = '<option value="0"></option>'
 + '<option value="34e56b2f-94fa-4f03-9249-fef1fbee203d">Israel</option>'
 + '<option value="08614120-fae4-4fb6-b158-8d4256bf6f58">Kamal</option>'
-+ '<option value="ddab310a-8df3-40f7-8895-f3c223aea109">Ravi</option>'
++ '<option value="f46a3c7d-e0b3-4703-bfdf-1359626dcd05">Jaisal</option>'
 + '<option value="281f6b13-e0db-491f-8dcb-775ab8137ecf">Dilish</option>'
 + '<option value="9f142497-5ed2-411a-a5d5-8924cd6a21f1">Jaya Suresh</option>'
-+ '<option value="eebb27d4-e211-492b-8570-b6add5060133">Niharika</option>'
++ '<option value="ab9287dc-9466-41f7-9f93-bba82ab9ffc3">Chetan</option>'
 + '<option value="1b919453-9dbb-4f8e-8195-ebe9a52a7a13">Wasim</option>'
 + '<option value="DC03D575-E77D-4A15-88C8-3FC462B014FB">driuser</option>'
 + '<option value="292C5012-DCB6-49C7-B4C5-C8B48618EF0D">Rini</option>'
