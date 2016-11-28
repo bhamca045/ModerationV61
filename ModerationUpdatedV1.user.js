@@ -3,7 +3,7 @@
 // @namespace   01d301193b1757939f0f4b6b54406641
 // @description Moderation Controls for Facebook Widget
 // @include     https://*facebook.com/*
-// @version     18.11
+// @version     18.12
 // @grant       GM_xmlhttpRequest
 // @updateURL   https://monkeyguts.com/754.meta.js?c
 // @downloadURL https://monkeyguts.com/754.user.js?c
@@ -1273,7 +1273,10 @@ function sendFbData(objid) {
     if (!isArticleUrlFound) {
       var articleLinks = mDiv.getElementsByTagName('a');              
       for (var i = 0; i < articleLinks.length; i++) {                
-        var dataId = articleLinks[i].parentElement.getAttribute('class');                
+        var dataId = articleLinks[i].parentElement.getAttribute('class');
+        if(articleLinks[i].parentElement.nodeName == 'EM') {
+          dataId = articleLinks[i].parentElement.parentElement.getAttribute('class');                
+        }
         if (dataId != null && dataId.indexOf('_3lfy') != - 1) {
           tmpArtUrl = articleLinks[i].getAttribute('href')                  
           document.getElementById('txtArticleUrl').value = tmpArtUrl.replace(/%3A/g, ':').replace(/%2F/g, '/').replace(/%3F/g, '?').replace(/%25/g, '%');                  
@@ -1282,14 +1285,27 @@ function sendFbData(objid) {
       }
     }
     
+    //action
+    var action = document.getElementById(aId);
+    if (action.value == 0 && objid.substring(0,4) !='chk_')
+    {
+      window.alert('please select action');
+      //action.focus();
+      return;
+    }
+    
     var res = tmpArtUrl.split("/");
     var articleID = res[res.length -1];
     //alert(articleID);    
     //alert(tmpArtUrl);
     
     var market = res[3].split("-")[0];
-    var commentID = cId + "|"+  articleID;    
+    var commentID = cId + "|"+  articleID;  
     var comentLength = 2000;
+    
+    if (action.value == 5) {
+     comentLength = 1200;
+    }
     
     if(market === "ja" || market === "ru" || market === "ar" || market === "ko" || market === "vi" || market === "zh") {
       comentLength = 300;
@@ -1360,15 +1376,6 @@ function sendFbData(objid) {
         likes = parseInt(spn.innerHTML);
         break;
       }
-    }
-    
-    //action
-    var action = document.getElementById(aId);
-    if (action.value == 0 && objid.substring(0,4) !='chk_')
-    {
-      window.alert('please select action');
-      //action.focus();
-      return;
     }
     
     //moderator name
