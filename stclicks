@@ -1,0 +1,103 @@
+// ==UserScript==
+// @name        stclicks
+// @namespace   stclicks.com
+// @description stclicks auto
+// @include     https://*socialtrade.biz/*
+// @version     1
+// @grant       none
+// ==/UserScript==
+
+var currentRowId = 0;
+var nextRowId = 0;
+
+setTimeout(function () {
+  var divFb = document.getElementById('ajax-content');
+  if (divFb != null)  {
+    //alert('start')
+    readTRsAndInvoke(divFb);
+  }
+}, 2000);
+
+
+function readTRsAndInvoke(tablEle) {
+  var trsList = tablEle.getElementsByTagName('TR');
+  for(var i=0; i<trsList.length;i++) {
+    readTDsAndInvoke(trsList[i]);
+  }
+}
+
+function readTDsAndInvoke(trEle) {
+  var tdsList = trEle.getElementsByTagName('TD');  
+  if(tdsList != null && tdsList.length > 0) {
+    //alert(tdsList[2].innerText);
+    currentRowId = parseInt(tdsList[0].innerHTML);
+    var nexTrNode = trEle.nextSibling;
+    
+    if(nexTrNode == null) {
+      if(tdsList[2].innerText == "Pending") {
+      //alert(tdsList[0].innerHTML);
+      var tdSpans = tdsList[3].getElementsByTagName('span');  
+      for(var j=0; j<tdSpans.length;j++) {
+        var tdspanId = tdSpans[j].getAttribute('id');
+        if(tdspanId != null && tdspanId.indexOf('hand_') != -1) {
+          //alert(tdspanId);
+        //  window.setTimeout(clickHand, 40000);
+           //tdSpans[j].onclick = function () {
+          // alert(tdspanId + ' onclick Exec');
+          //    window.setTimeout(clickHand, 45000);
+          //setTimeout(function () {
+          //}, 2000);
+          //}
+        //  clickHand(tdspanId);
+    nextRowId = currentRowId + 1;      
+        //  while(true) {
+        //  if(tdsList[2].innerText == "Clicked") {
+        //     alert('break execu');
+       //      break;
+       //    }
+       //   }
+          //alert(tdspanId);
+          //break;
+        }
+      }
+    }
+    }
+    else {
+      var nextTDNodes = nexTrNode.getElementsByTagName('TD');  
+      
+      if(nextTDNodes != null && nextTDNodes.length > 0) {
+        nextRowId = parseInt(nextTDNodes[0].innerHTML);
+      }
+      
+    if(tdsList[2].innerText == "Pending") {
+      //alert(tdsList[0].innerHTML);
+      var tdSpans = tdsList[3].getElementsByTagName('span');  
+      for(var j=0; j<tdSpans.length;j++) {
+        var tdspanId = tdSpans[j].getAttribute('id');
+        if(tdspanId != null && tdspanId.indexOf('hand_') != -1) {
+          //alert(tdspanId);
+        //  window.setTimeout(clickHand, 40000);
+           //tdSpans[j].onclick = function () {
+          // alert(tdspanId + ' onclick Exec');
+          //    window.setTimeout(clickHand, 45000);
+          //setTimeout(function () {
+          //}, 2000);
+          //}
+        //  clickHand(tdspanId);
+    nextRowId = currentRowId + 1;      
+        
+          }
+          //alert(tdspanId);
+          //break;
+        }
+      }
+    }
+  }
+}
+
+
+function clickHand(handId) {
+  var docObj = document.getElementById(handId);
+  //alert(docObj);
+  docObj.click();
+}
