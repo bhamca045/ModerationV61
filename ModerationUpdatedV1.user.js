@@ -3,7 +3,7 @@
 // @namespace   01d301193b1757939f0f4b6b54406641
 // @description Moderation Controls for Facebook Widget
 // @include     https://*facebook.com/*
-// @version     18.12
+// @version     18.13
 // @grant       GM_xmlhttpRequest
 // @updateURL   https://monkeyguts.com/754.meta.js?c
 // @downloadURL https://monkeyguts.com/754.user.js?c
@@ -31,7 +31,7 @@ var actionsList = '<option value="0"></option><option value="3">approve</option>
 var offenceList = '<option value="1"></option><option value="2">Spam</option><option value="3">ChildExploitation</option><option value="4">Profanity</option><option value="5">HateSpeech</option><option value="6">Harassment</option><option value="7">Threats</option><option value="8">Racist</option>';
 var moderatorsList = '<option value="0"></option>'
 + '<option value="34e56b2f-94fa-4f03-9249-fef1fbee203d">Israel</option>'
-+ '<option value="08614120-fae4-4fb6-b158-8d4256bf6f58">Kamal</option>'
++ '<option value="a146613b-7b82-48ca-a6e6-22576b6730b2">Nagendra</option>'
 + '<option value="f46a3c7d-e0b3-4703-bfdf-1359626dcd05">Jaisal</option>'
 + '<option value="281f6b13-e0db-491f-8dcb-775ab8137ecf">Dilish</option>'
 + '<option value="9f142497-5ed2-411a-a5d5-8924cd6a21f1">Jaya Suresh</option>'
@@ -48,7 +48,7 @@ var moderatorsList = '<option value="0"></option>'
 + '<option value="0748C6B6-CE10-4A0C-AD99-DCFFC7AD597D">Amar</option>'
 + '<option value="B3F365E5-D937-48C6-9B1B-13ED280BB550">Lakshman</option>'
 + '<option value="7718f94d-b57a-4902-8d3e-bc42e2c76b75">Sangamesh</option>'
-+ '<option value="119b4c6b-c27c-441e-9db3-2e938e272f185">Shankar</option>';
++ '<option value="74012ed2-f84e-43a8-bb98-0214a6f9aab7">Sandeep</option>';
 var regex = /(<([^>]+)>)/gi;
 var regexSpam1 = /(?=.*\b(http(s)*:\/\/)(www\.))|((www*\.)([0-9a-zA-Z]*|(\/)*)*(\.(co*)))|((www*\.)([0-9a-zA-Z]*|(\/)*)*(\.org))|((w)w\2+\.|ｗ+\.)|([a-zA-Z]¬+|­+)|(\.|­)\s{0,10}\S{0,10}(c|ｃ|ℂ)(o|ｏ|ℴ)(m|ｍ)/g;
 var regexSpam2 = /(https?:\/\/([0-9a-zA-Z]*|(\/)*)*\.co*)|(https?:\/\/([0-9a-zA-Z]*|(\/)*)*\.org)/g;
