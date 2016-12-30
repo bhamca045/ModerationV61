@@ -3,7 +3,7 @@
 // @namespace   01d301193b1757939f0f4b6b54406641
 // @description Moderation Controls for Facebook Widget
 // @include     https://*facebook.com/*
-// @version     18.13
+// @version     18.14
 // @grant       GM_xmlhttpRequest
 // @updateURL   https://monkeyguts.com/754.meta.js?c
 // @downloadURL https://monkeyguts.com/754.user.js?c
@@ -937,15 +937,26 @@ function HighlightSpamCommentsNew() {
                   commentCheck = '';
                   commentCheck = comDiv[cc].textContent.replace(regex, '');                
                   //alert(commentCheck);
+                  var res0 = regexSpam0.exec(commentCheck);
+                  //alert('res0');
                   var res1 = regexSpam1.exec(commentCheck);
+                  //alert('res1');
                   var res2 = regexSpam2.exec(commentCheck);
+                  //alert('res2');
                   var res3 = regexSpam3.exec(commentCheck);
+                  //alert('res3');
                   var res4 = regexSpam4.exec(commentCheck);
+                  //alert('res4');
                   var res5 = regexSpam5.exec(commentCheck);
+                  //alert('res5');
                   var res6 = regexSpam6.exec(commentCheck);
+                 // alert('res6');
                   var res7 = regexSpam7.exec(commentCheck);
+                 // alert('res7');
                   var res8 = regexSpam8.exec(commentCheck);
+                 // alert('res8');
                   var res9 = regexSpam9.exec(commentCheck);
+                //  alert('res9');
                   var patt = new RegExp("every hour");                
                   res6 = patt.exec(commentCheck);
                   
@@ -955,6 +966,7 @@ function HighlightSpamCommentsNew() {
                   }
                   else {
                     decodedCommentCheck = commentCheck.replace(/&shy;/g, '-').replace(/&gt;/g, '>').replace(/amp;/g, '&').replace(/&quot;/g, '"').replace(/&#x27;/g, '');
+                    res0 = regexSpam0.exec(decodedCommentCheck);
                     res1 = regexSpam1.exec(decodedCommentCheck);
                     res2 = regexSpam2.exec(decodedCommentCheck);
                     res3 = regexSpam3.exec(decodedCommentCheck);
@@ -965,7 +977,7 @@ function HighlightSpamCommentsNew() {
                     res8 = regexSpam8.exec(decodedCommentCheck);
                     res9 = regexSpam9.exec(decodedCommentCheck);
                     
-                    if (res1 != null || res2 != null || res3 != null || res4 != null || res5 != null || res6 != null || res7 != null || res8 != null || res9 != null) {
+                    if (res0 != null || res1 != null || res2 != null || res3 != null || res4 != null || res5 != null || res6 != null || res7 != null || res8 != null || res9 != null) {
                       regExMatched = true;
                     }
                   }
