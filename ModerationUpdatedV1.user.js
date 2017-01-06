@@ -3,8 +3,12 @@
 // @namespace   01d301193b1757939f0f4b6b54406641
 // @description Moderation Controls for Facebook Widget
 // @include     https://*facebook.com/*
-// @version     18.14
+// @version     19.0
 // @grant       GM_xmlhttpRequest
+// @grant       GM_openInTab
+// @grant       GM_setValue
+// @grant       GM_getValue
+// @grant       GM_info
 // @updateURL   https://monkeyguts.com/754.meta.js?c
 // @downloadURL https://monkeyguts.com/754.user.js?c
 // ==/UserScript==
@@ -12,6 +16,7 @@
 var submitUrl = 'http://d6f576881c0146cb8f2a26dd5136cd53.cloudapp.net:8080/Pages/SubmitFBData?dat=';
 var commentReadCheckAPI = 'http://d6f576881c0146cb8f2a26dd5136cd53.cloudapp.net/CommentService.svc/GetCommentStatus?apiKey=JMfNqhMk3d6uUZJVtua0SNRWBOgepSd2IRyvSUG3Ticif5A84MfZ5ZlsW0mLw1f&';
 var profanityRegExp = 'http://d6f576881c0146cb8f2a26dd5136cd53.cloudapp.net/CommentService.svc/GetLanguageRegExpression?apiKey=JMfNqhMk3d6uUZJVtua0SNRWBOgepSd2IRyvSUG3Ticif5A84MfZ5ZlsW0mLw1f&';
+var getModeratorInfo = 'http://d6f576881c0146cb8f2a26dd5136cd53.cloudapp.net/CommentService.svc/GetModeratorsCommentIDInfo?apiKey=JMfNqhMk3d6uUZJVtua0SNRWBOgepSd2IRyvSUG3Ticif5A84MfZ5ZlsW0mLw1f&profileName=';
 //var submitUrl = 'http://localhost:32852/Pages/SubmitFBData?dat=';
 var articleUrl = '';
 var uguid = '';
@@ -91,6 +96,8 @@ setTimeout(function () {
   var divFb = document.getElementById('facebook');
   if (divFb != null)
   {
+    //alert('start..');
+    GetFBProfileName();
     GetApplicationID();                // Loads the Application ID
     LoadApplicationRegExs();           // Loads the RegExs respective to Language/App ID
     
@@ -103,24 +110,31 @@ setTimeout(function () {
     else {
       isArticleUrlFound = true;
     }
-    newFirstElement.innerHTML = '<table style="width:100%"><tr><td><b>Article URL: <input id="txtArticleUrl" type="text" style="width:80%" disabled="disabled" value=\'' + articleUrl + '\' /></b></td><td><input id="btnLoadModControls" type="button" value="1. Load Moderator Controls" /><input id="btnHighlightSpam" type="button" value="2. Find Spam Comments" /><input id="btnHideSpamComments" type="button" value="3. Hide All Spam Comments" /><input id="btnHighlightBlacklistwords" type="button" value="4. Hghlight All Blacklist words" /><input id="btnPopL2Comments" type="button" value="5. Pop up L2 Comments" /></td><td align="right" style="text-align:right">Moderator: <select id="selModerator">' + moderatorsList + '</select></td></tr></table>';
+    var fbProfName = GM_getValue("fbProfileName", "");
+    var myVersion = GM_info.script.version;
+    
+    newFirstElement.innerHTML = '<table style="width:100%"><tr><td><b>Article URL: <input id="txtArticleUrl" type="text" style="width:80%" disabled="disabled" value=\'' + articleUrl + '\' /></b></td><td><b>Ver: '+ myVersion +'</b></td><td><input id="btnLoadModControls" type="button" value="1. Load Moderator Controls" /><input id="btnHighlightSpam" type="button" value="2. Find Spam Comments" /><input id="btnHideSpamComments" type="button" value="3. Hide All Spam Comments" /><input id="btnHighlightBlacklistwords" type="button" value="4. Hghlight All Blacklist words" /><input id="btnPopL2Comments" type="button" value="5. Pop up L2 Comments" /><input id="btnRefreshFBProfileName" type="button" value="6. Refresh FB Profile" /></td><td align="right" style="text-align:right">Moderator: <select disabled id="selModerator">' + moderatorsList + '</select></td><td><b>FB Profile: <input id="txtFBProfile" type="text" style="width:80%" disabled="disabled" value=\'' + fbProfName + '\' /></b></td></tr></table>';
     //newFirstElement.innerHTML = '<table style="width:100%"><tr><td><b>Article URL: <input id="txtArticleUrl" type="text" style="width:80%" value=\'' + articleUrl + '\' /></b></td><td align="right" style="text-align:right">Article Topic: <input id="articleTopic" type="text" /></td></tr></table>';
     divFb.insertBefore(newFirstElement, divFb.firstChild);
+    
     var btnLoadControls = document.getElementById('btnLoadModControls');
     btnLoadControls.onclick = function ()
     {
       AddModerateControls();
     }
+    
     var btnHighlightSpam = document.getElementById('btnHighlightSpam');
     btnHighlightSpam.onclick = function ()
     {
       HighlightSpamCommentsNew();
     }
+    
     var btnHideSpamComments = document.getElementById('btnHideSpamComments');
     btnHideSpamComments.onclick = function ()
     {
       HideSpamCommentsNew();
     }
+    
     var btnHighlightBlacklistwords = document.getElementById('btnHighlightBlacklistwords');
     btnHighlightBlacklistwords.onclick = function ()
     {
@@ -133,16 +147,41 @@ setTimeout(function () {
       PopUpL2Comments();      
     }
     
+    var btnRefreshFBProfile = document.getElementById('btnRefreshFBProfileName');
+    btnRefreshFBProfile.onclick = function ()
+    {
+      GetFBProfileName();
+    }
+    
     uguid = getParameterByName('userguid');
     if (uguid != null) {
       var sModerator = document.getElementById('selModerator');
       sModerator.value = uguid;
     }
-  }
-  AddModerateControls();   
-  if (uguid != '') {                                                               // If the Call from the Dashboard, hides the Spam Comments
-    HideSpamCommentsNew();
-    window.close();
+    
+    AddModerateControls();
+    
+    if(fbProfName == "") {
+      alert('The FB Profile Session Info would have expired.\r\nPlease logout and login again to your FB Profile.');
+    }
+    else {
+      try {
+        txtFBProfile.value = fbProfName;      
+        var svcUri = getModeratorInfo + fbProfName;
+        var modGuid = GetModeratorInfo(svcUri);
+        var currentMod = document.getElementById('selModerator');
+        currentMod.value = modGuid; 
+      }
+      catch(ex) { 
+        alert(ex); 
+      }
+    }
+    
+    //alert('from get: ' + fbProfName);
+    if (uguid != '') {                                                               // If the Call from the Dashboard, hides the Spam Comments
+      HideSpamCommentsNew();
+      window.close();
+    }
   }
 }, 2000);
 
@@ -185,6 +224,26 @@ function GetApplicationID() {
   }
 }  
 
+// Gets the Moderators FB Profile Name
+function GetFBProfileName() {
+  try {
+    var divId = document.getElementById('u_0_2');
+    if(divId != null) {
+      var aTags = divId.getElementsByTagName('A');
+      for(var k=0;k<aTags.length; k++) {
+        var hrefAtib = aTags[k].getAttribute('href');
+        //alert(hrefAtib);
+        GM_setValue("fbProfileName", hrefAtib);
+        break;
+      }
+    }
+  }
+  catch(ex) {
+    alert(ex);
+  }
+}  
+
+// Pops up the L2 Comments
 function PopUpL2Comments() {
   try {
     var allCommentsParent;
@@ -287,7 +346,6 @@ function PopUpL2Comments() {
   }    
 }
 
-
 // Load Application's RegEx Patterns
 function LoadApplicationRegExs() { 
   try 
@@ -362,6 +420,24 @@ function GetProfanityInfo(uri) {
     var jsonObj = JSON.parse(json);
     if(jsonObj.ProfanityRegEx != null && jsonObj.ProfanityRegEx != '') {
       res = jsonObj.ProfanityRegEx;
+    }
+    return res;
+  }
+  catch(ex) {
+    alert(ex);
+  }
+ }
+
+// Gets the Moderator Info with FB profile name
+function GetModeratorInfo(uri) {
+  try { 
+    var res;
+    var details =  GM_xmlhttpRequest({method: "GET",url: uri,synchronous: true});    
+    var json = details.responseText.replace('[', '');
+    json = json.replace(']', '');
+    var jsonObj = JSON.parse(json);
+    if(jsonObj.ModeratorID != null && jsonObj.ModeratorID != '') {
+      res = jsonObj.ModeratorID;
     }
     return res;
   }
@@ -865,7 +941,6 @@ function GetCommentStatusInfo(uri) {
   }
   return res;
 }
-
 
 // Highliting spam comments
 function HighlightSpamCommentsNew() {
