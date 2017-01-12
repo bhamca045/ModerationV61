@@ -3,7 +3,7 @@
 // @namespace   01d301193b1757939f0f4b6b54406641
 // @description Moderation Controls for Facebook Widget
 // @include     https://*facebook.com/*
-// @version     19.0
+// @version     19.1
 // @grant       GM_xmlhttpRequest
 // @grant       GM_openInTab
 // @grant       GM_setValue
@@ -241,7 +241,62 @@ function GetFBProfileName() {
   catch(ex) {
     alert(ex);
   }
-}  
+}
+
+// Formulates the Comment ID with FB IDs
+function GetDivFBID(imageBlockContent) {
+  try {
+    var dateDiv = '';
+    dateDiv = imageBlockContent.getElementsByTagName('abbr') [0];    
+    var datev = '';
+    if(dateDiv != null && dateDiv != '') {
+      datev = dateDiv.getAttribute('data-utime');
+      datev += '000';
+    }
+    else {
+      datev ="UNDEFINE";
+    }
+    //profileName
+    var pDiv = imageBlockContent.getElementsByTagName('a');
+    var from = '';
+    var userName = '';
+    
+    for (var k = 0; k < pDiv.length; k++) { 
+      if (pDiv[k].className == ' UFICommentActorName') {
+        from = pDiv[k].getAttribute('href');
+        from = from.replace('https://www.facebook.com/', '');
+        from = from.replace(/\/$/,'');
+        userName = pDiv[k].innerHTML;        
+        userName = userName.replace(new RegExp('<!--.*?-->', 'g'), '');         
+        if (from.indexOf('?id=') != - 1) {
+          from = from.replace('profile.php?id=', '');
+        }
+        break;
+      }
+    }
+          
+    if(from == ''|| userName == '') {
+     // alert(imageBlockContent.innerHTML);
+      var spanDivs = imageBlockContent.getElementsByTagName('span');
+      for (var k = 0; k < pDiv.length; k++) {
+        if (spanDivs[k].className == ' UFICommentActorName') {
+          userName = spanDivs[k].innerHTML;        
+          userName = userName.replace(new RegExp('<!--.*?-->', 'g'), '');
+          break;
+        }
+      }
+      from = userName;
+    }
+    
+    var pId =  datev+"|"+from+"|"+userName;
+    //alert(pId);
+    //var divFbId = 'divFb_' + pId;
+    return pId;    
+  }
+  catch(ex) {
+    alert(ex);
+  }
+}
 
 // Pops up the L2 Comments
 function PopUpL2Comments() {
@@ -1011,27 +1066,27 @@ function HighlightSpamCommentsNew() {
                 if (comSpanID != null && ((comSpanID.indexOf('_2uma') != -1) || (comSpanID.indexOf('_5mdd') != -1))) {               
                   commentCheck = '';
                   commentCheck = comDiv[cc].textContent.replace(regex, '');                
-                  //alert(commentCheck);
-                  var res0 = regexSpam0.exec(commentCheck);
-                  //alert('res0');
+                  //alert(regexSpam1);
+                  //var res0 = regexSpam0.exec(commentCheck);
+                  //alert(res0);
                   var res1 = regexSpam1.exec(commentCheck);
-                  //alert('res1');
+                  //alert(res1);
                   var res2 = regexSpam2.exec(commentCheck);
-                  //alert('res2');
+                  //alert(res2);
                   var res3 = regexSpam3.exec(commentCheck);
-                  //alert('res3');
+                  //alert(res3);
                   var res4 = regexSpam4.exec(commentCheck);
-                  //alert('res4');
+                  //alert(res4);
                   var res5 = regexSpam5.exec(commentCheck);
-                  //alert('res5');
+                  //alert(res5);
                   var res6 = regexSpam6.exec(commentCheck);
-                 // alert('res6');
+                 // alert(res6);
                   var res7 = regexSpam7.exec(commentCheck);
-                 // alert('res7');
+                 // alert(res7);
                   var res8 = regexSpam8.exec(commentCheck);
-                 // alert('res8');
+                 // alert(res8);
                   var res9 = regexSpam9.exec(commentCheck);
-                //  alert('res9');
+                //  alert(res9);
                   var patt = new RegExp("every hour");                
                   res6 = patt.exec(commentCheck);
                   
@@ -1041,7 +1096,7 @@ function HighlightSpamCommentsNew() {
                   }
                   else {
                     decodedCommentCheck = commentCheck.replace(/&shy;/g, '-').replace(/&gt;/g, '>').replace(/amp;/g, '&').replace(/&quot;/g, '"').replace(/&#x27;/g, '');
-                    res0 = regexSpam0.exec(decodedCommentCheck);
+                  //  res0 = regexSpam0.exec(decodedCommentCheck);
                     res1 = regexSpam1.exec(decodedCommentCheck);
                     res2 = regexSpam2.exec(decodedCommentCheck);
                     res3 = regexSpam3.exec(decodedCommentCheck);
