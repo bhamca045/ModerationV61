@@ -3,7 +3,7 @@
 // @namespace   01d301193b1757939f0f4b6b54406641
 // @description Moderation Controls for Facebook Widget
 // @include     https://*facebook.com/*
-// @version     19.1
+// @version     19.2
 // @grant       GM_xmlhttpRequest
 // @grant       GM_openInTab
 // @grant       GM_setValue
@@ -227,14 +227,16 @@ function GetApplicationID() {
 // Gets the Moderators FB Profile Name
 function GetFBProfileName() {
   try {
-    var divId = document.getElementById('u_0_2');
-    if(divId != null) {
-      var aTags = divId.getElementsByTagName('A');
-      for(var k=0;k<aTags.length; k++) {
-        var hrefAtib = aTags[k].getAttribute('href');
-        //alert(hrefAtib);
-        GM_setValue("fbProfileName", hrefAtib);
-        break;
+    if(window.location.href.indexOf('facebook.com') != -1) {
+      var divId = document.getElementById('u_0_2');
+      if(divId != null) {
+        var aTags = divId.getElementsByTagName('A');
+        for(var k=0;k<aTags.length; k++) {
+          var hrefAtib = aTags[k].getAttribute('href');
+          //alert(hrefAtib);
+          GM_setValue("fbProfileName", hrefAtib);
+          break;
+        }
       }
     }
   }
@@ -497,7 +499,7 @@ function GetModeratorInfo(uri) {
     return res;
   }
   catch(ex) {
-    alert(ex);
+    //alert(ex);
   }
  }
 
