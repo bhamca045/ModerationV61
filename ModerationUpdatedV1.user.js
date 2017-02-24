@@ -228,13 +228,7 @@ function GetApplicationID() {
 function GetFBProfileName() {
   try {
     if(window.location.href.indexOf('facebook.com') != -1) {
-      var divId = document.getElementById('u_0_3');
-      if(divId == null || divId == '') {
-        divId = document.getElementById('u_0_4');
-      }
-      if(divId == null || divId == '') {
-        divId = document.getElementById('u_0_5');
-      }
+      var divId = document.getElementById('u_0_4');
       if(divId != null) {
         var aTags = divId.getElementsByTagName('A');
         for(var k=0;k<aTags.length; k++) {
