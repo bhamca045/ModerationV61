@@ -3,7 +3,7 @@
 // @namespace   01d301193b1757939f0f4b6b54406641
 // @description Moderation Controls for Facebook Widget
 // @include     https://*facebook.com/*
-// @version     19.3
+// @version     19.4
 // @grant       GM_xmlhttpRequest
 // @grant       GM_openInTab
 // @grant       GM_setValue
@@ -229,6 +229,12 @@ function GetFBProfileName() {
   try {
     if(window.location.href.indexOf('facebook.com') != -1) {
       var divId = document.getElementById('u_0_3');
+      if(divId == null || divId == '') {
+        divId = document.getElementById('u_0_4');
+      }
+      if(divId == null || divId == '') {
+        divId = document.getElementById('u_0_5');
+      }
       if(divId != null) {
         var aTags = divId.getElementsByTagName('A');
         for(var k=0;k<aTags.length; k++) {
