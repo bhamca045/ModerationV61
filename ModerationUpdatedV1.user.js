@@ -3,7 +3,7 @@
 // @namespace   01d301193b1757939f0f4b6b54406641
 // @description Moderation Controls for Facebook Widget
 // @include     https://*facebook.com/*
-// @version     19.4
+// @version     19.5
 // @grant       GM_xmlhttpRequest
 // @grant       GM_openInTab
 // @grant       GM_setValue
@@ -38,7 +38,7 @@ var moderatorsList = '<option value="0"></option>'
 + '<option value="34e56b2f-94fa-4f03-9249-fef1fbee203d">Israel</option>'
 + '<option value="a146613b-7b82-48ca-a6e6-22576b6730b2">Nagendra</option>'
 + '<option value="f46a3c7d-e0b3-4703-bfdf-1359626dcd05">Jaisal</option>'
-+ '<option value="281f6b13-e0db-491f-8dcb-775ab8137ecf">Dilish</option>'
++ '<option value="1eab69e5-4648-4c9a-8921-1311197f345d">Pragathi</option>'
 + '<option value="9f142497-5ed2-411a-a5d5-8924cd6a21f1">Jaya Suresh</option>'
 + '<option value="ab9287dc-9466-41f7-9f93-bba82ab9ffc3">Chetan</option>'
 + '<option value="1b919453-9dbb-4f8e-8195-ebe9a52a7a13">Wasim</option>'
