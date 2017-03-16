@@ -3,7 +3,7 @@
 // @namespace   01d301193b1757939f0f4b6b54406641
 // @description Moderation Controls for Facebook Widget
 // @include     https://*facebook.com/*
-// @version     19.5
+// @version     19.6
 // @grant       GM_xmlhttpRequest
 // @grant       GM_openInTab
 // @grant       GM_setValue
@@ -526,14 +526,14 @@ function HighLightBlackListedWords() {
     var hilightTag = '';
     var regPatterns;
     var pageUrl = window.location.href;
-    if(pageUrl.indexOf('/approved/') > -1) {
-      hilightTag = "<font style='background-color:cyan'>";
-      regPatterns = regExDict['public'];
-    }
-    else {
+    //if(pageUrl.indexOf('/approved/') > -1) {
+     // hilightTag = "<font style='background-color:cyan'>";
+    //  regPatterns = regExDict['public'];
+   // }
+   // else {
       hilightTag = "<font style='background-color:red;color:white'>";
       regPatterns = regExDict['review'];
-    }    
+    //}    
     var highlightEndTag = "</font>";  
     var l1CountArray = new Array();
     var l2CountArray = new Array();
