@@ -100,7 +100,7 @@ setTimeout(function () {
     GetFBProfileName();
     GetApplicationID();                // Loads the Application ID
     LoadApplicationRegExs();           // Loads the RegExs respective to Language/App ID
-    
+    //ClickSettings();
     divFb.setAttribute('style', 'overflow:scroll;width:95%; margin:0px auto;');
     var newFirstElement = document.createElement('label');
     articleUrl = getParameterByName('href');
@@ -223,6 +223,57 @@ function GetApplicationID() {
     alert(ex);
   }
 }  
+
+// Clicks the Settings link (should be only in public view)
+function ClickSettings()
+{
+  try {
+    var divs = document.getElementsByTagName('div');
+    for (var i = 0; i < divs.length; i++) { 
+      var divRole = divs[i].getAttribute('class');
+      if(divRole === '_ohf rfloat') {
+        var liclick = divs[i].getElementsByTagName('li')[0];
+        //alert(liclick);
+        liclick.click();
+      }
+    }
+  }
+  catch(ex) {
+    //alert(ex);
+  }
+}
+
+// Reads the Blacklist words from opened settings window
+function ClickBlackListWords()
+{
+  try {
+    var idBar = document.getElementById('blacklist');
+    var spansList = document.getElementsByTagName('span');
+    var blWords = new Array();
+    for (var i = 0; i < spansList.length; i++) { 
+       var clsName = spansList[i].getAttribute('class');
+      if(clsName === '_5aab') {
+        //alert(spansList[i].innerHTML);
+        blWords.push(spansList[i].innerHTML);
+      }
+    }
+    
+    var csvString = blWords.join("\n");
+
+    
+    var a         = document.createElement('a');
+a.href        = 'data:attachment/csv,' +  encodeURIComponent(csvString);
+a.target      = '_blank';
+a.download    = 'myFile.csv';
+
+document.body.appendChild(a);
+a.click();
+
+  }
+  catch(ex) {
+    //alert(ex);
+  }
+}
 
 // Gets the Moderators FB Profile Name
 function GetFBProfileName() {
@@ -953,6 +1004,7 @@ function AddModerateControls() {
       }
     }
     
+    //ClickBlackListWords();
     SetPagerDivClickAction();    
     SetViewChangeAction();
     SetMoreCommentClickAction();
