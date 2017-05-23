@@ -3,7 +3,7 @@
 // @namespace   01d301193b1757939f0f4b6b54406641
 // @description Moderation Controls for Facebook Widget
 // @include     https://*facebook.com/*
-// @version     19.7
+// @version     19.8
 // @grant       GM_xmlhttpRequest
 // @grant       GM_openInTab
 // @grant       GM_setValue
@@ -189,21 +189,24 @@ setTimeout(function () {
 function GetApplicationID() {  
   try
   { 
-    var pageUrl = window.location.href;
-    if(!pageUrl.indexOf('tools/comments/url')) {                                 // If Cluster wise Loading
+    var pageUrl = window.location.href;    
+    if(pageUrl.indexOf('tools/comments/url') == -1) {                                 // If Cluster wise Loading
       var textContainers = document.getElementsByClassName('_50f8 _50f3'); 
       if(textContainers.length>0) {
         for(var i=0; i<textContainers.length;i++) {
           var spanText = textContainers[i].innerHTML;
           if(spanText.indexOf('App ID') > -1) {
-            spanText = spanText.replace(new RegExp('<!--.*?-->', 'g'), '');
-            currentAppId = spanText.match(/\d+/)[0];
+            var spanInnerTxt = textContainers[i].innerText;
+            //spanText = spanText.replace(new RegExp('<!--.*?-->', 'g'), '');
+            currentAppId = spanInnerTxt.match(/\d+/)[0];
+            //alert(currentAppId);
             break;
           }
         }
       }
     }
     else {                                                                     // If page wise Loading
+      //alert('else enter');
       textContainers = document.getElementsByClassName('_50f8 _50f3'); 
       if(textContainers.length>0) {
         for(var i=0; i<textContainers.length;i++) {
@@ -222,7 +225,7 @@ function GetApplicationID() {
   {
     alert(ex);
   }
-}  
+} 
 
 // Clicks the Settings link (should be only in public view)
 function ClickSettings()
