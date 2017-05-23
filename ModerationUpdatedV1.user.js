@@ -189,31 +189,31 @@ setTimeout(function () {
 function GetApplicationID() {  
   try
   { 
-    var pageUrl = window.location.href;    
-    if(pageUrl.indexOf('tools/comments/url') == -1) {                                 // If Cluster wise Loading
-      var textContainers = document.getElementsByClassName('_50f8 _50f3'); 
+    var pageUrl = window.location.href;
+    if(pageUrl.indexOf('tools/comments/url') != -1) {                                 // If page wise Loading
+      var textContainers = document.getElementsByClassName('_5c0n'); 
       if(textContainers.length>0) {
         for(var i=0; i<textContainers.length;i++) {
-          var spanText = textContainers[i].innerHTML;
-          if(spanText.indexOf('App ID') > -1) {
-            var spanInnerTxt = textContainers[i].innerText;
-            //spanText = spanText.replace(new RegExp('<!--.*?-->', 'g'), '');
-            currentAppId = spanInnerTxt.match(/\d+/)[0];
-            //alert(currentAppId);
+          var spanText = textContainers[i].getAttribute('href');
+          if(spanText.indexOf('tools/comments/') > -1) {
+            spanText = spanText.replace(new RegExp('<!--.*?-->', 'g'), '');
+            currentAppId = spanText.match(/\d+/)[0];
+            //alert(currentAppId);                                                    // For Debug
             break;
           }
         }
       }
     }
-    else {                                                                     // If page wise Loading
-      //alert('else enter');
-      textContainers = document.getElementsByClassName('_50f8 _50f3'); 
+    else {                                                                     // If Cluster wise Loading
+      textContainers = document.getElementsByClassName('_50f8 _50f3');       
       if(textContainers.length>0) {
         for(var i=0; i<textContainers.length;i++) {
           var spanText = textContainers[i].innerHTML;
           if(spanText.indexOf('App ID') > -1) {
-            spanText = spanText.replace(new RegExp('<!--.*?-->', 'g'), '');
-            currentAppId = spanText.match(/\d+/)[0];
+            var innerTxt = textContainers[i].innerText;
+            //spanText = spanText.replace(new RegExp('<!--.*?-->', 'g'), '');
+            currentAppId = innerTxt.match(/\d+/)[0];
+            //alert(currentAppId);                                                    // For Debug
             break;
           }
         }
@@ -225,7 +225,7 @@ function GetApplicationID() {
   {
     alert(ex);
   }
-} 
+}
 
 // Clicks the Settings link (should be only in public view)
 function ClickSettings()
@@ -262,16 +262,13 @@ function ClickBlackListWords()
     }
     
     var csvString = blWords.join("\n");
-
-    
     var a         = document.createElement('a');
-a.href        = 'data:attachment/csv,' +  encodeURIComponent(csvString);
-a.target      = '_blank';
-a.download    = 'myFile.csv';
-
-document.body.appendChild(a);
-a.click();
-
+    a.href        = 'data:attachment/csv,' +  encodeURIComponent(csvString);
+    a.target      = '_blank';
+    a.download    = 'myFile.csv';
+    
+    document.body.appendChild(a);
+    a.click();
   }
   catch(ex) {
     //alert(ex);
